@@ -1,0 +1,41 @@
+cmake_minimum_required(VERSION 3.13)
+set(PROJECT_NAME lfxNet)
+set(PROJECT_VERSION_MAJOR 0)
+set(PROJECT_VERSION_MINOR 7)
+project(${PROJECT_NAME})
+
+#set(CMAKE_CXX_FLAGS "-g -Wall")  # gdb 调试信息
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+set(QT_VERSION 5)
+set(REQUIRED_LIBS Core Gui Widgets)
+set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets)
+find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED) # REQUIRED: 找不到就报错
+
+add_subdirectory(lib)
+add_subdirectory(dockplugin)
+
+# 加入一个配置头文件，用于处理 CMake 对源码的设置
+#configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.in"
+#               "${CMAKE_CURRENT_BINARY_DIR}/config.h")
+
+#message(${PROJECT_SOURCE_DIR}) # 源码路径
+#message(${PROJECT_BINARY_DIR}) # 二进制产物输出路径
+
+file(GLOB DIR "widgets/*.h" "widgets/*.cpp" "widgets/*.ui" "*.h" "*.cpp")
+
+foreach(v ${DIR})
+    message(${v})
+endforeach()
+add_executable(${PROJECT_NAME} ${DIR})
+
+#if (NOT CMAKE_PREFIX_PATH)
+#    message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
+#            "(-DCMAKE_PREFIX_PATH=\"path/to/Qt/lib/cmake\" or -DCMAKE_PREFIX_PATH=/usr/include/{host}/qt{version}/ on Ubuntu)")
+#endif ()
+
+#find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
+target_link_libraries(${PROJECT_NAME} MonitorInfo MonitorNet)
