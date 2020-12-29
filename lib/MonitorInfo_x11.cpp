@@ -111,7 +111,7 @@ void MonitorInfo_x11::netInfo(long &upload, long &down)
     while (!line.isNull()) {
         QStringList list = line.split(QRegExp("\\s{1,}"));
 
-        if (!list.isEmpty()) {
+        if (!list.isEmpty()) {  // 可以删掉 if
             netUpload = list[9].toLong();
             netDown = list[1].toLong();
         }
@@ -174,26 +174,26 @@ void MonitorInfo_x11::memoryInfo(MemoryInfo &info)
  *
  * 注意：请先将单位转为字节(Byte)后再传参
  */
-double MonitorInfo_x11::netShowUnit(long net, MonitorInfo_x11::NetUnit &unit)
+double MonitorInfo_x11::netShowUnit(long net, NetUnit &unit)
 {
     double ret = 0;
     if (0 <= net && net < qPow(2, 10)) {
-        unit = MonitorInfo_x11::Byte;
+        unit = Byte;
         ret = net;
     } else if (qPow(2, 10) <= net && net < qPow(2, 20)) {
-        unit = MonitorInfo_x11::Kb;
+        unit = Kb;
         ret = static_cast<double>(net / qPow(2, 10) * 1.0);
     } else if (qPow(2, 20) <= net && net < qPow(2, 30)) {
-        unit = MonitorInfo_x11::Mb;
+        unit = Mb;
         ret = static_cast<double>(net / qPow(2, 20) * 1.0);
     } else if (qPow(2, 30) <= net && net < qPow(2, 40)) {
-        unit = MonitorInfo_x11::Gb;
+        unit = Gb;
         ret = static_cast<double>(net / qPow(2, 30) * 1.0);
     } else if (qPow(2, 40) <= net && net < qPow(2, 50)) {
-        unit = MonitorInfo_x11::Tb;
+        unit = Tb;
         ret = static_cast<double>(net / qPow(2, 40) * 1.0);
     } else {
-        unit = MonitorInfo_x11::Unknow;
+        unit = Unknow;
         qWarning()<<QObject::tr("本设备网络速率单位传输超过 TB, 或者低于 1 Byte.");
         ret = -1;
     }
@@ -207,60 +207,60 @@ double MonitorInfo_x11::netShowUnit(long net, MonitorInfo_x11::NetUnit &unit)
  * \param[out] model 最终显示的网速模式
  * \return 该模式下的对应字符串文本
  */
-QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit &model)
+QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit model)
 {
     switch (model) {
-    case MonitorInfo_x11::Default: {
+    case Default: {
         switch (unit) {
-        case MonitorInfo_x11::Bit:
+        case Bit:
             return QString("b/s");
-        case MonitorInfo_x11::Byte:
+        case Byte:
             return QString("B/s");
-        case MonitorInfo_x11::Kb:
+        case Kb:
             return QString("Kb/s");
-        case MonitorInfo_x11::Mb:
+        case Mb:
             return QString("Mb/s");
-        case MonitorInfo_x11::Gb:
+        case Gb:
             return QString("Gb/s");
-        case MonitorInfo_x11::Tb:
+        case Tb:
             return QString("Tb/s");
         default:
             qWarning()<<QObject::tr("ModelUnit::Default,  MonitorInfo_x11 is Unknow.");
             return QString("");
         }
     }
-    case MonitorInfo_x11::Upper: {
+    case Upper: {
         switch (unit) {
-        case MonitorInfo_x11::Bit:
+        case Bit:
             return QString("BIT/S");
-        case MonitorInfo_x11::Byte:
+        case Byte:
             return QString("B/S");
-        case MonitorInfo_x11::Kb:
+        case Kb:
             return QString("KB/S");
-        case MonitorInfo_x11::Mb:
+        case Mb:
             return QString("MB/S");
-        case MonitorInfo_x11::Gb:
+        case Gb:
             return QString("GB/S");
-        case MonitorInfo_x11::Tb:
+        case Tb:
             return QString("TB/S");
         default:
             qWarning()<<QObject::tr("ModelUnit::Upper,  MonitorInfo_x11 is Unknow.");
             return QString("");
         }
     }
-    case MonitorInfo_x11::Lower: {
+    case Lower: {
         switch (unit) {
-        case MonitorInfo_x11::Bit:
+        case Bit:
             return QString("bit/s");
-        case MonitorInfo_x11::Byte:
+        case Byte:
             return QString("b/s");
-        case MonitorInfo_x11::Kb:
+        case Kb:
             return QString("kb/s");
-        case MonitorInfo_x11::Mb:
+        case Mb:
             return QString("mb/s");
-        case MonitorInfo_x11::Gb:
+        case Gb:
             return QString("gb/s");
-        case MonitorInfo_x11::Tb:
+        case Tb:
             return QString("tb/s");
         default:
             qWarning()<<QObject::tr("ModelUnit::Lower,  MonitorInfo_x11 is Unknow.");
@@ -276,11 +276,11 @@ QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit &model)
 }
 
 /*!
- * \brief MonitorInfo_x11::runTimeUnit 系统时间运行转换格式: "系统已运行: %1天, %2:%3:%4"
+ * \brief runTimeUnit 系统时间运行转换格式: "系统已运行: %1天, %2:%3:%4"
  * \param[in] s 秒
  * \return 预期显示格式
  */
-QString MonitorInfo_x11::runTimeUnit(double s)
+QString runTimeUnit(double s)
 {
     int time = qFloor(s);
     int ss = time % 60;

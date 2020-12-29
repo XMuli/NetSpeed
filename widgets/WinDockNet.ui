@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WinAbout</class>
- <widget class="QWidget" name="WinAbout">
+ <class>WinDockNet</class>
+ <widget class="QWidget" name="WinDockNet">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>289</width>
-    <height>68</height>
+    <width>329</width>
+    <height>112</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,58 +15,58 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="lab_11">
      <property name="text">
-      <string>TextLabel</string>
+      <string>↑:</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="lab_12">
      <property name="text">
-      <string>TextLabel</string>
+      <string/>
      </property>
     </widget>
    </item>
    <item row="0" column="2">
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="lab_13">
      <property name="text">
-      <string>TextLabel</string>
+      <string>CPU:</string>
      </property>
     </widget>
    </item>
    <item row="0" column="3">
-    <widget class="QLabel" name="label_7">
+    <widget class="QLabel" name="lan_14">
      <property name="text">
-      <string>TextLabel</string>
+      <string> </string>
      </property>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="lab_21">
      <property name="text">
-      <string>TextLabel</string>
+      <string>↓:</string>
      </property>
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="lab_22">
      <property name="text">
-      <string>TextLabel</string>
+      <string> </string>
      </property>
     </widget>
    </item>
    <item row="1" column="2">
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="lab_00">
      <property name="text">
-      <string>TextLabel</string>
+      <string>内存:</string>
      </property>
     </widget>
    </item>
    <item row="1" column="3">
-    <widget class="QLabel" name="label_8">
+    <widget class="QLabel" name="lab_24">
      <property name="text">
-      <string>TextLabel</string>
+      <string> </string>
      </property>
     </widget>
    </item>

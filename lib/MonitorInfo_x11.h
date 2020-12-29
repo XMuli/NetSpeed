@@ -25,25 +25,24 @@ public:
     long swapFree;
 };
 
+enum NetUnit {
+    Bit,
+    Byte,
+    Kb,
+    Mb,
+    Gb,
+    Tb,
+    Unknow
+};
+
+enum ModelUnit {
+    Default,  // 大小写混合
+    Upper,    // 全部大写
+    Lower,    // 全部小写
+    Custom    // 自定义格式
+};
+
 class MonitorInfo_x11 {
-public:
-    enum NetUnit {
-        Bit,
-        Byte,
-        Kb,
-        Mb,
-        Gb,
-        Tb,
-        Unknow
-    };
-
-    enum ModelUnit {
-        Default,  // 大小写混合
-        Upper,    // 全部大写
-        Lower,    // 全部小写
-        Custom    // 自定义格式
-    };
-
 public:
     MonitorInfo_x11();
 
@@ -53,7 +52,7 @@ public:
     void memoryInfo(MemoryInfo &info);
 
     double netShowUnit(long net, NetUnit &unit);
-    QString netModelUnit(NetUnit unit, ModelUnit &model);
+    QString netModelUnit(NetUnit unit, ModelUnit model);
     QString runTimeUnit(double s = 0);
 };
 

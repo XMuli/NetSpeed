@@ -1,26 +1,22 @@
-//
-// Created by xmuli on 2020/12/25.
-//
-
-#ifndef LFXNET_WINABOUT_H
-#define LFXNET_WINABOUT_H
+#ifndef WINABOUT_H
+#define WINABOUT_H
 
 #include <QWidget>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class WinAbout; }
-QT_END_NAMESPACE
+namespace Ui {
+class WinAbout;
+}
 
-class WinAbout : public QWidget {
-Q_OBJECT
+class WinAbout : public QWidget
+{
+    Q_OBJECT
 
 public:
     explicit WinAbout(QWidget *parent = nullptr);
-
-    ~WinAbout() override;
+    ~WinAbout();
 
 private:
     Ui::WinAbout *ui;
 };
 
-#endif //LFXNET_WINABOUT_H
+#endif // WINABOUT_H

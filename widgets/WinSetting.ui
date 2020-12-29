@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabMainSetting">
       <attribute name="title">
@@ -1081,7 +1081,7 @@
          <property name="title">
           <string>消息通知</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,2,1,1,1">
+         <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,2,1,1">
           <item row="1" column="1">
            <widget class="QSpinBox" name="spinBox_11"/>
           </item>
