@@ -14,7 +14,7 @@ struct CpuInfo{
 public:
     int index;     // CPU 序号 （若序号为 0, 则是总 CPU 信息）
     long cpuAll;   // CPU 总量
-    long cpuFree;  // CPU 空闲量
+    long cpuWork;  // CPU 工作量
 };
 
 struct MemoryInfo{

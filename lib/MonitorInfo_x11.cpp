@@ -70,17 +70,18 @@ void MonitorInfo_x11::cpuInfo(QVector<CpuInfo> &vec)
     int i = 0;
 
     do {
+        info.index = i;
         line = stream.readLine().simplified();
         list = line.split(QRegExp("\\s{1,}"));
 
-        for (auto v = list.begin() + 1; v != list.end(); ++v)
+        for (auto v = list.begin() + 1; v != list.end(); ++v) {
             info.cpuAll += v->toLong(&ok);
 
-        info.cpuFree = list[4].toLong(&ok);
-        info.index = i;
+            if(v <= list.begin() + 3)
+                info.cpuWork += v->toLong(&ok);
+        }
 
         vec.push_back(info);
-
     } while(i++, list[0] != "intr");
 
     vec.pop_back(); // 去掉多余
@@ -280,7 +281,7 @@ QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit model)
  * \param[in] s 秒
  * \return 预期显示格式
  */
-QString runTimeUnit(double s)
+QString MonitorInfo_x11::runTimeUnit(double s)
 {
     int time = qFloor(s);
     int ss = time % 60;

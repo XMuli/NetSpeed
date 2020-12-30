@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 //    info->memoryInfo(mem);
 
     WinDockNet *winDockNet = new WinDockNet();
-    winDockNet->resize(200, 40);
+    winDockNet->resize(500, 600);
     winDockNet->show();
 
     return QApplication::exec();

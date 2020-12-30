@@ -2,6 +2,8 @@
 #include "ui_WinDockNet.h"
 
 #include <QTimer>
+#include <QDebug>
+
 
 /*!
  * \brief WinDockNet::WinDockNet
@@ -30,6 +32,7 @@ WinDockNet::WinDockNet(QWidget *parent) :
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onNet);
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onCpu);
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onMemory);
+    connect(m_timer, &QTimer::timeout, this, &WinDockNet::onSystemRunTime);
     m_timer->setInterval(1000);
     m_timer->start();
 }
@@ -42,10 +45,12 @@ WinDockNet::~WinDockNet()
 void WinDockNet::init()
 {
     m_info->netInfo(m_upload, m_down);
+    m_info->cpuInfo(m_vec);
+    m_precision = 2;
 }
 
 /*!
- * \brief WinDockNet::onNet 时刻刷新网速
+ * \brief WinDockNet::onNet 定时刷新网速
  */
 void WinDockNet::onNet()
 {
@@ -57,31 +62,71 @@ void WinDockNet::onNet()
     m_info->netInfo(upload, down);
     double increaseUpload  = m_info->netShowUnit((upload - m_upload) / (m_timer->interval() / 1000.0), netUnit);
     unit = m_info->netModelUnit(netUnit, m_modelUnit);
-    ui->lab_12->setText(QString("%1").arg(increaseUpload, 0, 'f', 2, QLatin1Char(' ')) + unit);
+    ui->lab_12->setText(QString("%1").arg(increaseUpload, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
 
     netUnit = Byte;
     double increaseDown = m_info->netShowUnit((down - m_down) / (m_timer->interval() / 1000.0), netUnit);
     unit = m_info->netModelUnit(netUnit, m_modelUnit);
-    ui->lab_22->setText(QString("%1").arg(increaseDown, 0, 'f', 2, QLatin1Char(' ')) + unit);
+    ui->lab_22->setText(QString("%1").arg(increaseDown, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
 
     m_upload = upload;
     m_down = down;
 }
 
 /*!
- * \brief WinDockNet::onCpu 时刻刷新 CPU
+ * \brief WinDockNet::onCpu 定时刷新 CPU
  */
 void WinDockNet::onCpu()
 {
+    ui->textEdit->clear();
 
+    QVector<CpuInfo> vec;
+    m_info->cpuInfo(vec);
+
+    double valCpu = (vec.begin()->cpuWork - m_vec.begin()->cpuWork) * 100.0 / (vec.begin()->cpuAll - m_vec.begin()->cpuAll);
+    ui->lab_14->setText(QString("%1%").arg(valCpu, 0, 'f', m_precision, QLatin1Char(' ')));
+
+    auto m_it = m_vec.begin();
+    for (auto it = vec.begin(); it != vec.end();  ++it) {
+        long cpuWork = it->cpuWork - m_it->cpuWork;
+        long cpuAll = it->cpuAll - m_it->cpuAll;
+        ui->textEdit->append(QString::number(it->index)
+                             + "  "
+                             + QString::number(cpuWork)
+                             + "  "
+                             + QString::number(cpuAll)
+                             + "  "
+                             + QString::number(cpuWork * 100.0 / cpuAll));
+
+        m_it->cpuWork = it->cpuWork;
+        m_it->cpuAll = it->cpuAll;
+        m_it++;
+    }
 }
 
 /*!
- * \brief WinDockNet::onMemory 时刻刷新 内存
+ * \brief WinDockNet::onMemory 定时刷新 内存
  */
 void WinDockNet::onMemory()
 {
+    MemoryInfo info;
+    m_info->memoryInfo(info);
 
+    double mem = (info.memoryAll - info.memoryFree) * 100.0 / info.memoryAll;
+    double swap = (info.swapAll - info.swapFree) * 100.0 / info.swapAll;
+    ui->lab_24->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
+    ui->lab_34->setText(QString("%1%").arg(swap, 0, 'f', m_precision, QLatin1Char(' ')));
+}
+
+/*!
+ * \brief WinDockNet::onSystemRunTime 定时刷新 系统开机运行时间
+ */
+void WinDockNet::onSystemRunTime()
+{
+    double run = 0;
+    double idle = 0;
+    m_info->systemRunTime(run, idle);
+    ui->lab_32->setText(m_info->runTimeUnit(run));
 }
 
 
