@@ -16,7 +16,7 @@ set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets)
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED) # REQUIRED: 找不到就报错
 
 add_subdirectory(lib)
-add_subdirectory(dockplugin)
+add_subdirectory(dde-dock-plugin)
 
 # 加入一个配置头文件，用于处理 CMake 对源码的设置
 #configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.in"
