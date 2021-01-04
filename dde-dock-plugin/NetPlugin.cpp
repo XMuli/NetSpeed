@@ -4,14 +4,15 @@
 
 #include "NetPlugin.h"
 #include <QLabel>
+#include <QDebug>
 
 DWIDGET_USE_NAMESPACE
 
 NetPlugin::NetPlugin(QObject *parent)
     : QObject(parent)
-    , m_labTest(nullptr)
+    , m_test(nullptr)
 {
-
+    qDebug()<<"------------------->00";
 }
 
 /*!
@@ -22,7 +23,7 @@ NetPlugin::NetPlugin(QObject *parent)
  */
 const QString NetPlugin::pluginName() const
 {
-    return "MonitorNet"; //"datetime";
+    return "MonitorNet2"; //"datetime";
 }
 
 /*!
@@ -32,7 +33,10 @@ const QString NetPlugin::pluginName() const
 void NetPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-    m_labTest = new QLabel("test MonitorNet");
+//    m_labTest = new QLabel("test MonitorNet");
+    m_test = new WinDockTest();
+
+    qDebug()<<"------------------->01";
 
     if (!pluginIsDisable())
         m_proxyInter->itemAdded(this, pluginName());
@@ -46,5 +50,27 @@ void NetPlugin::init(PluginProxyInterface *proxyInter)
 QWidget *NetPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey)
-    return m_labTest;
+    return m_test;
+}
+
+const QString NetPlugin::itemContextMenu(const QString &itemKey)
+{
+    Q_UNUSED(itemKey);
+
+    QList<QVariant> items;
+    items.reserve(1);
+
+    QMap<QString, QVariant> update;
+    update["itemId"] = "update";
+    update["itemText"] = "刷新";
+    update["isActive"] = true;
+    items.push_back(update);
+
+    QMap<QString, QVariant> menu;
+    menu["items"] = items;
+    menu["checkableMenu"] = false;
+    menu["singleCheck"] = false;
+
+    // 返回 JSON 格式的菜单数据
+    return QJsonDocument::fromVariant(menu).toJson();
 }

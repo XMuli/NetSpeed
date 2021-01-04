@@ -8,7 +8,8 @@
 #include <QObject>
 #include <pluginsiteminterface.h>
 #include <dtkwidget_global.h>
-#include "../widgets/WinDockNet.h"
+//#include "../widgets/WinDockNet.h"
+#include "../widgets/WinDockTest.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -27,9 +28,14 @@ public:
     virtual void init(PluginProxyInterface *proxyInter) override;
     virtual QWidget *itemWidget(const QString &itemKey) override;
 
+    virtual const QString itemContextMenu(const QString &itemKey) override;
+
 private:
-    QLabel *m_labTest;
+
+    WinDockTest *m_test;
+//    WinDockNet *m_winDockNet;
     PluginProxyInterface *m_proxyInter;
+
 };
 
 #endif //LFXNET_NETPLUGIN_H
