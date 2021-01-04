@@ -10,9 +10,8 @@ DWIDGET_USE_NAMESPACE
 
 NetPlugin::NetPlugin(QObject *parent)
     : QObject(parent)
-    , m_test(nullptr)
+    , m_winDockNet(nullptr)
 {
-    qDebug()<<"------------------->00";
 }
 
 /*!
@@ -23,7 +22,7 @@ NetPlugin::NetPlugin(QObject *parent)
  */
 const QString NetPlugin::pluginName() const
 {
-    return "MonitorNet2"; //"datetime";
+    return "datetime"; // MonitorNet
 }
 
 /*!
@@ -33,10 +32,7 @@ const QString NetPlugin::pluginName() const
 void NetPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-//    m_labTest = new QLabel("test MonitorNet");
-    m_test = new WinDockTest();
-
-    qDebug()<<"------------------->01";
+    m_winDockNet = new WinDockNet();
 
     if (!pluginIsDisable())
         m_proxyInter->itemAdded(this, pluginName());
@@ -50,7 +46,7 @@ void NetPlugin::init(PluginProxyInterface *proxyInter)
 QWidget *NetPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey)
-    return m_test;
+    return m_winDockNet;
 }
 
 const QString NetPlugin::itemContextMenu(const QString &itemKey)

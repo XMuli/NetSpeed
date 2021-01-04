@@ -8,8 +8,8 @@
 #include <QObject>
 #include <pluginsiteminterface.h>
 #include <dtkwidget_global.h>
+#include "WinDockNet.h"
 //#include "../widgets/WinDockNet.h"
-#include "../widgets/WinDockTest.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -31,9 +31,7 @@ public:
     virtual const QString itemContextMenu(const QString &itemKey) override;
 
 private:
-
-    WinDockTest *m_test;
-//    WinDockNet *m_winDockNet;
+    WinDockNet *m_winDockNet;
     PluginProxyInterface *m_proxyInter;
 
 };
