@@ -9,7 +9,6 @@
 #include <pluginsiteminterface.h>
 #include <dtkwidget_global.h>
 #include "WinDockNet.h"
-//#include "../widgets/WinDockNet.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -28,12 +27,24 @@ public:
     virtual void init(PluginProxyInterface *proxyInter) override;
     virtual QWidget *itemWidget(const QString &itemKey) override;
 
+    // 插件禁用和启用相关的接口
+    virtual bool pluginIsAllowDisable() override;
+    virtual bool pluginIsDisable() override;
+    virtual void pluginStateSwitched() override;
+
+    // 其它额外接口
+    virtual const QString pluginDisplayName() const override;
     virtual const QString itemContextMenu(const QString &itemKey) override;
+    virtual void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) override;
 
 private:
     WinDockNet *m_winDockNet;
     PluginProxyInterface *m_proxyInter;
 
+
+
+    // PluginsItemInterface interface
+public:
 };
 
 #endif //LFXNET_NETPLUGIN_H

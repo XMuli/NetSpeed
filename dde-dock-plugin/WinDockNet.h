@@ -23,7 +23,6 @@ public:
 
     void init();
 
-
 public slots:
     void onNet();
     void onCpu();
