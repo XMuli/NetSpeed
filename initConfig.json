@@ -1,0 +1,49 @@
+{
+    "WinMain": {
+        
+    },
+    "WinDdeDock": {
+        "ColorAndFont": {
+            "FontType": "",
+            "FontSize": "",
+            "TextColor": "#000000",
+            "BackgroundColor": "#FF0000"
+        },
+        "DisplayText": [
+            {
+                "LabUpload": "↑:",
+                "LabDown": "↓:",
+                "LabCpu": "CPU:",
+                "LabMemory": "内存",
+                "LabDiskRead": "↗:",
+                "LabDiskWrite": "↙:"
+            },
+            {
+                "DisolayNet": true,
+                "DisolayCPUAndMemory": true,
+                "DisolayDisk": true
+            },
+            {
+                "LocationExchangeNet": false,
+                "LocationExchangeCPUAndMenory": false,
+                "LocationExchangeDisk": false
+            },
+            {
+                "FractionalAccuracy": 2,
+                "RefreshInterval": 1000
+            }
+        ],
+        "UnitSetting": {
+            "NetUnit": "B",
+            "UnitModel": "Default"
+        },
+        "DockWindow": {
+            "HoverDisplay": true,
+            "DoubleClick": false
+        },
+        "GraphicsMode": 0
+    },
+    "WinConfig": {
+        
+    }
+}

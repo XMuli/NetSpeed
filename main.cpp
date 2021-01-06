@@ -1,12 +1,17 @@
 #include <QApplication>
+#include <QLoggingCategory>
 #include "widgets/WinSetting.h"
 #include "lib/MonitorInfo_x11.h"
 #include "widgets/WinDockNet.h"
+#include "dde-dock-plugin/WinDdeDockSetting.h"
 
 
 //using namespace lfx;
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
+    QLoggingCategory::setFilterRules("*.debug=true\nqt.*.debug=false");
+//    QT_LOGGING_RULES=qt.qpa.input= false;
+//    QLoggingCategory::setFilterRules("*.debug=true\nqt.*.debug=false");
 //    WinSetting setting;
 //    setting.show();
 
@@ -21,9 +26,12 @@ int main(int argc, char *argv[]) {
 //    MemoryInfo mem;
 //    info->memoryInfo(mem);
 
-    WinDockNet *winDockNet = new WinDockNet();
-    winDockNet->resize(500, 600);
-    winDockNet->show();
+//    WinDockNet *winDockNet = new WinDockNet();
+//    winDockNet->resize(500, 600);
+//    winDockNet->show();
+    WinDdeDockSetting *setting = new WinDdeDockSetting();
+    setting->readConfig();
+    setting->show();
 
     return QApplication::exec();
 }

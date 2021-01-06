@@ -25,11 +25,11 @@ add_subdirectory(dde-dock-plugin)
 #message(${PROJECT_SOURCE_DIR}) # 源码路径
 #message(${PROJECT_BINARY_DIR}) # 二进制产物输出路径
 
-file(GLOB DIR "widgets/*.h" "widgets/*.cpp" "widgets/*.ui" "*.h" "*.cpp")
+file(GLOB DIR "widgets/*.h" "widgets/*.cpp" "widgets/*.ui" "*.h" "*.hpp" "*.cpp" "*.json")
 
-foreach(v ${DIR})
-    message(${v})
-endforeach()
+#foreach(v ${DIR})
+#    message(${v})
+#endforeach()
 add_executable(${PROJECT_NAME} ${DIR})
 
 #if (NOT CMAKE_PREFIX_PATH)
@@ -38,4 +38,4 @@ add_executable(${PROJECT_NAME} ${DIR})
 #endif ()
 
 #find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-target_link_libraries(${PROJECT_NAME} MonitorInfo)
+target_link_libraries(${PROJECT_NAME} MonitorInfo MonitorNet)

@@ -1,454 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WinSetting</class>
- <widget class="QWidget" name="WinSetting">
+ <class>WinDdeDockSetting</class>
+ <widget class="QWidget" name="WinDdeDockSetting">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>883</width>
-    <height>704</height>
+    <width>749</width>
+    <height>677</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>WinSetting</string>
+   <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_16">
+  <layout class="QHBoxLayout" name="horizontalLayout_8">
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="tabMainSetting">
-      <attribute name="title">
-       <string>主窗口设置</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QGroupBox" name="groupBox">
-         <property name="title">
-          <string>颜色和字体</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2,1,2,2">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>字体：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="lineEdit"/>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>字体大小：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBox"/>
-            </item>
-            <item>
-             <widget class="QFontComboBox" name="fontComboBox"/>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,3">
-            <item>
-             <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="text">
-                 <string>文本颜色：</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string>颜色A</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>背景颜色：</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="label_6">
-                <property name="text">
-                 <string>颜色B</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0">
-           <item>
-            <widget class="QGroupBox" name="groupBox_2">
-             <property name="title">
-              <string>显示文本</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <item>
-               <layout class="QGridLayout" name="gridLayout_2">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_7">
-                  <property name="text">
-                   <string>上传：</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="lineEdit_2">
-                  <property name="text">
-                   <string>↑:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLabel" name="label_9">
-                  <property name="text">
-                   <string>CPU：</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="3">
-                 <widget class="QLineEdit" name="lineEdit_4">
-                  <property name="text">
-                   <string>CPU:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="4">
-                 <widget class="QLabel" name="label_11">
-                  <property name="text">
-                   <string>读取：</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="5">
-                 <widget class="QLineEdit" name="lineEdit_6">
-                  <property name="text">
-                   <string>Read:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="6" rowspan="2">
-                 <widget class="QPushButton" name="pushButton_2">
-                  <property name="text">
-                   <string>重置</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_8">
-                  <property name="text">
-                   <string>下载：</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLineEdit" name="lineEdit_3">
-                  <property name="text">
-                   <string>↓:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QLabel" name="label_10">
-                  <property name="text">
-                   <string>内存：</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="3">
-                 <widget class="QLineEdit" name="lineEdit_5">
-                  <property name="text">
-                   <string>内存</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="4">
-                 <widget class="QLabel" name="label_12">
-                  <property name="text">
-                   <string>写入：</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="5">
-                 <widget class="QLineEdit" name="lineEdit_7">
-                  <property name="text">
-                   <string>Write:</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="Line" name="line">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="4,1">
-                <item>
-                 <layout class="QGridLayout" name="gridLayout_3">
-                  <item row="0" column="0">
-                   <widget class="QCheckBox" name="checkBox_4">
-                    <property name="enabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="autoFillBackground">
-                     <bool>false</bool>
-                    </property>
-                    <property name="text">
-                     <string>显示 [上传/下载]</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
-                    </property>
-                    <property name="tristate">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="1">
-                   <widget class="QCheckBox" name="checkBox_5">
-                    <property name="text">
-                     <string>显示 [CPU/内存]</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="2">
-                   <widget class="QCheckBox" name="checkBox_6">
-                    <property name="text">
-                     <string>显示 [读取/写入]</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="0">
-                   <widget class="QCheckBox" name="checkBox">
-                    <property name="text">
-                     <string>互换位置 [上传/下载]</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="1">
-                   <widget class="QCheckBox" name="checkBox_2">
-                    <property name="text">
-                     <string>互换位置 [CPU/内存]</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="1" column="2">
-                   <widget class="QCheckBox" name="checkBox_3">
-                    <property name="text">
-                     <string>互换位置 [读取/写入]</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_2">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2,1,2,1">
-                <item>
-                 <widget class="QLabel" name="label_15">
-                  <property name="text">
-                   <string>小数精确度：</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="spinBox_2"/>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_16">
-                  <property name="text">
-                   <string>刷新时隔：</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QSpinBox" name="spinBox_3"/>
-                </item>
-                <item>
-                 <spacer name="horizontalSpacer_3">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QGroupBox" name="groupBox_3">
-             <property name="title">
-              <string>单位设置</string>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
-              <item>
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>网速单位：</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton">
-                <property name="text">
-                 <string>B（字节）</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_2">
-                <property name="text">
-                 <string>b（比特）</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>单位选择：</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="comboBox"/>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>192</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_21" stretch="5,1,1">
-         <item>
-          <spacer name="horizontalSpacer_11">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton">
-           <property name="text">
-            <string>保存配置</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton_5">
-           <property name="text">
-            <string>取消</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="tabDockSetting">
       <attribute name="title">
        <string>任务栏窗口设置</string>
@@ -461,7 +31,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_14" stretch="4,1">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="1,2,1,2,2">
+           <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="1,2,1,2">
             <item>
              <widget class="QLabel" name="label_43">
               <property name="text">
@@ -470,7 +40,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_21"/>
+             <widget class="QFontComboBox" name="fontComboBox"/>
             </item>
             <item>
              <widget class="QLabel" name="label_44">
@@ -480,10 +50,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QSpinBox" name="spinBox_9"/>
-            </item>
-            <item>
-             <widget class="QFontComboBox" name="fontComboBox_3"/>
+             <widget class="QSpinBox" name="spinBoxFontSize"/>
             </item>
            </layout>
           </item>
@@ -499,7 +66,7 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLabel" name="label_46">
+               <widget class="QLabel" name="labTextColor">
                 <property name="text">
                  <string>颜色A</string>
                 </property>
@@ -513,7 +80,7 @@
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLabel" name="label_48">
+               <widget class="QLabel" name="lanBackgroundColor">
                 <property name="text">
                  <string>颜色B</string>
                 </property>
@@ -561,7 +128,7 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="lineEdit_15">
+                   <widget class="QLineEdit" name="lineLabUpload">
                     <property name="text">
                      <string>↑:</string>
                     </property>
@@ -575,7 +142,7 @@
                    </widget>
                   </item>
                   <item row="0" column="3">
-                   <widget class="QLineEdit" name="lineEdit_16">
+                   <widget class="QLineEdit" name="lineLabCpu">
                     <property name="text">
                      <string>CPU:</string>
                     </property>
@@ -589,14 +156,14 @@
                    </widget>
                   </item>
                   <item row="0" column="5">
-                   <widget class="QLineEdit" name="lineEdit_17">
+                   <widget class="QLineEdit" name="lineLabDiskRead">
                     <property name="text">
                      <string>Read:</string>
                     </property>
                    </widget>
                   </item>
                   <item row="0" column="6" rowspan="2">
-                   <widget class="QPushButton" name="pushButton_4">
+                   <widget class="QPushButton" name="btnReset">
                     <property name="text">
                      <string>重置</string>
                     </property>
@@ -610,7 +177,7 @@
                    </widget>
                   </item>
                   <item row="1" column="1">
-                   <widget class="QLineEdit" name="lineEdit_18">
+                   <widget class="QLineEdit" name="lineLabDown">
                     <property name="text">
                      <string>↓:</string>
                     </property>
@@ -624,7 +191,7 @@
                    </widget>
                   </item>
                   <item row="1" column="3">
-                   <widget class="QLineEdit" name="lineEdit_19">
+                   <widget class="QLineEdit" name="lineLabMemory">
                     <property name="text">
                      <string>内存</string>
                     </property>
@@ -638,7 +205,7 @@
                    </widget>
                   </item>
                   <item row="1" column="5">
-                   <widget class="QLineEdit" name="lineEdit_20">
+                   <widget class="QLineEdit" name="lineLabDiskWrite">
                     <property name="text">
                      <string>Write:</string>
                     </property>
@@ -658,7 +225,7 @@
                   <item>
                    <layout class="QGridLayout" name="gridLayout_8">
                     <item row="0" column="0">
-                     <widget class="QCheckBox" name="checkBox_13">
+                     <widget class="QCheckBox" name="checkBoxDisolayNet">
                       <property name="enabled">
                        <bool>true</bool>
                       </property>
@@ -677,7 +244,7 @@
                      </widget>
                     </item>
                     <item row="0" column="1">
-                     <widget class="QCheckBox" name="checkBox_14">
+                     <widget class="QCheckBox" name="checkBoxDisolayCPUAndMemory">
                       <property name="text">
                        <string>显示 [CPU/内存]</string>
                       </property>
@@ -687,7 +254,7 @@
                      </widget>
                     </item>
                     <item row="0" column="2">
-                     <widget class="QCheckBox" name="checkBox_15">
+                     <widget class="QCheckBox" name="checkBoxDisolayDisk">
                       <property name="text">
                        <string>显示 [读取/写入]</string>
                       </property>
@@ -697,21 +264,21 @@
                      </widget>
                     </item>
                     <item row="1" column="0">
-                     <widget class="QCheckBox" name="checkBox_16">
+                     <widget class="QCheckBox" name="checkBoxLocationExchangeNet">
                       <property name="text">
                        <string>互换位置 [上传/下载]</string>
                       </property>
                      </widget>
                     </item>
                     <item row="1" column="1">
-                     <widget class="QCheckBox" name="checkBox_17">
+                     <widget class="QCheckBox" name="checkBoxLocationExchangeCPUAndMenory">
                       <property name="text">
                        <string>互换位置 [CPU/内存]</string>
                       </property>
                      </widget>
                     </item>
                     <item row="1" column="2">
-                     <widget class="QCheckBox" name="checkBox_18">
+                     <widget class="QCheckBox" name="checkBoxLocationExchangeDisk">
                       <property name="text">
                        <string>互换位置 [读取/写入]</string>
                       </property>
@@ -744,7 +311,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="spinBox_7"/>
+                   <widget class="QSpinBox" name="spinBoxFractionalAccuracy"/>
                   </item>
                   <item>
                    <widget class="QLabel" name="label_40">
@@ -754,7 +321,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="spinBox_8"/>
+                   <widget class="QSpinBox" name="spinBoxRefreshInterval"/>
                   </item>
                   <item>
                    <spacer name="horizontalSpacer_8">
@@ -813,7 +380,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBox_3"/>
+                 <widget class="QComboBox" name="comboBoxUnitModel"/>
                 </item>
                </layout>
               </widget>
@@ -842,7 +409,7 @@
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
-             <widget class="QCheckBox" name="checkBox_19">
+             <widget class="QCheckBox" name="checkBoxHoverDisplay">
               <property name="text">
                <string>悬浮显示系统运行总时间</string>
               </property>
@@ -859,7 +426,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_4">
+             <widget class="QComboBox" name="comboBoxDoubleClick">
               <item>
                <property name="text">
                 <string>显示配置主窗口</string>
@@ -949,14 +516,14 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_6">
+          <widget class="QPushButton" name="btnSave">
            <property name="text">
             <string>保存配置</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_7">
+          <widget class="QPushButton" name="btnQuit">
            <property name="text">
             <string>取消</string>
            </property>
