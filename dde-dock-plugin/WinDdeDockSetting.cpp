@@ -29,6 +29,8 @@ WinDdeDockSetting::~WinDdeDockSetting()
 
 void WinDdeDockSetting::init()
 {
+    setAttribute(Qt::WA_DeleteOnClose);  // 关闭时候销毁
+
     // 读入 json 文件到流中
     ifstream jfile(DATA_JSON_PATH);
     jfile >> m_js;

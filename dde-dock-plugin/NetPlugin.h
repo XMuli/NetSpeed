@@ -8,7 +8,9 @@
 #include <QObject>
 #include <pluginsiteminterface.h>
 #include <dtkwidget_global.h>
+
 #include "WinDockNet.h"
+#include "WinDdeDockSetting.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -38,13 +40,9 @@ public:
     virtual void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) override;
 
 private:
+    WinDdeDockSetting *m_winSetting;
     WinDockNet *m_winDockNet;
     PluginProxyInterface *m_proxyInter;
-
-
-
-    // PluginsItemInterface interface
-public:
 };
 
 #endif //LFXNET_NETPLUGIN_H

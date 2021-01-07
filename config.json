@@ -2,17 +2,17 @@
   "WinConfig": {},
   "WinDdeDock": {
     "ColorAndFont": {
-      "BackgroundColor": "#000000",
-      "FontSize": 9,
+      "BackgroundColor": "#ffffff",
+      "FontSize": 0,
       "FontType": "Noto Sans CJK SC",
       "FontTypeIndex": 59,
-      "TextColor": "#ffffff"
+      "TextColor": "#000000"
     },
     "DisplayText": [
       {
         "LabCpu": "CPU:",
-        "LabDiskRead": "↗:",
-        "LabDiskWrite": "↙:",
+        "LabDiskRead": "Read:",
+        "LabDiskWrite": "Write:",
         "LabDown": "↓:",
         "LabMemory": "内存",
         "LabUpload": "↑:"
@@ -28,7 +28,7 @@
         "LocationExchangeNet": false
       },
       {
-        "FractionalAccuracy": 2,
+        "FractionalAccuracy": 0,
         "RefreshInterval": 1000
       }
     ],

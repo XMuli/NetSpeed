@@ -3,15 +3,17 @@
 //
 
 #include "NetPlugin.h"
-#include <QLabel>
-
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QDebug>
 
 DWIDGET_USE_NAMESPACE
 
 NetPlugin::NetPlugin(QObject *parent)
     : QObject(parent)
+    , m_winSetting(nullptr)
     , m_winDockNet(nullptr)
+    , m_proxyInter(nullptr)
 {
 }
 
@@ -19,7 +21,7 @@ NetPlugin::NetPlugin(QObject *parent)
  * \brief NetPlugin::pluginName 返回插件名称
  * \return 插件名（后会更正 MonitorNet）
  * \note 解决压缩 Bug，在 dde-dock 1.2.3 被修复，故名称叫 “datetime”
- * \see 参见文末 https://xmuli.tech/posts/c225b552/ 缺陷分析
+ * \see 参见 https://xmuli.tech/posts/c225b552/ 文末缺陷分析
  */
 const QString NetPlugin::pluginName() const
 {
@@ -110,9 +112,15 @@ const QString NetPlugin::itemContextMenu(const QString &itemKey)
     update["itemText"] = "刷新";
     update["isActive"] = true;
 
+    QMap<QString, QVariant> setting;
+    setting["itemId"] = "setting";
+    setting["itemText"] = "设置";
+    setting["isActive"] = true;
+
     QList<QVariant> items;
-    items.reserve(1);
+    items.reserve(2);
     items.push_back(update);
+    items.push_back(setting);
 
     QMap<QString, QVariant> menu;
     menu["items"] = items;
@@ -137,5 +145,9 @@ void NetPlugin::invokedMenuItem(const QString &itemKey, const QString &menuId, c
     if (menuId == "update") {
         m_proxyInter->itemRemoved(this, pluginName());
         m_proxyInter->itemAdded(this, pluginName());
+    } else if (menuId == "setting") {
+        m_winSetting = new WinDdeDockSetting();
+        m_winSetting->move((QApplication::desktop()->width() - m_winSetting->width())/2,(QApplication::desktop()->height() - m_winSetting->height())/2);
+        m_winSetting->show();
     }
 }
