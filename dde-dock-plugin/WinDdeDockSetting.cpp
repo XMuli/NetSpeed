@@ -47,10 +47,6 @@ void WinDdeDockSetting::init()
     ui->labTextColor->installEventFilter(this);
     ui->labBackgroundColor->installEventFilter(this);
 
-    ui->comboBoxUnitModel->setEditable(true);
-    ui->fontComboBox->setEditable(true);
-    ui->comboBoxDoubleClick->setEditable(true);
-
     connect(ui->btnSave, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnSave);
     connect(ui->btnQuit, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuit);
 }
@@ -61,7 +57,7 @@ void WinDdeDockSetting::init()
 void WinDdeDockSetting::readConfig()
 {
     json jsColorAndFont = m_js["WinDdeDock"]["ColorAndFont"];
-//    ui->fontComboBox, const int fontSize = jsColorAndFont["FontSize"];// TODO: 2021-01-07 字体赋值
+    ui->fontComboBox->setCurrentIndex(jsColorAndFont["FontTypeIndex"]);
     ui->spinBoxFontSize->setValue(jsColorAndFont["FontSize"]);
     QPalette palette;
     palette.setColor(QPalette::Background, QString::fromStdString(jsColorAndFont["TextColor"]));
@@ -86,7 +82,7 @@ void WinDdeDockSetting::readConfig()
     ui->spinBoxRefreshInterval->setValue(jsDisplayText[3]["RefreshInterval"]);
 
     json jsUnitSetting = m_js["WinDdeDock"]["UnitSetting"];
-    ui->comboBoxUnitModel->setCurrentText(QString::fromStdString(jsUnitSetting["UnitModel"]));
+    ui->comboBoxUnitModel->setCurrentIndex(jsUnitSetting["UnitModelIndex"]);
     if (jsUnitSetting["NetUnitIsByte"]) {
         ui->radioBtnByte->setChecked(true);
         ui->radioBtnBit->setChecked(false);
@@ -94,6 +90,10 @@ void WinDdeDockSetting::readConfig()
         ui->radioBtnByte->setChecked(false);
         ui->radioBtnBit->setChecked(true);
     }
+
+    json jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
+    ui->checkBoxHoverDisplay->setChecked(jsDockWindow["HoverDisplay"]);
+    ui->comboBoxDoubleClick->setCurrentIndex(jsDockWindow["DoubleClickIndex"]);
 
     // TODO: 2021-01-07 占用图模式未写
 }
@@ -107,6 +107,7 @@ void WinDdeDockSetting::saveConfig()
     json &jsColorAndFont = m_js["WinDdeDock"]["ColorAndFont"];
     jsColorAndFont["FontSize"] = ui->spinBoxFontSize->value();
     jsColorAndFont["FontType"] = ui->fontComboBox->currentText().toStdString().c_str();
+    jsColorAndFont["FontTypeIndex"] = ui->fontComboBox->currentIndex();
     jsColorAndFont["TextColor"] = ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
     jsColorAndFont["BackgroundColor"] = ui->labBackgroundColor->palette().color(QPalette::Background).name().toStdString().c_str();
 
@@ -128,11 +129,19 @@ void WinDdeDockSetting::saveConfig()
 
     json &jsUnitSetting = m_js["WinDdeDock"]["UnitSetting"];
     jsUnitSetting["UnitModel"] = ui->comboBoxUnitModel->currentText().toStdString().c_str();
+    jsUnitSetting["UnitModelIndex"] = ui->comboBoxUnitModel->currentIndex();
     bool isBety = ui->radioBtnByte->isChecked();
     if (isBety)
         jsUnitSetting["NetUnitIsByte"] = true;
     else
         jsUnitSetting["NetUnitIsByte"] = false;
+
+    json &jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
+    jsDockWindow["HoverDisplay"] = ui->checkBoxHoverDisplay->checkState() == Qt::Checked;
+    jsDockWindow["DoubleClickIndex"] = ui->comboBoxDoubleClick->currentIndex();
+    jsDockWindow["DoubleClick"] = ui->comboBoxDoubleClick->currentText().toStdString().c_str();
+
+    // TODO: 2021-01-07 占用图模式未写
 
     ofstream outFile(DATA_JSON_PATH);
     outFile << setw(2) << m_js << endl;
@@ -161,7 +170,7 @@ bool WinDdeDockSetting::eventFilter(QObject *watched, QEvent *event)
 
             QPalette palette;
             palette.setColor(QPalette::Background, labBackgroundColor);
-            ui->labTextColor->setPalette(palette);
+            ui->labBackgroundColor->setPalette(palette);
             return true;
         }
     } else {

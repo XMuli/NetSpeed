@@ -109,7 +109,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_15">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="4,1">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0">
              <item>
@@ -434,11 +434,11 @@
            <property name="title">
             <string>任务栏窗口</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,1,3,2">
             <item>
              <widget class="QCheckBox" name="checkBoxHoverDisplay">
               <property name="text">
-               <string>悬浮显示系统运行总时间</string>
+               <string>悬浮显示额外信息</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -487,25 +487,42 @@
            <property name="title">
             <string>CPU/内存占用图</string>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_20">
-            <item>
-             <widget class="QRadioButton" name="radioButton_7">
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+             <widget class="QRadioButton" name="radioButtonNumber">
+              <property name="text">
+               <string>数值</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QRadioButton" name="radioButtonColumn">
               <property name="text">
                <string>柱状图</string>
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_8">
+            <item row="0" column="2">
+             <widget class="QRadioButton" name="radioButtonStripes">
               <property name="text">
-               <string>饼状图</string>
+               <string>横向矩形</string>
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QRadioButton" name="radioButton_9">
+            <item row="1" column="1">
+             <widget class="QRadioButton" name="radioButtonScrolling">
               <property name="text">
                <string>横向滚动图</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QRadioButton" name="radioButtonRound">
+              <property name="text">
+               <string>饼状图</string>
               </property>
              </widget>
             </item>

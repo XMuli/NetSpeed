@@ -1,44 +1,48 @@
 {
-    "WinConfig": {},
-    "WinDdeDock": {
-        "ColorAndFont": {
-            "BackgroundColor": "#ff0000",
-            "FontSize": 9,
-            "FontType": "Noto Sans CJK SC",
-            "TextColor": "#aaffff"
-        },
-        "DisplayText": [{
-                "LabCpu": "CPU:",
-                "LabDiskRead": "↗:",
-                "LabDiskWrite": "↙:",
-                "LabDown": "↓:",
-                "LabMemory": "内存",
-                "LabUpload": "↑:"
-            },
-            {
-                "DisolayCPUAndMemory": true,
-                "DisolayDisk": true,
-                "DisolayNet": true
-            },
-            {
-                "LocationExchangeCPUAndMenory": false,
-                "LocationExchangeDisk": false,
-                "LocationExchangeNet": false
-            },
-            {
-                "FractionalAccuracy": 2,
-                "RefreshInterval": 1000
-            }
-        ],
-        "DockWindow": {
-            "DoubleClick": false,
-            "HoverDisplay": true
-        },
-        "GraphicsMode": 0,
-        "UnitSetting": {
-            "NetUnitIsByte": true,
-            "UnitModel": "Custom"
-        }
+  "WinConfig": {},
+  "WinDdeDock": {
+    "ColorAndFont": {
+      "BackgroundColor": "#000000",
+      "FontSize": 9,
+      "FontType": "Noto Sans CJK SC",
+      "FontTypeIndex": 59,
+      "TextColor": "#ffffff"
     },
-    "WinMain": {}
+    "DisplayText": [
+      {
+        "LabCpu": "CPU:",
+        "LabDiskRead": "↗:",
+        "LabDiskWrite": "↙:",
+        "LabDown": "↓:",
+        "LabMemory": "内存",
+        "LabUpload": "↑:"
+      },
+      {
+        "DisolayCPUAndMemory": true,
+        "DisolayDisk": true,
+        "DisolayNet": true
+      },
+      {
+        "LocationExchangeCPUAndMenory": false,
+        "LocationExchangeDisk": false,
+        "LocationExchangeNet": false
+      },
+      {
+        "FractionalAccuracy": 2,
+        "RefreshInterval": 1000
+      }
+    ],
+    "DockWindow": {
+      "DoubleClick": "显示配置主窗口",
+      "DoubleClickIndex": 0,
+      "HoverDisplay": true
+    },
+    "GraphicsMode": 0,
+    "UnitSetting": {
+      "NetUnitIsByte": true,
+      "UnitModel": "Default",
+      "UnitModelIndex": 0
+    }
+  },
+  "WinMain": {}
 }
