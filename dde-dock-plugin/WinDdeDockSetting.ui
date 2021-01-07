@@ -68,7 +68,7 @@
               <item row="0" column="1">
                <widget class="QLabel" name="labTextColor">
                 <property name="text">
-                 <string>颜色A</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -80,9 +80,9 @@
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLabel" name="lanBackgroundColor">
+               <widget class="QLabel" name="labBackgroundColor">
                 <property name="text">
-                 <string>颜色B</string>
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -359,14 +359,17 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioButton_5">
+                 <widget class="QRadioButton" name="radioBtnByte">
                   <property name="text">
                    <string>B（字节）</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioButton_6">
+                 <widget class="QRadioButton" name="radioBtnBit">
                   <property name="text">
                    <string>b（比特）</string>
                   </property>
@@ -380,7 +383,31 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="comboBoxUnitModel"/>
+                 <widget class="QComboBox" name="comboBoxUnitModel">
+                  <property name="duplicatesEnabled">
+                   <bool>false</bool>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>Default</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Upper</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Lower</string>
+                   </property>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>Custom</string>
+                   </property>
+                  </item>
+                 </widget>
                 </item>
                </layout>
               </widget>

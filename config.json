@@ -1,49 +1,44 @@
 {
-    "WinMain": {
-        
-    },
+    "WinConfig": {},
     "WinDdeDock": {
         "ColorAndFont": {
-            "FontType": "",
-            "FontSize": "",
-            "TextColor": "#000000",
-            "BackgroundColor": "#FF0000"
+            "BackgroundColor": "#ff0000",
+            "FontSize": 9,
+            "FontType": "Noto Sans CJK SC",
+            "TextColor": "#aaffff"
         },
-        "DisplayText": [
-            {
-                "LabUpload": "↑:",
-                "LabDown": "↓:",
+        "DisplayText": [{
                 "LabCpu": "CPU:",
-                "LabMemory": "内存",
                 "LabDiskRead": "↗:",
-                "LabDiskWrite": "↙:"
+                "LabDiskWrite": "↙:",
+                "LabDown": "↓:",
+                "LabMemory": "内存",
+                "LabUpload": "↑:"
             },
             {
-                "DisolayNet": true,
                 "DisolayCPUAndMemory": true,
-                "DisolayDisk": true
+                "DisolayDisk": true,
+                "DisolayNet": true
             },
             {
-                "LocationExchangeNet": false,
                 "LocationExchangeCPUAndMenory": false,
-                "LocationExchangeDisk": false
+                "LocationExchangeDisk": false,
+                "LocationExchangeNet": false
             },
             {
                 "FractionalAccuracy": 2,
                 "RefreshInterval": 1000
             }
         ],
-        "UnitSetting": {
-            "NetUnit": "B",
-            "UnitModel": "Default"
-        },
         "DockWindow": {
-            "HoverDisplay": true,
-            "DoubleClick": false
+            "DoubleClick": false,
+            "HoverDisplay": true
         },
-        "GraphicsMode": 0
+        "GraphicsMode": 0,
+        "UnitSetting": {
+            "NetUnitIsByte": true,
+            "UnitModel": "Custom"
+        }
     },
-    "WinConfig": {
-        
-    }
+    "WinMain": {}
 }
