@@ -11,8 +11,8 @@ DWIDGET_USE_NAMESPACE
 
 NetPlugin::NetPlugin(QObject *parent)
     : QObject(parent)
-    , m_winSetting(nullptr)
-    , m_winDockNet(nullptr)
+    , m_winSetting(new WinDdeDockSetting())
+    , m_winDockNet(new WinDockNet(m_winSetting))  // 利用 class 成员先后初始化机制，确保 m_winSetting 不是 nullptr
     , m_proxyInter(nullptr)
 {
 }
@@ -35,7 +35,6 @@ const QString NetPlugin::pluginName() const
 void NetPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-    m_winDockNet = new WinDockNet();
 
     if (!pluginIsDisable())
         m_proxyInter->itemAdded(this, pluginName());
@@ -107,19 +106,19 @@ const QString NetPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
+    QList<QVariant> items;
+    items.reserve(2);
+
     QMap<QString, QVariant> update;
     update["itemId"] = "update";
     update["itemText"] = "刷新";
     update["isActive"] = true;
+    items.push_back(update);
 
     QMap<QString, QVariant> setting;
     setting["itemId"] = "setting";
     setting["itemText"] = "设置";
     setting["isActive"] = true;
-
-    QList<QVariant> items;
-    items.reserve(2);
-    items.push_back(update);
     items.push_back(setting);
 
     QMap<QString, QVariant> menu;
@@ -142,11 +141,12 @@ void NetPlugin::invokedMenuItem(const QString &itemKey, const QString &menuId, c
     Q_UNUSED(itemKey)
     Q_UNUSED(checked)
 
+    qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
+
     if (menuId == "update") {
         m_proxyInter->itemRemoved(this, pluginName());
         m_proxyInter->itemAdded(this, pluginName());
     } else if (menuId == "setting") {
-        m_winSetting = new WinDdeDockSetting();
         m_winSetting->move((QApplication::desktop()->width() - m_winSetting->width())/2,(QApplication::desktop()->height() - m_winSetting->height())/2);
         m_winSetting->show();
     }

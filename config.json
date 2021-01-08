@@ -2,11 +2,11 @@
   "WinConfig": {},
   "WinDdeDock": {
     "ColorAndFont": {
-      "BackgroundColor": "#ffffff",
+      "BackgroundColor": "#55ffff",
       "FontSize": 0,
       "FontType": "Noto Sans CJK SC",
       "FontTypeIndex": 59,
-      "TextColor": "#000000"
+      "TextColor": "#ff0000"
     },
     "DisplayText": [
       {
@@ -28,7 +28,7 @@
         "LocationExchangeNet": false
       },
       {
-        "FractionalAccuracy": 0,
+        "FractionalAccuracy": 2,
         "RefreshInterval": 1000
       }
     ],

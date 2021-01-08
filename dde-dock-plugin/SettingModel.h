@@ -3,18 +3,11 @@
 
 #include <QObject>
 
-class SettingModel : public QObject
+class SettingModel : QObject
 {
     Q_OBJECT
 public:
-    explicit SettingModel(QObject *parent = nullptr);
-
-
-
-signals:
-
-public slots:
-
+    SettingModel();
 };
 
 #endif // SETTINGMODEL_H

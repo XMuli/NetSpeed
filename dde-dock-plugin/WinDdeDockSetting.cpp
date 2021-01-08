@@ -29,8 +29,6 @@ WinDdeDockSetting::~WinDdeDockSetting()
 
 void WinDdeDockSetting::init()
 {
-    setAttribute(Qt::WA_DeleteOnClose);  // 关闭时候销毁
-
     // 读入 json 文件到流中
     ifstream jfile(DATA_JSON_PATH);
     jfile >> m_js;
@@ -49,8 +47,29 @@ void WinDdeDockSetting::init()
     ui->labTextColor->installEventFilter(this);
     ui->labBackgroundColor->installEventFilter(this);
 
+//    readConfig();
+
     connect(ui->btnSave, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnSave);
     connect(ui->btnQuit, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuit);
+
+    connect(ui->fontComboBox, &QFontComboBox::currentTextChanged, this, &WinDdeDockSetting::sigCurrentFont);
+    void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
+    connect(ui->spinBoxFontSize, pFun, this, &WinDdeDockSetting::sigFontSize);
+    connect(ui->lineLabUpload, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabUploadText);
+    connect(ui->lineLabDown, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDownText);
+    connect(ui->lineLabCpu, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabCpuText);
+    connect(ui->lineLabMemory, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabMemoryText);
+    connect(ui->lineLabDiskRead, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDiskReadText);
+    connect(ui->lineLabDiskWrite, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDiskWriteText);
+    connect(ui->checkBoxDisolayNet, &QCheckBox::clicked, this, &WinDdeDockSetting::sigDisolayNet);
+    connect(ui->checkBoxDisolayCPUAndMemory, &QCheckBox::clicked, this, &WinDdeDockSetting::sigDisolayCPUAndMemory);
+    connect(ui->checkBoxDisolayDisk, &QCheckBox::clicked, this, &WinDdeDockSetting::sigDisolayDisk);
+    connect(ui->checkBoxLocationExchangeNet, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeNet);
+    connect(ui->checkBoxLocationExchangeCPUAndMenory, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeCPUAndMenory);
+    connect(ui->checkBoxLocationExchangeDisk, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeDisk);
+    connect(ui->spinBoxFractionalAccuracy, pFun, this, &WinDdeDockSetting::sigFractionalAccuracy);
+    connect(ui->spinBoxRefreshInterval, pFun, this, &WinDdeDockSetting::sigRefreshInterval);
+    connect(ui->checkBoxHoverDisplay, &QCheckBox::clicked, this, &WinDdeDockSetting::sigHoverDisplay);
 }
 
 /*!
@@ -164,6 +183,7 @@ bool WinDdeDockSetting::eventFilter(QObject *watched, QEvent *event)
             QPalette palette;
             palette.setColor(QPalette::Background, labTextColor);
             ui->labTextColor->setPalette(palette);
+            emit sigTextColor(labTextColor);
             return true;
         }
     } else if (watched == ui->labBackgroundColor) {
@@ -173,13 +193,21 @@ bool WinDdeDockSetting::eventFilter(QObject *watched, QEvent *event)
             QPalette palette;
             palette.setColor(QPalette::Background, labBackgroundColor);
             ui->labBackgroundColor->setPalette(palette);
+            emit sigBackgroundColor(labBackgroundColor);
             return true;
         }
     } else {
 
     }
 
-    QWidget::eventFilter(watched, event);
+    return QWidget::eventFilter(watched, event);
+}
+
+/*!
+ * \brief WinDdeDockSetting::emitAllSignal 发射所有信号，用来从 UI 初始化 DDE-DOCK 的效果
+ */
+void WinDdeDockSetting::emitAllSignal()
+{
 }
 
 /*!

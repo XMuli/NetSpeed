@@ -34,7 +34,7 @@ private:
     long m_upload;  // 网速的上次数值
     long m_down;
     QVector<CpuInfo> m_vec;
-    unsigned int m_precision; // 精度
+    int m_precision; // 精度
 
     Ui::WinDockNet *ui;
     MonitorInfo_x11 *m_info;
