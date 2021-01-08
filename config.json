@@ -2,11 +2,12 @@
   "WinConfig": {},
   "WinDdeDock": {
     "ColorAndFont": {
-      "BackgroundColor": "#55ffff",
+      "BackgroundColor": "#ffffff",
       "FontSize": 0,
       "FontType": "Noto Sans CJK SC",
       "FontTypeIndex": 59,
-      "TextColor": "#ff0000"
+      "LabTextColor": "#aa0000",
+      "TextColor": "#aa0000"
     },
     "DisplayText": [
       {
@@ -14,12 +15,12 @@
         "LabDiskRead": "Read:",
         "LabDiskWrite": "Write:",
         "LabDown": "↓:",
-        "LabMemory": "内存",
+        "LabMemory": "内存:",
         "LabUpload": "↑:"
       },
       {
         "DisolayCPUAndMemory": true,
-        "DisolayDisk": true,
+        "DisolayDisk": false,
         "DisolayNet": true
       },
       {
@@ -33,8 +34,8 @@
       }
     ],
     "DockWindow": {
-      "DoubleClick": "显示配置主窗口",
-      "DoubleClickIndex": 0,
+      "DoubleClick": "显示系统监视器（DDE）",
+      "DoubleClickIndex": 1,
       "HoverDisplay": true
     },
     "GraphicsMode": 0,

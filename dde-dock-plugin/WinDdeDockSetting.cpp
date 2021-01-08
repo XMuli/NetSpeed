@@ -56,6 +56,7 @@ void WinDdeDockSetting::init()
     jfile >> m_js;
 
     // 控件的基本设置，其读写留其它函数完成
+    ui->labLabTextColor->setAutoFillBackground(true);
     ui->labTextColor->setAutoFillBackground(true);
     ui->labBackgroundColor->setAutoFillBackground(true);
 
@@ -66,6 +67,7 @@ void WinDdeDockSetting::init()
     ui->spinBoxRefreshInterval->setSingleStep(1000);
     ui->spinBoxRefreshInterval->setSuffix(tr("ms"));
 
+    ui->labLabTextColor->installEventFilter(this);
     ui->labTextColor->installEventFilter(this);
     ui->labBackgroundColor->installEventFilter(this);
 }
@@ -79,6 +81,8 @@ void WinDdeDockSetting::readConfig()
     ui->fontComboBox->setCurrentIndex(jsColorAndFont["FontTypeIndex"]);
     ui->spinBoxFontSize->setValue(jsColorAndFont["FontSize"]);
     QPalette palette;
+    palette.setColor(QPalette::Background, QString::fromStdString(jsColorAndFont["LabTextColor"]));
+    ui->labLabTextColor->setPalette(palette);
     palette.setColor(QPalette::Background, QString::fromStdString(jsColorAndFont["TextColor"]));
     ui->labTextColor->setPalette(palette);
     palette.setColor(QPalette::Background, QString::fromStdString(jsColorAndFont["BackgroundColor"]));
@@ -120,6 +124,7 @@ void WinDdeDockSetting::readConfig()
     // 第一次发射信号，加载配置文件
     emit ui->fontComboBox->currentTextChanged(ui->fontComboBox->currentText());
     emit ui->spinBoxFontSize->valueChanged(ui->spinBoxFontSize->value());
+    emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
     emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
     emit sigBackgroundColor(ui->labBackgroundColor->palette().color(QPalette::Background));
     emit ui->lineLabUpload->textChanged(ui->lineLabUpload->text());
@@ -131,8 +136,8 @@ void WinDdeDockSetting::readConfig()
     emit ui->checkBoxDisolayNet->clicked(ui->checkBoxDisolayNet->checkState() == Qt::Checked);
     emit ui->checkBoxDisolayCPUAndMemory->clicked(ui->checkBoxDisolayCPUAndMemory->checkState() == Qt::Checked);
 //    emit ui->checkBoxDisolayDisk->clicked(ui->checkBoxDisolayDisk->checkState() == Qt::Checked);
-    emit ui->checkBoxLocationExchangeNet->clicked(ui->checkBoxLocationExchangeNet->checkState() == Qt::Checked);
-    emit ui->checkBoxLocationExchangeCPUAndMenory->clicked(ui->checkBoxLocationExchangeCPUAndMenory->checkState() == Qt::Checked);
+//    emit ui->checkBoxLocationExchangeNet->clicked(ui->checkBoxLocationExchangeNet->checkState() == Qt::Checked);
+//    emit ui->checkBoxLocationExchangeCPUAndMenory->clicked(ui->checkBoxLocationExchangeCPUAndMenory->checkState() == Qt::Checked);
 //    emit ui->checkBoxLocationExchangeDisk->clicked(ui->checkBoxLocationExchangeDisk->checkState() == Qt::Checked);
     emit ui->spinBoxFractionalAccuracy->valueChanged(ui->spinBoxFractionalAccuracy->value());
     emit ui->spinBoxRefreshInterval->valueChanged(ui->spinBoxRefreshInterval->value());
@@ -154,6 +159,7 @@ void WinDdeDockSetting::saveConfig()
     jsColorAndFont["FontSize"] = ui->spinBoxFontSize->value();
     jsColorAndFont["FontType"] = ui->fontComboBox->currentText().toStdString().c_str();
     jsColorAndFont["FontTypeIndex"] = ui->fontComboBox->currentIndex();
+    jsColorAndFont["LabTextColor"] = ui->labLabTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
     jsColorAndFont["TextColor"] = ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
     jsColorAndFont["BackgroundColor"] = ui->labBackgroundColor->palette().color(QPalette::Background).name().toStdString().c_str();
 
@@ -202,7 +208,16 @@ void WinDdeDockSetting::saveConfig()
  */
 bool WinDdeDockSetting::eventFilter(QObject *watched, QEvent *event)
 {
-    if (watched == ui->labTextColor) {
+    if (watched == ui->labLabTextColor) {
+        if (event->type() == QEvent::MouseButtonRelease) {
+            QColor labLabTextColor = QColorDialog::getColor(ui->labLabTextColor->palette().color(QPalette::Background), this, tr("选择文本颜色"));
+            QPalette palette;
+            palette.setColor(QPalette::Background, labLabTextColor);
+            ui->labLabTextColor->setPalette(palette);
+            emit sigLabTextColor(labLabTextColor);
+            return true;
+        }
+    } else if (watched == ui->labTextColor) {
         if (event->type() == QEvent::MouseButtonRelease) {
             QColor labTextColor = QColorDialog::getColor(ui->labTextColor->palette().color(QPalette::Background), this, tr("选择文本颜色"));
             QPalette palette;

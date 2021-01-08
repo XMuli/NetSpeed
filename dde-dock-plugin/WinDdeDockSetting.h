@@ -26,6 +26,7 @@ public:
 signals:
     void sigCurrentFont(const QFont &);
     void sigFontSize(int);
+    void sigLabTextColor(const QColor);
     void sigTextColor(const QColor);
     void sigBackgroundColor(const QColor);
     void sigLabUploadText(const QString &);

@@ -53,6 +53,7 @@ void WinDockNet::init()
 
     connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
     connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
+    connect(m_winSetting, &WinDdeDockSetting::sigLabTextColor, this, &WinDockNet::onLabTextColor);
     connect(m_winSetting, &WinDdeDockSetting::sigTextColor, this, &WinDockNet::onTextColor);
     connect(m_winSetting, &WinDdeDockSetting::sigBackgroundColor, this, &WinDockNet::onBackgroundColor);
     connect(m_winSetting, &WinDdeDockSetting::sigLabUploadText, this, &WinDockNet::onLabUploadText);
@@ -72,17 +73,6 @@ void WinDockNet::init()
 //    connect(m_winSetting, &WinDdeDockSetting::sigHoverDisplay, this, &WinDockNet::sigHoverDisplay);
 
     m_winSetting->readConfig();
-}
-
-
-bool WinDockNet::setPtrWinDdeDockSetting(WinDdeDockSetting *winSetting)
-{
-    if (winSetting == nullptr) {
-        return false;
-    } else {
-        m_winSetting = winSetting;
-        return true;
-    }
 }
 
 /*!
@@ -155,10 +145,23 @@ void WinDockNet::onFontSize(int size)
     // TODO: 2021-01-08 修改插件字体大小
 }
 
+void WinDockNet::onLabTextColor(const QColor color)
+{
+    // TODO: 2021-01-08 加一行，颜色相同就返回, 结尾出，后面添加磁盘功能
+    QPalette palette;
+    qDebug()<<"===============================22++>"<<color;
+    palette.setColor(QPalette::WindowText, color);
+    ui->lab_11->setPalette(palette);
+    ui->lab_13->setPalette(palette);
+    ui->lab_21->setPalette(palette);
+    ui->lab_23->setPalette(palette);
+}
+
 void WinDockNet::onTextColor(const QColor color)
 {
     // TODO: 2021-01-08 加一行，颜色相同就返回, 结尾出，后面添加磁盘功能
     QPalette palette;
+    qDebug()<<"===============================33++>"<<color;
     palette.setColor(QPalette::WindowText, color);
     ui->lab_12->setPalette(palette);
     ui->lab_14->setPalette(palette);
