@@ -23,8 +23,6 @@ public:
 
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
 
-    void emitAllSignal();
-
 signals:
     void sigCurrentFont(const QFont &);
     void sigFontSize(int);
@@ -47,8 +45,6 @@ signals:
     void sigFractionalAccuracy(int);
     void sigRefreshInterval(int);
     void sigHoverDisplay(bool);
-
-//    void sigAllSignal();
 
 public slots:
     void onBtnSave(bool check);

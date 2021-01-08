@@ -47,11 +47,8 @@ WinDockNet::~WinDockNet()
 
 void WinDockNet::init()
 {
-    m_winSetting->readConfig();
-
     m_info->netInfo(m_upload, m_down);
     m_info->cpuInfo(m_vec);
-
 //    setAutoFillBackground(true);  // 暂时不设置背景颜色
 
     connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
@@ -74,7 +71,7 @@ void WinDockNet::init()
     connect(m_winSetting, &WinDdeDockSetting::sigRefreshInterval, this, &WinDockNet::onRefreshInterval);
 //    connect(m_winSetting, &WinDdeDockSetting::sigHoverDisplay, this, &WinDockNet::sigHoverDisplay);
 
-
+    m_winSetting->readConfig();
 }
 
 

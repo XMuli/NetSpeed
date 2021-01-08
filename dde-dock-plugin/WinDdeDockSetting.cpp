@@ -29,26 +29,6 @@ WinDdeDockSetting::~WinDdeDockSetting()
 
 void WinDdeDockSetting::init()
 {
-    // 读入 json 文件到流中
-    ifstream jfile(DATA_JSON_PATH);
-    jfile >> m_js;
-
-    // 控件的基本设置，其读写留其它函数完成
-    ui->labTextColor->setAutoFillBackground(true);
-    ui->labBackgroundColor->setAutoFillBackground(true);
-
-    ui->spinBoxFractionalAccuracy->setRange(0, 100);
-    ui->spinBoxFractionalAccuracy->setSingleStep(1);
-    ui->spinBoxFractionalAccuracy->setSuffix(tr("位"));
-    ui->spinBoxRefreshInterval->setRange(1000, 2147483647);
-    ui->spinBoxRefreshInterval->setSingleStep(1000);
-    ui->spinBoxRefreshInterval->setSuffix(tr("ms"));
-
-    ui->labTextColor->installEventFilter(this);
-    ui->labBackgroundColor->installEventFilter(this);
-
-//    readConfig();
-
     connect(ui->btnSave, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnSave);
     connect(ui->btnQuit, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuit);
 
@@ -70,6 +50,24 @@ void WinDdeDockSetting::init()
     connect(ui->spinBoxFractionalAccuracy, pFun, this, &WinDdeDockSetting::sigFractionalAccuracy);
     connect(ui->spinBoxRefreshInterval, pFun, this, &WinDdeDockSetting::sigRefreshInterval);
     connect(ui->checkBoxHoverDisplay, &QCheckBox::clicked, this, &WinDdeDockSetting::sigHoverDisplay);
+
+    // 读入 json 文件到流中
+    ifstream jfile(DATA_JSON_PATH);
+    jfile >> m_js;
+
+    // 控件的基本设置，其读写留其它函数完成
+    ui->labTextColor->setAutoFillBackground(true);
+    ui->labBackgroundColor->setAutoFillBackground(true);
+
+    ui->spinBoxFractionalAccuracy->setRange(0, 100);
+    ui->spinBoxFractionalAccuracy->setSingleStep(1);
+    ui->spinBoxFractionalAccuracy->setSuffix(tr("位"));
+    ui->spinBoxRefreshInterval->setRange(1000, 2147483647);
+    ui->spinBoxRefreshInterval->setSingleStep(1000);
+    ui->spinBoxRefreshInterval->setSuffix(tr("ms"));
+
+    ui->labTextColor->installEventFilter(this);
+    ui->labBackgroundColor->installEventFilter(this);
 }
 
 /*!
@@ -89,6 +87,7 @@ void WinDdeDockSetting::readConfig()
     json jsDisplayText = m_js["WinDdeDock"]["DisplayText"];
     ui->lineLabUpload->setText(QString::fromStdString(jsDisplayText[0]["LabUpload"]));
     ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[0]["LabDown"]));
+
     ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[0]["LabCpu"]));
     ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[0]["LabMemory"]));
     ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[0]["LabDiskRead"]));
@@ -117,6 +116,32 @@ void WinDdeDockSetting::readConfig()
     ui->comboBoxDoubleClick->setCurrentIndex(jsDockWindow["DoubleClickIndex"]);
 
     // TODO: 2021-01-07 占用图模式未写
+
+    // 第一次发射信号，加载配置文件
+    emit ui->fontComboBox->currentTextChanged(ui->fontComboBox->currentText());
+    emit ui->spinBoxFontSize->valueChanged(ui->spinBoxFontSize->value());
+    emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
+    emit sigBackgroundColor(ui->labBackgroundColor->palette().color(QPalette::Background));
+    emit ui->lineLabUpload->textChanged(ui->lineLabUpload->text());
+    emit ui->lineLabDown->textChanged(ui->lineLabDown->text());
+    emit ui->lineLabCpu->textChanged(ui->lineLabCpu->text());
+    emit ui->lineLabMemory->textChanged(ui->lineLabMemory->text());
+//    emit ui->lineLabDiskRead->textChanged(ui->lineLabDiskRead->text());
+//    emit ui->lineLabDiskWrite->textChanged(ui->lineLabDiskWrite->text());
+    emit ui->checkBoxDisolayNet->clicked(ui->checkBoxDisolayNet->checkState() == Qt::Checked);
+    emit ui->checkBoxDisolayCPUAndMemory->clicked(ui->checkBoxDisolayCPUAndMemory->checkState() == Qt::Checked);
+//    emit ui->checkBoxDisolayDisk->clicked(ui->checkBoxDisolayDisk->checkState() == Qt::Checked);
+    emit ui->checkBoxLocationExchangeNet->clicked(ui->checkBoxLocationExchangeNet->checkState() == Qt::Checked);
+    emit ui->checkBoxLocationExchangeCPUAndMenory->clicked(ui->checkBoxLocationExchangeCPUAndMenory->checkState() == Qt::Checked);
+//    emit ui->checkBoxLocationExchangeDisk->clicked(ui->checkBoxLocationExchangeDisk->checkState() == Qt::Checked);
+    emit ui->spinBoxFractionalAccuracy->valueChanged(ui->spinBoxFractionalAccuracy->value());
+    emit ui->spinBoxRefreshInterval->valueChanged(ui->spinBoxRefreshInterval->value());
+    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->checkState() == Qt::Checked);
+
+    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
+    emit ui->radioBtnByte->clicked(ui->radioBtnByte->isChecked());
+    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
+    emit ui->comboBoxDoubleClick->currentIndexChanged(ui->comboBoxDoubleClick->currentIndex());
 }
 
 /*!
@@ -201,13 +226,6 @@ bool WinDdeDockSetting::eventFilter(QObject *watched, QEvent *event)
     }
 
     return QWidget::eventFilter(watched, event);
-}
-
-/*!
- * \brief WinDdeDockSetting::emitAllSignal 发射所有信号，用来从 UI 初始化 DDE-DOCK 的效果
- */
-void WinDdeDockSetting::emitAllSignal()
-{
 }
 
 /*!
