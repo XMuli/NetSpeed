@@ -3,6 +3,7 @@
 
 #include <QTimer>
 #include <QDebug>
+#include <QObjectList>
 
 
 /*!
@@ -137,19 +138,31 @@ void WinDockNet::onSystemRunTime()
 
 void WinDockNet::onCurrentFont(const QFont &font)
 {
-    // TODO: 2021-01-08 修改插件字体
+    int nCount = ui->gridLayout->count();
+    for (int i = 0; i < nCount; ++i) {
+        QLayoutItem *it = ui->gridLayout->itemAt(i);
+        QLabel * lab = static_cast<QLabel *>(it->widget());
+        lab->setFont(font);
+    }
 }
 
 void WinDockNet::onFontSize(int size)
 {
-    // TODO: 2021-01-08 修改插件字体大小
+    QFont font;
+    font.setPointSize(size);
+
+    int nCount = ui->gridLayout->count();
+    for (int i = 0; i < nCount; ++i) {
+        QLayoutItem *it = ui->gridLayout->itemAt(i);
+        QLabel * lab = static_cast<QLabel *>(it->widget());
+        lab->setFont(font);
+    }
 }
 
 void WinDockNet::onLabTextColor(const QColor color)
 {
     // TODO: 2021-01-08 加一行，颜色相同就返回, 结尾出，后面添加磁盘功能
     QPalette palette;
-    qDebug()<<"===============================22++>"<<color;
     palette.setColor(QPalette::WindowText, color);
     ui->lab_11->setPalette(palette);
     ui->lab_13->setPalette(palette);
@@ -161,7 +174,6 @@ void WinDockNet::onTextColor(const QColor color)
 {
     // TODO: 2021-01-08 加一行，颜色相同就返回, 结尾出，后面添加磁盘功能
     QPalette palette;
-    qDebug()<<"===============================33++>"<<color;
     palette.setColor(QPalette::WindowText, color);
     ui->lab_12->setPalette(palette);
     ui->lab_14->setPalette(palette);
