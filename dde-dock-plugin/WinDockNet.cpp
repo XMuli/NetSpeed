@@ -113,23 +113,18 @@ void WinDockNet::setLabWidgetLayout(Qt::Orientation orientation)
     }
 
     if (orientation == Qt::Horizontal && m_gridLayout->children().count() == 0) {
-        m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
-        m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
-        m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
-        m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
-        m_gridLayout->addWidget(m_vecLabel[4], 0 , 2);
-        m_gridLayout->addWidget(m_vecLabel[5], 0 , 3);
-        m_gridLayout->addWidget(m_vecLabel[6], 1 , 2);
-        m_gridLayout->addWidget(m_vecLabel[7], 1 , 3);
+        for (int i = 0; i < m_vecLabel.count(); i += 4) {
+            int iTo2 = i % 2;
+            m_gridLayout->addWidget(m_vecLabel[i], 0, i / 2 + iTo2, Qt::AlignLeft);
+            m_gridLayout->addWidget(m_vecLabel[i + 1], 0, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight);
+            m_gridLayout->addWidget(m_vecLabel[i + 2], 1, i / 2 + iTo2, Qt::AlignLeft);
+            m_gridLayout->addWidget(m_vecLabel[i + 3], 1, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight);
+        }
     } else {
-        m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
-        m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
-        m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
-        m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
-        m_gridLayout->addWidget(m_vecLabel[4], 2 , 0);
-        m_gridLayout->addWidget(m_vecLabel[5], 2 , 1);
-        m_gridLayout->addWidget(m_vecLabel[6], 3 , 0);
-        m_gridLayout->addWidget(m_vecLabel[7], 3 , 1);
+        for (int i = 0; i < m_vecLabel.count(); ++i) {
+            int iTo2 = i % 2;
+            m_gridLayout->addWidget(m_vecLabel[i], i / 2, iTo2, iTo2 ? Qt::AlignRight : Qt::AlignLeft);
+        }
     }
 }
 

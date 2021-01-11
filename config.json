@@ -48,9 +48,9 @@
     },
     "GraphicsMode": 0,
     "ModelSetting": {
-      "IsHorizontal": true,
-      "UnitModel": "Default",
-      "UnitModelIndex": 0
+      "IsHorizontal": false,
+      "UnitModel": "Custom",
+      "UnitModelIndex": 3
     }
   },
   "WinMain": {}
