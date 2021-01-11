@@ -32,6 +32,8 @@ public slots:
     // 响应 WinDdeDockSetting 发射的信号
     void onCurrentFont(const QFont &font);
     void onFontSize(int size);
+    void onShowModel(bool check);
+    void onUnitModel(const QString &text);
     void onLabTextColor(const QColor color);
     void onTextColor(const QColor color);
     void onBackgroundColor(const QColor color);

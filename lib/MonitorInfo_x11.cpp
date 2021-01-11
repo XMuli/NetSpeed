@@ -268,6 +268,25 @@ QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit model)
             return QString("");
         }
     }
+    case Custom: {
+        switch (unit) {
+        case Bit:
+            return QString("b/s");
+        case Byte:
+            return QString("B/s");
+        case Kb:
+            return QString("K/s");
+        case Mb:
+            return QString("M/s");
+        case Gb:
+            return QString("G/s");
+        case Tb:
+            return QString("T/s");
+        default:
+            qWarning()<<QObject::tr("ModelUnit::Custom,  MonitorInfo_x11 is Unknow.");
+            return QString("");
+        }
+    }
     default: {
         qWarning()<<QObject::tr("ModelUnit::Custom,  MonitorInfo_x11 is Custom.");
         // TODO: 2020-12-29

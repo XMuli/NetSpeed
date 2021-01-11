@@ -32,7 +32,7 @@ signals:
     void sigBackgroundColor(const QColor);
 
     void sigShowModel(bool);
-    void sigUnitModel(int);
+    void sigUnitModel(const QString &);
     void sigLabUploadText(const QString &);
     void sigLabDownText(const QString &);
     void sigLabCpuText(const QString &);

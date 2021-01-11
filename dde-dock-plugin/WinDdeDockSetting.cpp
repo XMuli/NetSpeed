@@ -35,8 +35,9 @@ void WinDdeDockSetting::init()
     connect(ui->fontComboBox, &QFontComboBox::currentTextChanged, this, &WinDdeDockSetting::sigCurrentFont);
     void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
     connect(ui->spinBoxFontSize, pFun, this, &WinDdeDockSetting::sigFontSize);
-//    connect(ui->radioHorizontal, &QRadioButton::clicked, this, &WinDdeDockSetting::sigShowModel);
-//    connect(ui->comboBoxUnitModel, &QComboBox::currentIndexChanged, this, &WinDdeDockSetting::sigUnitModel);
+
+    connect(ui->radioHorizontal, &QRadioButton::clicked, this, &WinDdeDockSetting::sigShowModel);
+    connect(ui->comboBoxUnitModel, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::sigUnitModel);
     connect(ui->lineLabUpload, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabUploadText);
     connect(ui->lineLabDown, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDownText);
     connect(ui->lineLabCpu, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabCpuText);
@@ -49,6 +50,7 @@ void WinDdeDockSetting::init()
     connect(ui->checkBoxLocationExchangeNet, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeNet);
     connect(ui->checkBoxLocationExchangeCPUAndMenory, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeCPUAndMenory);
     connect(ui->checkBoxLocationExchangeDisk, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeDisk);
+
     connect(ui->spinBoxFractionalAccuracy, pFun, this, &WinDdeDockSetting::sigFractionalAccuracy);
     connect(ui->spinBoxRefreshInterval, pFun, this, &WinDdeDockSetting::sigRefreshInterval);
     connect(ui->checkBoxHoverDisplay, &QCheckBox::clicked, this, &WinDdeDockSetting::sigHoverDisplay);
@@ -138,6 +140,8 @@ void WinDdeDockSetting::readConfig()
     emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
     emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
     emit sigBackgroundColor(ui->labBackgroundColor->palette().color(QPalette::Background));
+//    emit ui->radioHorizontal->clicked(ui->radioHorizontal->isChecked());
+//    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
     emit ui->lineLabUpload->textChanged(ui->lineLabUpload->text());
     emit ui->lineLabDown->textChanged(ui->lineLabDown->text());
     emit ui->lineLabCpu->textChanged(ui->lineLabCpu->text());

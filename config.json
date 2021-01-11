@@ -12,9 +12,9 @@
     "DisplayText": [
       {
         "LabCpu": "  CPU: ",
-        "LabDiskRead": "Read:",
-        "LabDiskWrite": "Write:",
-        "LabDown": "↓:",
+        "LabDiskRead": "Read: ",
+        "LabDiskWrite": "Write: ",
+        "LabDown": "↓: ",
         "LabMemory": "  内存: ",
         "LabUpload": "↑: "
       },
@@ -48,7 +48,7 @@
     },
     "GraphicsMode": 0,
     "ModelSetting": {
-      "IsHorizontal": false,
+      "IsHorizontal": true,
       "UnitModel": "Default",
       "UnitModelIndex": 0
     }

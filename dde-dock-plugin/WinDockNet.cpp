@@ -53,6 +53,7 @@ void WinDockNet::init()
 
     connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
     connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
+    connect(m_winSetting, &WinDdeDockSetting::sigUnitModel, this, &WinDockNet::onUnitModel);
     connect(m_winSetting, &WinDdeDockSetting::sigLabTextColor, this, &WinDockNet::onLabTextColor);
     connect(m_winSetting, &WinDdeDockSetting::sigTextColor, this, &WinDockNet::onTextColor);
     connect(m_winSetting, &WinDdeDockSetting::sigBackgroundColor, this, &WinDockNet::onBackgroundColor);
@@ -185,6 +186,36 @@ void WinDockNet::onFontSize(int size)
         QLabel * lab = static_cast<QLabel *>(it->widget());
         lab->setFont(font);
     }
+}
+
+/*!
+ * \brief WinDockNet::onShowModel 插件水平还是垂直
+ * \param[in] check 现实模式中水平 (radioHorizontal) 控件是否被选中
+ * \line            true 水平； false 垂直
+ */
+void WinDockNet::onShowModel(bool check)
+{
+    qDebug()<<"-----------------b@--->"<<check;
+    if (check) {
+        // TODO: 更改为水平布局
+    } else {
+        // TODO: 更改为垂直布局
+    }
+}
+
+/*!
+ * \brief WinDockNet::onUnitModel 单位显示模式
+ */
+void WinDockNet::onUnitModel(const QString &text)
+{
+    if (text == "Default")
+        m_modelUnit = ModelUnit::Default;
+    else if (text == "Upper")
+        m_modelUnit = ModelUnit::Upper;
+    else if (text == "Lower")
+        m_modelUnit = ModelUnit::Lower;
+    else if (text == "Custom")
+        m_modelUnit = ModelUnit::Custom;
 }
 
 void WinDockNet::onLabTextColor(const QColor color)
