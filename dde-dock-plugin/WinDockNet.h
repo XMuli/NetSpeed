@@ -5,13 +5,11 @@
 #include "../lib/MonitorInfo_x11.h"
 #include <QWidget>
 #include <QVector>
+#include <QLabel>
+#include <QGridLayout>
 #include "WinDdeDockSetting.h"
 
 LFX_USE_NAESPACE
-
-namespace Ui {
-class WinDockNet;
-}
 
 class QTimer;
 class WinDockNet : public QWidget
@@ -19,7 +17,7 @@ class WinDockNet : public QWidget
     Q_OBJECT
 
 public:
-    explicit WinDockNet(WinDdeDockSetting *winSetting = nullptr, QWidget *parent = nullptr);
+    explicit WinDockNet(WinDdeDockSetting *winSetting = nullptr, Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
     ~WinDockNet();
 
     void init();
@@ -62,12 +60,14 @@ private:
     int m_precision; // 精确度
 //    bool m_hover;    // 悬浮现实额外信息
 
-    Ui::WinDockNet *ui;
     MonitorInfo_x11 *m_info;
     ModelUnit m_modelUnit;
     QTimer *m_timer;
 
     WinDdeDockSetting *m_winSetting;
+    Qt::Orientation m_orientation;
+    QGridLayout *m_gridLayout;
+    QVector<QLabel *> m_vecLabel;
 };
 
 #endif // WINDOCKNET_H

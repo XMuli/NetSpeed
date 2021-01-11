@@ -1,10 +1,8 @@
 #include "WinDockNet.h"
-#include "ui_WinDockNet.h"
 
 #include <QTimer>
 #include <QDebug>
 #include <QObjectList>
-
 
 /*!
  * \brief WinDockNet::WinDockNet
@@ -20,17 +18,51 @@
  * </pre>
  * \endhtmlonly
  */
-WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, QWidget *parent)
+WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientation, QWidget *parent)
     : m_winSetting(winSetting)
     , QWidget(parent)
-    , ui(new Ui::WinDockNet)
     , m_info(new MonitorInfo_x11())
     , m_timer(new QTimer())
     , m_modelUnit(Default)
     , m_precision(2)
+    , m_orientation(Qt::Horizontal)
+    , m_gridLayout(new QGridLayout(this))
+    , m_vecLabel(8, nullptr)
 //    , m_hover(true)
 {
-    ui->setupUi(this);
+   for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
+       *it = new QLabel();
+
+   m_vecLabel[0]->setText(tr("↑:"));
+   m_vecLabel[1]->setText(tr("0 Kb/s"));
+   m_vecLabel[2]->setText(tr("↓:"));
+   m_vecLabel[3]->setText(tr("0 Kb/s"));
+   m_vecLabel[4]->setText(tr("CPU:"));
+   m_vecLabel[5]->setText(tr("0%"));
+   m_vecLabel[6]->setText(tr("内存:"));
+   m_vecLabel[7]->setText(tr("0%"));
+
+    m_gridLayout->setContentsMargins(0, 0, 0, 0);
+    m_gridLayout->setSpacing(0);
+    if (m_orientation == Qt::Horizontal) {
+        m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
+        m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
+        m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
+        m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
+        m_gridLayout->addWidget(m_vecLabel[4], 0 , 2);
+        m_gridLayout->addWidget(m_vecLabel[5], 0 , 3);
+        m_gridLayout->addWidget(m_vecLabel[6], 1 , 2);
+        m_gridLayout->addWidget(m_vecLabel[7], 1 , 3);
+    } else {
+        m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
+        m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
+        m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
+        m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
+        m_gridLayout->addWidget(m_vecLabel[4], 2 , 0);
+        m_gridLayout->addWidget(m_vecLabel[5], 2 , 1);
+        m_gridLayout->addWidget(m_vecLabel[6], 3 , 0);
+        m_gridLayout->addWidget(m_vecLabel[7], 3 , 1);
+    }
 
     init();
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onNet);
@@ -43,7 +75,6 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, QWidget *parent)
 
 WinDockNet::~WinDockNet()
 {
-    delete ui;
 }
 
 void WinDockNet::init()
@@ -89,12 +120,12 @@ void WinDockNet::onNet()
     m_info->netInfo(upload, down);
     double increaseUpload  = m_info->netShowUnit((upload - m_upload) / (m_timer->interval() /  1000.0), netUnit);
     unit = m_info->netModelUnit(netUnit, m_modelUnit);
-    ui->lab_12->setText(QString("%1").arg(increaseUpload, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
+    m_vecLabel[1]->setText(QString("%1").arg(increaseUpload, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
 
     netUnit = Byte;
     double increaseDown = m_info->netShowUnit((down - m_down) / (m_timer->interval() / 1000.0), netUnit);
     unit = m_info->netModelUnit(netUnit, m_modelUnit);
-    ui->lab_22->setText(QString("%1").arg(increaseDown, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
+    m_vecLabel[3]->setText(QString("%1").arg(increaseDown, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
 
     m_upload = upload;
     m_down = down;
@@ -109,7 +140,7 @@ void WinDockNet::onCpu()
     m_info->cpuInfo(vec);
 
     double valCpu = (vec.begin()->cpuWork - m_vec.begin()->cpuWork) * 100.0 / (vec.begin()->cpuAll - m_vec.begin()->cpuAll);
-    ui->lab_14->setText(QString("%1%").arg(valCpu, 0, 'f', m_precision, QLatin1Char(' ')));
+    m_vecLabel[5]->setText(QString("%1%").arg(valCpu, 0, 'f', m_precision, QLatin1Char(' ')));
 }
 
 /*!
@@ -121,7 +152,7 @@ void WinDockNet::onMemory()
     m_info->memoryInfo(info);
 
     double mem = (info.memoryAll - info.memoryFree) * 100.0 / info.memoryAll;
-    ui->lab_24->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
+    m_vecLabel[7]->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
 //    ui->lab_34->setText(QString("%1%").arg(swap, 0, 'f', m_precision, QLatin1Char(' ')));
 }
 
@@ -138,9 +169,9 @@ void WinDockNet::onSystemRunTime()
 
 void WinDockNet::onCurrentFont(const QFont &font)
 {
-    int nCount = ui->gridLayout->count();
+    int nCount = m_gridLayout->count();
     for (int i = 0; i < nCount; ++i) {
-        QLayoutItem *it = ui->gridLayout->itemAt(i);
+        QLayoutItem *it = m_gridLayout->itemAt(i);
         QLabel * lab = static_cast<QLabel *>(it->widget());
         lab->setFont(font);
     }
@@ -151,9 +182,9 @@ void WinDockNet::onFontSize(int size)
     QFont font;
     font.setPointSize(size);
 
-    int nCount = ui->gridLayout->count();
+    int nCount = m_gridLayout->count();
     for (int i = 0; i < nCount; ++i) {
-        QLayoutItem *it = ui->gridLayout->itemAt(i);
+        QLayoutItem *it = m_gridLayout->itemAt(i);
         QLabel * lab = static_cast<QLabel *>(it->widget());
         lab->setFont(font);
     }
@@ -164,10 +195,10 @@ void WinDockNet::onLabTextColor(const QColor color)
     // TODO: 2021-01-08 加一行，颜色相同就返回, 结尾出，后面添加磁盘功能
     QPalette palette;
     palette.setColor(QPalette::WindowText, color);
-    ui->lab_11->setPalette(palette);
-    ui->lab_13->setPalette(palette);
-    ui->lab_21->setPalette(palette);
-    ui->lab_23->setPalette(palette);
+    m_vecLabel[0]->setPalette(palette);
+    m_vecLabel[2]->setPalette(palette);
+    m_vecLabel[4]->setPalette(palette);
+    m_vecLabel[6]->setPalette(palette);
 }
 
 void WinDockNet::onTextColor(const QColor color)
@@ -175,10 +206,10 @@ void WinDockNet::onTextColor(const QColor color)
     // TODO: 2021-01-08 加一行，颜色相同就返回, 结尾出，后面添加磁盘功能
     QPalette palette;
     palette.setColor(QPalette::WindowText, color);
-    ui->lab_12->setPalette(palette);
-    ui->lab_14->setPalette(palette);
-    ui->lab_22->setPalette(palette);
-    ui->lab_24->setPalette(palette);
+    m_vecLabel[1]->setPalette(palette);
+    m_vecLabel[3]->setPalette(palette);
+    m_vecLabel[5]->setPalette(palette);
+    m_vecLabel[7]->setPalette(palette);
 }
 
 void WinDockNet::onBackgroundColor(const QColor color)
@@ -193,40 +224,40 @@ void WinDockNet::onBackgroundColor(const QColor color)
 
 void WinDockNet::onLabUploadText(const QString &text)
 {
-    if (ui->lab_11->text() != text)
-        ui->lab_11->setText(text);
+    if (m_vecLabel[0]->text() != text)
+        m_vecLabel[0]->setText(text);
 }
 
 void WinDockNet::onLabDownText(const QString &text)
 {
-    if (ui->lab_21->text() != text)
-        ui->lab_21->setText(text);
+    if (m_vecLabel[2]->text() != text)
+        m_vecLabel[2]->setText(text);
 }
 
 void WinDockNet::onLabCpuText(const QString &text)
 {
-    if (ui->lab_13->text() != text)
-        ui->lab_13->setText(text);
+    if (m_vecLabel[4]->text() != text)
+        m_vecLabel[4]->setText(text);
 }
 
 void WinDockNet::onLabMemoryText(const QString &text)
 {
-    if (ui->lab_23->text() != text)
-        ui->lab_23->setText(text);
+    if (m_vecLabel[6]->text() != text)
+        m_vecLabel[6]->setText(text);
 }
 
 void WinDockNet::onDisolayNet(bool check)
 {
     if (check) {
-        ui->lab_11->show();
-        ui->lab_12->show();
-        ui->lab_21->show();
-        ui->lab_22->show();
+        m_vecLabel[0]->show();
+        m_vecLabel[1]->show();
+        m_vecLabel[2]->show();
+        m_vecLabel[3]->show();
     } else {
-        ui->lab_11->hide();
-        ui->lab_12->hide();
-        ui->lab_21->hide();
-        ui->lab_22->hide();
+        m_vecLabel[0]->hide();
+        m_vecLabel[1]->hide();
+        m_vecLabel[2]->hide();
+        m_vecLabel[3]->hide();
     }
 
 }
@@ -234,40 +265,40 @@ void WinDockNet::onDisolayNet(bool check)
 void WinDockNet::onDisolayCPUAndMemory(bool check)
 {
     if (check) {
-        ui->lab_13->show();
-        ui->lab_14->show();
-        ui->lab_23->show();
-        ui->lab_24->show();
+        m_vecLabel[4]->show();
+        m_vecLabel[5]->show();
+        m_vecLabel[6]->show();
+        m_vecLabel[7]->show();
     } else {
-        ui->lab_13->hide();
-        ui->lab_14->hide();
-        ui->lab_23->hide();
-        ui->lab_24->hide();
+        m_vecLabel[4]->hide();
+        m_vecLabel[5]->hide();
+        m_vecLabel[6]->hide();
+        m_vecLabel[7]->hide();
     }
 }
 
 void WinDockNet::onLocationExchangeNet(bool check)
 {
     Q_UNUSED(check)
-    QLabel labLab(ui->lab_11->text());
-    QLabel labText(ui->lab_12->text());
+    QLabel labLab(m_vecLabel[0]->text());
+    QLabel labText(m_vecLabel[1]->text());
 
-    ui->lab_11->setText(ui->lab_21->text());
-    ui->lab_12->setText(ui->lab_22->text());
-    ui->lab_21->setText(labLab.text());
-    ui->lab_22->setText(labText.text());
+    m_vecLabel[0]->setText(m_vecLabel[2]->text());
+    m_vecLabel[1]->setText(m_vecLabel[3]->text());
+    m_vecLabel[2]->setText(labLab.text());
+    m_vecLabel[3]->setText(labText.text());
 }
 
 void WinDockNet::onLocationExchangeCPUAndMenory(bool check)
 {
     Q_UNUSED(check)
-    QLabel labLab(ui->lab_13->text());
-    QLabel labText(ui->lab_14->text());
+    QLabel labLab(m_vecLabel[4]->text());
+    QLabel labText(m_vecLabel[5]->text());
 
-    ui->lab_13->setText(ui->lab_23->text());
-    ui->lab_14->setText(ui->lab_24->text());
-    ui->lab_23->setText(labLab.text());
-    ui->lab_24->setText(labText.text());
+    m_vecLabel[4]->setText(m_vecLabel[6]->text());
+    m_vecLabel[5]->setText(m_vecLabel[7]->text());
+    m_vecLabel[6]->setText(labLab.text());
+    m_vecLabel[7]->setText(labText.text());
 }
 
 void WinDockNet::onFractionalAccuracy(int num)
