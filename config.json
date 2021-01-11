@@ -19,6 +19,14 @@
         "LabUpload": "↑: "
       },
       {
+        "LabCpu": "C",
+        "LabDiskRead": "R",
+        "LabDiskWrite": "W",
+        "LabDown": "↓",
+        "LabMemory": "M",
+        "LabUpload": "↑"
+      },
+      {
         "DisolayCPUAndMemory": true,
         "DisolayDisk": false,
         "DisolayNet": true
@@ -40,7 +48,7 @@
     },
     "GraphicsMode": 0,
     "ModelSetting": {
-      "IsHorizontal": true,
+      "IsHorizontal": false,
       "UnitModel": "Default",
       "UnitModelIndex": 0
     }

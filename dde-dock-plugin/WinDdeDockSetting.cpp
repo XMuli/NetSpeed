@@ -35,6 +35,8 @@ void WinDdeDockSetting::init()
     connect(ui->fontComboBox, &QFontComboBox::currentTextChanged, this, &WinDdeDockSetting::sigCurrentFont);
     void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
     connect(ui->spinBoxFontSize, pFun, this, &WinDdeDockSetting::sigFontSize);
+//    connect(ui->radioHorizontal, &QRadioButton::clicked, this, &WinDdeDockSetting::sigShowModel);
+//    connect(ui->comboBoxUnitModel, &QComboBox::currentIndexChanged, this, &WinDdeDockSetting::sigUnitModel);
     connect(ui->lineLabUpload, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabUploadText);
     connect(ui->lineLabDown, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDownText);
     connect(ui->lineLabCpu, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabCpuText);
@@ -88,23 +90,6 @@ void WinDdeDockSetting::readConfig()
     palette.setColor(QPalette::Background, QString::fromStdString(jsColorAndFont["BackgroundColor"]));
     ui->labBackgroundColor->setPalette(palette);
 
-    json jsDisplayText = m_js["WinDdeDock"]["DisplayText"];
-    ui->lineLabUpload->setText(QString::fromStdString(jsDisplayText[0]["LabUpload"]));
-    ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[0]["LabDown"]));
-
-    ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[0]["LabCpu"]));
-    ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[0]["LabMemory"]));
-    ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[0]["LabDiskRead"]));
-    ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[0]["LabDiskWrite"]));
-    ui->checkBoxDisolayNet->setChecked(jsDisplayText[1]["DisolayNet"]);
-    ui->checkBoxDisolayCPUAndMemory->setChecked(jsDisplayText[1]["DisolayCPUAndMemory"]);
-    ui->checkBoxDisolayDisk->setChecked(jsDisplayText[1]["DisolayDisk"]);
-    ui->checkBoxLocationExchangeNet->setChecked(jsDisplayText[2]["LocationExchangeNet"]);
-    ui->checkBoxLocationExchangeCPUAndMenory->setChecked(jsDisplayText[2]["LocationExchangeCPUAndMenory"]);
-    ui->checkBoxLocationExchangeDisk->setChecked(jsDisplayText[2]["LocationExchangeDisk"]);
-    ui->spinBoxFractionalAccuracy->setValue(jsDisplayText[3]["FractionalAccuracy"]);
-    ui->spinBoxRefreshInterval->setValue(jsDisplayText[3]["RefreshInterval"]);
-
     json jsModelSetting = m_js["WinDdeDock"]["ModelSetting"];
     ui->comboBoxUnitModel->setCurrentIndex(jsModelSetting["UnitModelIndex"]);
     if (jsModelSetting["IsHorizontal"]) {
@@ -114,6 +99,32 @@ void WinDdeDockSetting::readConfig()
         ui->radioHorizontal->setChecked(false);
         ui->radioVertical->setChecked(true);
     }
+
+    json jsDisplayText = m_js["WinDdeDock"]["DisplayText"];
+    if (jsModelSetting["IsHorizontal"]) {
+        ui->lineLabUpload->setText(QString::fromStdString(jsDisplayText[0]["LabUpload"]));
+        ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[0]["LabDown"]));
+        ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[0]["LabCpu"]));
+        ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[0]["LabMemory"]));
+        ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[0]["LabDiskRead"]));
+        ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[0]["LabDiskWrite"]));
+    } else {
+        ui->lineLabUpload->setText(QString::fromStdString(jsDisplayText[1]["LabUpload"]));
+        ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[1]["LabDown"]));
+        ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[1]["LabCpu"]));
+        ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[1]["LabMemory"]));
+        ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[1]["LabDiskRead"]));
+        ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[1]["LabDiskWrite"]));
+    }
+
+    ui->checkBoxDisolayNet->setChecked(jsDisplayText[2]["DisolayNet"]);
+    ui->checkBoxDisolayCPUAndMemory->setChecked(jsDisplayText[2]["DisolayCPUAndMemory"]);
+    ui->checkBoxDisolayDisk->setChecked(jsDisplayText[2]["DisolayDisk"]);
+    ui->checkBoxLocationExchangeNet->setChecked(jsDisplayText[3]["LocationExchangeNet"]);
+    ui->checkBoxLocationExchangeCPUAndMenory->setChecked(jsDisplayText[3]["LocationExchangeCPUAndMenory"]);
+    ui->checkBoxLocationExchangeDisk->setChecked(jsDisplayText[3]["LocationExchangeDisk"]);
+    ui->spinBoxFractionalAccuracy->setValue(jsDisplayText[4]["FractionalAccuracy"]);
+    ui->spinBoxRefreshInterval->setValue(jsDisplayText[4]["RefreshInterval"]);
 
     json jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
     ui->checkBoxHoverDisplay->setChecked(jsDockWindow["HoverDisplay"]);
@@ -163,22 +174,6 @@ void WinDdeDockSetting::saveConfig()
     jsColorAndFont["TextColor"] = ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
     jsColorAndFont["BackgroundColor"] = ui->labBackgroundColor->palette().color(QPalette::Background).name().toStdString().c_str();
 
-    json &jsDisplayText = m_js["WinDdeDock"]["DisplayText"];
-    jsDisplayText[0]["LabUpload"] = ui->lineLabUpload->text().toStdString().c_str();
-    jsDisplayText[0]["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
-    jsDisplayText[0]["LabCpu"] = ui->lineLabCpu->text().toStdString().c_str();
-    jsDisplayText[0]["LabMemory"] = ui->lineLabMemory->text().toStdString().c_str();
-    jsDisplayText[0]["LabDiskRead"] = ui->lineLabDiskRead->text().toStdString().c_str();
-    jsDisplayText[0]["LabDiskWrite"] = ui->lineLabDiskWrite->text().toStdString().c_str();
-    jsDisplayText[1]["DisolayNet"] = ui->checkBoxDisolayNet->checkState() == Qt::Checked;
-    jsDisplayText[1]["DisolayCPUAndMemory"] = ui->checkBoxDisolayCPUAndMemory->checkState() == Qt::Checked;
-    jsDisplayText[1]["DisolayDisk"] = ui->checkBoxDisolayDisk->checkState() == Qt::Checked;
-    jsDisplayText[2]["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->checkState() == Qt::Checked;
-    jsDisplayText[2]["LocationExchangeCPUAndMenory"] = ui->checkBoxLocationExchangeCPUAndMenory->checkState() == Qt::Checked;
-    jsDisplayText[2]["LocationExchangeDisk"] = ui->checkBoxLocationExchangeDisk->checkState() == Qt::Checked;
-    jsDisplayText[3]["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
-    jsDisplayText[3]["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
-
     json &jsModelSetting = m_js["WinDdeDock"]["ModelSetting"];
     jsModelSetting["UnitModel"] = ui->comboBoxUnitModel->currentText().toStdString().c_str();
     jsModelSetting["UnitModelIndex"] = ui->comboBoxUnitModel->currentIndex();
@@ -187,6 +182,32 @@ void WinDdeDockSetting::saveConfig()
         jsModelSetting["IsHorizontal"] = true;
     else
         jsModelSetting["IsHorizontal"] = false;
+
+    json &jsDisplayText = m_js["WinDdeDock"]["DisplayText"];
+    if (isHorizontal) {
+        jsDisplayText[0]["LabUpload"] = ui->lineLabUpload->text().toStdString().c_str();
+        jsDisplayText[0]["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
+        jsDisplayText[0]["LabCpu"] = ui->lineLabCpu->text().toStdString().c_str();
+        jsDisplayText[0]["LabMemory"] = ui->lineLabMemory->text().toStdString().c_str();
+        jsDisplayText[0]["LabDiskRead"] = ui->lineLabDiskRead->text().toStdString().c_str();
+        jsDisplayText[0]["LabDiskWrite"] = ui->lineLabDiskWrite->text().toStdString().c_str();
+    } else {
+        jsDisplayText[1]["LabUpload"] = ui->lineLabUpload->text().toStdString().c_str();
+        jsDisplayText[1]["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
+        jsDisplayText[1]["LabCpu"] = ui->lineLabCpu->text().toStdString().c_str();
+        jsDisplayText[1]["LabMemory"] = ui->lineLabMemory->text().toStdString().c_str();
+        jsDisplayText[1]["LabDiskRead"] = ui->lineLabDiskRead->text().toStdString().c_str();
+        jsDisplayText[1]["LabDiskWrite"] = ui->lineLabDiskWrite->text().toStdString().c_str();
+    }
+
+    jsDisplayText[2]["DisolayNet"] = ui->checkBoxDisolayNet->checkState() == Qt::Checked;
+    jsDisplayText[2]["DisolayCPUAndMemory"] = ui->checkBoxDisolayCPUAndMemory->checkState() == Qt::Checked;
+    jsDisplayText[2]["DisolayDisk"] = ui->checkBoxDisolayDisk->checkState() == Qt::Checked;
+    jsDisplayText[3]["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->checkState() == Qt::Checked;
+    jsDisplayText[3]["LocationExchangeCPUAndMenory"] = ui->checkBoxLocationExchangeCPUAndMenory->checkState() == Qt::Checked;
+    jsDisplayText[3]["LocationExchangeDisk"] = ui->checkBoxLocationExchangeDisk->checkState() == Qt::Checked;
+    jsDisplayText[4]["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
+    jsDisplayText[4]["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
 
     json &jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
     jsDockWindow["HoverDisplay"] = ui->checkBoxHoverDisplay->checkState() == Qt::Checked;
