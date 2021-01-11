@@ -362,20 +362,20 @@
              <item>
               <widget class="QGroupBox" name="groupBox_8">
                <property name="title">
-                <string>单位设置</string>
+                <string>模式设置</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_13">
                 <item>
                  <widget class="QLabel" name="label_41">
                   <property name="text">
-                   <string>网速单位：</string>
+                   <string>显示模式：</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioBtnByte">
+                 <widget class="QRadioButton" name="radioHorizontal">
                   <property name="text">
-                   <string>B（字节）</string>
+                   <string>水平</string>
                   </property>
                   <property name="checked">
                    <bool>true</bool>
@@ -383,9 +383,9 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioBtnBit">
+                 <widget class="QRadioButton" name="radioVertical">
                   <property name="text">
-                   <string>b（比特）</string>
+                   <string>垂直</string>
                   </property>
                  </widget>
                 </item>

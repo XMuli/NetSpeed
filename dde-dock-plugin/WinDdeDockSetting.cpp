@@ -105,14 +105,14 @@ void WinDdeDockSetting::readConfig()
     ui->spinBoxFractionalAccuracy->setValue(jsDisplayText[3]["FractionalAccuracy"]);
     ui->spinBoxRefreshInterval->setValue(jsDisplayText[3]["RefreshInterval"]);
 
-    json jsUnitSetting = m_js["WinDdeDock"]["UnitSetting"];
-    ui->comboBoxUnitModel->setCurrentIndex(jsUnitSetting["UnitModelIndex"]);
-    if (jsUnitSetting["NetUnitIsByte"]) {
-        ui->radioBtnByte->setChecked(true);
-        ui->radioBtnBit->setChecked(false);
+    json jsModelSetting = m_js["WinDdeDock"]["ModelSetting"];
+    ui->comboBoxUnitModel->setCurrentIndex(jsModelSetting["UnitModelIndex"]);
+    if (jsModelSetting["IsHorizontal"]) {
+        ui->radioHorizontal->setChecked(true);
+        ui->radioVertical->setChecked(false);
     } else {
-        ui->radioBtnByte->setChecked(false);
-        ui->radioBtnBit->setChecked(true);
+        ui->radioHorizontal->setChecked(false);
+        ui->radioVertical->setChecked(true);
     }
 
     json jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
@@ -144,7 +144,7 @@ void WinDdeDockSetting::readConfig()
     emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->checkState() == Qt::Checked);
 
     emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
-    emit ui->radioBtnByte->clicked(ui->radioBtnByte->isChecked());
+    emit ui->radioHorizontal->clicked(ui->radioHorizontal->isChecked());
     emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
     emit ui->comboBoxDoubleClick->currentIndexChanged(ui->comboBoxDoubleClick->currentIndex());
 }
@@ -179,14 +179,14 @@ void WinDdeDockSetting::saveConfig()
     jsDisplayText[3]["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
     jsDisplayText[3]["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
 
-    json &jsUnitSetting = m_js["WinDdeDock"]["UnitSetting"];
-    jsUnitSetting["UnitModel"] = ui->comboBoxUnitModel->currentText().toStdString().c_str();
-    jsUnitSetting["UnitModelIndex"] = ui->comboBoxUnitModel->currentIndex();
-    bool isBety = ui->radioBtnByte->isChecked();
-    if (isBety)
-        jsUnitSetting["NetUnitIsByte"] = true;
+    json &jsModelSetting = m_js["WinDdeDock"]["ModelSetting"];
+    jsModelSetting["UnitModel"] = ui->comboBoxUnitModel->currentText().toStdString().c_str();
+    jsModelSetting["UnitModelIndex"] = ui->comboBoxUnitModel->currentIndex();
+    bool isHorizontal = ui->radioHorizontal->isChecked();
+    if (isHorizontal)
+        jsModelSetting["IsHorizontal"] = true;
     else
-        jsUnitSetting["NetUnitIsByte"] = false;
+        jsModelSetting["IsHorizontal"] = false;
 
     json &jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
     jsDockWindow["HoverDisplay"] = ui->checkBoxHoverDisplay->checkState() == Qt::Checked;
@@ -197,6 +197,16 @@ void WinDdeDockSetting::saveConfig()
 
     ofstream outFile(DATA_JSON_PATH);
     outFile << setw(2) << m_js << endl;
+}
+
+/*!
+ * \brief WinDdeDockSetting::isHorizontal 该网速插件现实模式是水平还是垂直
+ * \return true 水平； false 垂直
+ * \note 单独给初始化时候读取使用的
+ */
+bool WinDdeDockSetting::isHorizontal()
+{
+    return ui->radioHorizontal->isChecked();
 }
 
 /*!

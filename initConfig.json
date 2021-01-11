@@ -33,7 +33,7 @@
                 "RefreshInterval": 1000
             }
         ],
-        "UnitSetting": {
+        "ModelSetting": {
             "NetUnit": "B",
             "UnitModel": "Default"
         },

@@ -20,6 +20,7 @@ public:
     void init();
     void readConfig();
     void saveConfig();
+    bool isHorizontal();
 
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
 

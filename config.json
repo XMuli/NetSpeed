@@ -3,20 +3,20 @@
   "WinDdeDock": {
     "ColorAndFont": {
       "BackgroundColor": "#ffffff",
-      "FontSize": 0,
+      "FontSize": 11,
       "FontType": "Noto Sans CJK SC",
       "FontTypeIndex": 59,
-      "LabTextColor": "#aa0000",
-      "TextColor": "#aa0000"
+      "LabTextColor": "#000000",
+      "TextColor": "#000000"
     },
     "DisplayText": [
       {
-        "LabCpu": "CPU:",
+        "LabCpu": "  CPU: ",
         "LabDiskRead": "Read:",
         "LabDiskWrite": "Write:",
         "LabDown": "↓:",
-        "LabMemory": "内存:",
-        "LabUpload": "↑:"
+        "LabMemory": "  内存: ",
+        "LabUpload": "↑: "
       },
       {
         "DisolayCPUAndMemory": true,
@@ -39,8 +39,8 @@
       "HoverDisplay": true
     },
     "GraphicsMode": 0,
-    "UnitSetting": {
-      "NetUnitIsByte": true,
+    "ModelSetting": {
+      "IsHorizontal": true,
       "UnitModel": "Default",
       "UnitModelIndex": 0
     }

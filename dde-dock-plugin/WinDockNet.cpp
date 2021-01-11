@@ -30,40 +30,6 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     , m_vecLabel(8, nullptr)
 //    , m_hover(true)
 {
-   for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
-       *it = new QLabel();
-
-   m_vecLabel[0]->setText(tr("↑:"));
-   m_vecLabel[1]->setText(tr("0 Kb/s"));
-   m_vecLabel[2]->setText(tr("↓:"));
-   m_vecLabel[3]->setText(tr("0 Kb/s"));
-   m_vecLabel[4]->setText(tr("CPU:"));
-   m_vecLabel[5]->setText(tr("0%"));
-   m_vecLabel[6]->setText(tr("内存:"));
-   m_vecLabel[7]->setText(tr("0%"));
-
-    m_gridLayout->setContentsMargins(0, 0, 0, 0);
-    m_gridLayout->setSpacing(0);
-    if (m_orientation == Qt::Horizontal) {
-        m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
-        m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
-        m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
-        m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
-        m_gridLayout->addWidget(m_vecLabel[4], 0 , 2);
-        m_gridLayout->addWidget(m_vecLabel[5], 0 , 3);
-        m_gridLayout->addWidget(m_vecLabel[6], 1 , 2);
-        m_gridLayout->addWidget(m_vecLabel[7], 1 , 3);
-    } else {
-        m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
-        m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
-        m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
-        m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
-        m_gridLayout->addWidget(m_vecLabel[4], 2 , 0);
-        m_gridLayout->addWidget(m_vecLabel[5], 2 , 1);
-        m_gridLayout->addWidget(m_vecLabel[6], 3 , 0);
-        m_gridLayout->addWidget(m_vecLabel[7], 3 , 1);
-    }
-
     init();
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onNet);
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onCpu);
@@ -79,9 +45,11 @@ WinDockNet::~WinDockNet()
 
 void WinDockNet::init()
 {
-    m_info->netInfo(m_upload, m_down);
-    m_info->cpuInfo(m_vec);
-//    setAutoFillBackground(true);  // 暂时不设置背景颜色
+    for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
+        *it = new QLabel();
+
+     m_gridLayout->setContentsMargins(0, 0, 0, 0);
+     m_gridLayout->setSpacing(0);
 
     connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
     connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
@@ -104,7 +72,36 @@ void WinDockNet::init()
     connect(m_winSetting, &WinDdeDockSetting::sigRefreshInterval, this, &WinDockNet::onRefreshInterval);
 //    connect(m_winSetting, &WinDdeDockSetting::sigHoverDisplay, this, &WinDockNet::sigHoverDisplay);
 
-    m_winSetting->readConfig();
+//    setAutoFillBackground(true);  // 暂时不设置背景颜色
+
+   m_winSetting->readConfig();
+   if (m_winSetting->isHorizontal())
+       m_orientation = Qt::Horizontal;
+   else
+       m_orientation = Qt::Vertical;
+
+   if (m_orientation == Qt::Horizontal) {
+       m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
+       m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
+       m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
+       m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
+       m_gridLayout->addWidget(m_vecLabel[4], 0 , 2);
+       m_gridLayout->addWidget(m_vecLabel[5], 0 , 3);
+       m_gridLayout->addWidget(m_vecLabel[6], 1 , 2);
+       m_gridLayout->addWidget(m_vecLabel[7], 1 , 3);
+   } else {
+       m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
+       m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
+       m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
+       m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
+       m_gridLayout->addWidget(m_vecLabel[4], 2 , 0);
+       m_gridLayout->addWidget(m_vecLabel[5], 2 , 1);
+       m_gridLayout->addWidget(m_vecLabel[6], 3 , 0);
+       m_gridLayout->addWidget(m_vecLabel[7], 3 , 1);
+   }
+
+   m_info->netInfo(m_upload, m_down);
+   m_info->cpuInfo(m_vec);
 }
 
 /*!

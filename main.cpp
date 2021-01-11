@@ -2,7 +2,7 @@
 #include <QLoggingCategory>
 #include "widgets/WinSetting.h"
 #include "lib/MonitorInfo_x11.h"
-#include "widgets/WinDockNet.h"
+#include "dde-dock-plugin/WinDockNet.h"
 #include "dde-dock-plugin/WinDdeDockSetting.h"
 
 
@@ -32,6 +32,10 @@ int main(int argc, char *argv[]) {
     WinDdeDockSetting *setting = new WinDdeDockSetting();
     setting->readConfig();
     setting->show();
+
+
+//    WinDockNet *net = new WinDockNet();
+//    net->show();
 
     return QApplication::exec();
 }
