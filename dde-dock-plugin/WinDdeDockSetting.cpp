@@ -14,9 +14,10 @@ using namespace std;
 
 #define DATA_JSON_PATH "/home/xmuli/project/github/lfxNet/config.json"
 
-WinDdeDockSetting::WinDdeDockSetting(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::WinDdeDockSetting)
+WinDdeDockSetting::WinDdeDockSetting(QWidget *parent)
+    : QWidget(parent)
+    , ui(new Ui::WinDdeDockSetting)
+    , m_isHorizontal(true)
 {
     ui->setupUi(this);
     init();
@@ -36,7 +37,8 @@ void WinDdeDockSetting::init()
     void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
     connect(ui->spinBoxFontSize, pFun, this, &WinDdeDockSetting::sigFontSize);
 
-    connect(ui->radioHorizontal, &QRadioButton::clicked, this, &WinDdeDockSetting::sigShowModel);
+    connect(ui->radioHorizontal, &QRadioButton::toggled, this, &WinDdeDockSetting::sigShowModel);
+    connect(ui->radioHorizontal, &QRadioButton::toggled, this, &WinDdeDockSetting::updateLabelText);
     connect(ui->comboBoxUnitModel, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::sigUnitModel);
     connect(ui->lineLabUpload, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabUploadText);
     connect(ui->lineLabDown, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDownText);
@@ -140,7 +142,7 @@ void WinDdeDockSetting::readConfig()
     emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
     emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
     emit sigBackgroundColor(ui->labBackgroundColor->palette().color(QPalette::Background));
-//    emit ui->radioHorizontal->clicked(ui->radioHorizontal->isChecked());
+//    emit ui->radioHorizontal->toggled(ui->radioHorizontal->isChecked());
 //    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
     emit ui->lineLabUpload->textChanged(ui->lineLabUpload->text());
     emit ui->lineLabDown->textChanged(ui->lineLabDown->text());
@@ -232,6 +234,34 @@ void WinDdeDockSetting::saveConfig()
 bool WinDdeDockSetting::isHorizontal()
 {
     return ui->radioHorizontal->isChecked();
+}
+
+/*!
+ * \brief WinDdeDockSetting::updateLabelText 根据当前 UI 界面的 radioHorizontal 控件是否被中（临时），来更新
+ *                                           下面 网速、CPU、内存、磁盘的 QLineEdit 的内容
+ * \param isHorizontal true 临时为水平布局； false 临时为垂直布局
+ */
+void WinDdeDockSetting::updateLabelText(bool isHorizontal)
+{
+    if (m_js.is_null())
+        return;
+
+    json jsDisplayText = m_js["WinDdeDock"]["DisplayText"];
+    if (isHorizontal) {
+        ui->lineLabUpload->setText(QString::fromStdString(jsDisplayText[0]["LabUpload"]));
+        ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[0]["LabDown"]));
+        ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[0]["LabCpu"]));
+        ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[0]["LabMemory"]));
+        ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[0]["LabDiskRead"]));
+        ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[0]["LabDiskWrite"]));
+    } else {
+        ui->lineLabUpload->setText(QString::fromStdString(jsDisplayText[1]["LabUpload"]));
+        ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[1]["LabDown"]));
+        ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[1]["LabCpu"]));
+        ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[1]["LabMemory"]));
+        ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[1]["LabDiskRead"]));
+        ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[1]["LabDiskWrite"]));
+    }
 }
 
 /*!

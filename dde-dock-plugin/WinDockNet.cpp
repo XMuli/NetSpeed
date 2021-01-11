@@ -54,6 +54,7 @@ void WinDockNet::init()
     connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
     connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
     connect(m_winSetting, &WinDdeDockSetting::sigUnitModel, this, &WinDockNet::onUnitModel);
+    connect(m_winSetting, &WinDdeDockSetting::sigShowModel, this, &WinDockNet::onShowModel);
     connect(m_winSetting, &WinDdeDockSetting::sigLabTextColor, this, &WinDockNet::onLabTextColor);
     connect(m_winSetting, &WinDdeDockSetting::sigTextColor, this, &WinDockNet::onTextColor);
     connect(m_winSetting, &WinDdeDockSetting::sigBackgroundColor, this, &WinDockNet::onBackgroundColor);
@@ -76,33 +77,60 @@ void WinDockNet::init()
 //    setAutoFillBackground(true);  // 暂时不设置背景颜色
 
    m_winSetting->readConfig();
-   if (m_winSetting->isHorizontal())
-       m_orientation = Qt::Horizontal;
-   else
-       m_orientation = Qt::Vertical;
 
-   if (m_orientation == Qt::Horizontal) {
-       m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
-       m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
-       m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
-       m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
-       m_gridLayout->addWidget(m_vecLabel[4], 0 , 2);
-       m_gridLayout->addWidget(m_vecLabel[5], 0 , 3);
-       m_gridLayout->addWidget(m_vecLabel[6], 1 , 2);
-       m_gridLayout->addWidget(m_vecLabel[7], 1 , 3);
-   } else {
-       m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
-       m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
-       m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
-       m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
-       m_gridLayout->addWidget(m_vecLabel[4], 2 , 0);
-       m_gridLayout->addWidget(m_vecLabel[5], 2 , 1);
-       m_gridLayout->addWidget(m_vecLabel[6], 3 , 0);
-       m_gridLayout->addWidget(m_vecLabel[7], 3 , 1);
-   }
-
+   setLabWidgetLayout(m_winSetting->isHorizontal());
    m_info->netInfo(m_upload, m_down);
    m_info->cpuInfo(m_vec);
+}
+
+/*!
+ * \brief WinDockNet::setLabWidgetLayout 设置 dde 的插件布局（水平 、垂直）
+ * \param[in] isHorizontal true 水平； false 垂直
+ */
+void WinDockNet::setLabWidgetLayout(bool isHorizontal)
+{
+    if (isHorizontal)
+        m_orientation = Qt::Horizontal;
+    else
+        m_orientation = Qt::Vertical;
+
+    setLabWidgetLayout(m_orientation);
+}
+
+/*!
+ * \brief WinDockNet::setLabWidgetLayout 设置 dde 的插件布局（水平 、垂直）
+ * \param[in] orientation 希望设置为的布局方式
+ */
+void WinDockNet::setLabWidgetLayout(Qt::Orientation orientation)
+{
+    if (m_gridLayout == nullptr)
+        return;
+
+    const int nNum = m_gridLayout->children().count();
+    for (int i = 0; i < nNum; ++i) {
+        QLayoutItem *item = m_gridLayout->layout()->itemAt(i);
+        m_gridLayout->removeItem(item);
+    }
+
+    if (orientation == Qt::Horizontal && m_gridLayout->children().count() == 0) {
+        m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
+        m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
+        m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
+        m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
+        m_gridLayout->addWidget(m_vecLabel[4], 0 , 2);
+        m_gridLayout->addWidget(m_vecLabel[5], 0 , 3);
+        m_gridLayout->addWidget(m_vecLabel[6], 1 , 2);
+        m_gridLayout->addWidget(m_vecLabel[7], 1 , 3);
+    } else {
+        m_gridLayout->addWidget(m_vecLabel[0], 0 , 0);
+        m_gridLayout->addWidget(m_vecLabel[1], 0 , 1);
+        m_gridLayout->addWidget(m_vecLabel[2], 1 , 0);
+        m_gridLayout->addWidget(m_vecLabel[3], 1 , 1);
+        m_gridLayout->addWidget(m_vecLabel[4], 2 , 0);
+        m_gridLayout->addWidget(m_vecLabel[5], 2 , 1);
+        m_gridLayout->addWidget(m_vecLabel[6], 3 , 0);
+        m_gridLayout->addWidget(m_vecLabel[7], 3 , 1);
+    }
 }
 
 /*!
@@ -195,12 +223,7 @@ void WinDockNet::onFontSize(int size)
  */
 void WinDockNet::onShowModel(bool check)
 {
-    qDebug()<<"-----------------b@--->"<<check;
-    if (check) {
-        // TODO: 更改为水平布局
-    } else {
-        // TODO: 更改为垂直布局
-    }
+    setLabWidgetLayout(check);
 }
 
 /*!

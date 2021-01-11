@@ -21,6 +21,8 @@ public:
     ~WinDockNet();
 
     void init();
+    void setLabWidgetLayout(bool isHorizontal);
+    void setLabWidgetLayout(Qt::Orientation orientation);
 
 public slots:
     // 响应本身

@@ -21,6 +21,7 @@ public:
     void readConfig();
     void saveConfig();
     bool isHorizontal();
+    void updateLabelText(bool isHorizontal);
 
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
 
@@ -60,6 +61,7 @@ public:
 
 private:
     json m_js;
+    bool m_isHorizontal;
 };
 
 #endif // WINDDEDOCKSETTING_H
