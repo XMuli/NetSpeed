@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabDockSetting">
       <attribute name="title">
@@ -624,13 +624,6 @@
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QCheckBox" name="checkBox_23">
-                  <property name="text">
-                   <string>开机自启</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </item>
               <item>
@@ -717,13 +710,13 @@
          </property>
          <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,2,1,1">
           <item row="1" column="1">
-           <widget class="QSpinBox" name="spinBox_11"/>
+           <widget class="QSpinBox" name="spinBoxCpuOver"/>
           </item>
           <item row="2" column="1">
-           <widget class="QSpinBox" name="spinBox_12"/>
+           <widget class="QSpinBox" name="spinBoxMemOver"/>
           </item>
           <item row="1" column="0">
-           <widget class="QCheckBox" name="checkBox_21">
+           <widget class="QCheckBox" name="checkBoxCpuOver">
             <property name="text">
              <string>当CPU利用率超过</string>
             </property>
@@ -744,24 +737,24 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QCheckBox" name="checkBox_26">
+           <widget class="QCheckBox" name="checkBoxMemOver">
             <property name="text">
              <string>当内存利用率超过</string>
             </property>
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QCheckBox" name="checkBox_20">
+           <widget class="QCheckBox" name="checkBoxNetOver">
             <property name="text">
              <string>今日流量使用超过</string>
             </property>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QSpinBox" name="spinBox_10"/>
+           <widget class="QSpinBox" name="spinBoxNetOver"/>
           </item>
           <item row="3" column="2">
-           <widget class="QComboBox" name="comboBox_5">
+           <widget class="QComboBox" name="comboBoxNetUnit">
             <item>
              <property name="text">
               <string>MB</string>
@@ -798,12 +791,9 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_28" stretch="1,1,1,1">
             <item>
-             <widget class="QRadioButton" name="radioButton_12">
+             <widget class="QRadioButton" name="radioButtonSystem">
               <property name="text">
-               <string>浅色模式</string>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
+               <string>跟随系统</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -811,16 +801,22 @@
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_13">
+             <widget class="QRadioButton" name="radioButtonLight">
               <property name="text">
-               <string>暗色模式</string>
+               <string>浅色模式</string>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_14">
+             <widget class="QRadioButton" name="radioButtonDark">
               <property name="text">
-               <string>自定义模式</string>
+               <string>暗色模式</string>
               </property>
              </widget>
             </item>
@@ -849,7 +845,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_7">
+             <widget class="QComboBox" name="comboBoxStyle">
               <item>
                <property name="text">
                 <string>系统默认风格</string>
@@ -871,48 +867,6 @@
              </spacer>
             </item>
            </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_16">
-         <property name="title">
-          <string>皮肤</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_26">
-          <item>
-           <widget class="QCheckBox" name="checkBox_24">
-            <property name="text">
-             <string>允许皮肤覆盖字体设置</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkBox_25">
-            <property name="text">
-             <string>允许皮肤覆盖字体显示文本设置</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_17">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
          </layout>
         </widget>
@@ -948,7 +902,7 @@
          <item>
           <widget class="QPushButton" name="pushButton_10">
            <property name="text">
-            <string>保存配置</string>
+            <string>应用</string>
            </property>
           </widget>
          </item>
@@ -962,6 +916,11 @@
         </layout>
        </item>
       </layout>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>关于</string>
+      </attribute>
      </widget>
     </widget>
    </item>

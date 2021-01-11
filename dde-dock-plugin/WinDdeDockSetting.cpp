@@ -76,6 +76,8 @@ void WinDdeDockSetting::init()
     ui->labLabTextColor->installEventFilter(this);
     ui->labTextColor->installEventFilter(this);
     ui->labBackgroundColor->installEventFilter(this);
+
+    setWindowFlags(Qt::WindowStaysOnTopHint);
 }
 
 /*!

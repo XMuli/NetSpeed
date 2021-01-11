@@ -1,57 +1,56 @@
 {
-  "WinConfig": {},
-  "WinDdeDock": {
-    "ColorAndFont": {
-      "BackgroundColor": "#ffffff",
-      "FontSize": 11,
-      "FontType": "Noto Sans CJK SC",
-      "FontTypeIndex": 59,
-      "LabTextColor": "#000000",
-      "TextColor": "#000000"
+    "WinConfig": {},
+    "WinDdeDock": {
+        "ColorAndFont": {
+            "BackgroundColor": "#ffffff",
+            "FontSize": 11,
+            "FontType": "Noto Sans CJK SC",
+            "FontTypeIndex": 59,
+            "LabTextColor": "#000000",
+            "TextColor": "#000000"
+        },
+        "DisplayText": [{
+                "LabCpu": "  CPU: ",
+                "LabDiskRead": "Read: ",
+                "LabDiskWrite": "Write: ",
+                "LabDown": "↓: ",
+                "LabMemory": "  内存: ",
+                "LabUpload": "↑: "
+            },
+            {
+                "LabCpu": "C",
+                "LabDiskRead": "R",
+                "LabDiskWrite": "W",
+                "LabDown": "↓",
+                "LabMemory": "M",
+                "LabUpload": "↑"
+            },
+            {
+                "DisolayCPUAndMemory": true,
+                "DisolayDisk": false,
+                "DisolayNet": true
+            },
+            {
+                "LocationExchangeCPUAndMenory": false,
+                "LocationExchangeDisk": false,
+                "LocationExchangeNet": false
+            },
+            {
+                "FractionalAccuracy": 2,
+                "RefreshInterval": 1000
+            }
+        ],
+        "DockWindow": {
+            "DoubleClick": "显示系统监视器（DDE）",
+            "DoubleClickIndex": 1,
+            "HoverDisplay": true
+        },
+        "GraphicsMode": 0,
+        "ModelSetting": {
+            "IsHorizontal": false,
+            "UnitModel": "Custom",
+            "UnitModelIndex": 3
+        }
     },
-    "DisplayText": [
-      {
-        "LabCpu": "  CPU: ",
-        "LabDiskRead": "Read: ",
-        "LabDiskWrite": "Write: ",
-        "LabDown": "↓: ",
-        "LabMemory": "  内存: ",
-        "LabUpload": "↑: "
-      },
-      {
-        "LabCpu": "C",
-        "LabDiskRead": "R",
-        "LabDiskWrite": "W",
-        "LabDown": "↓",
-        "LabMemory": "M",
-        "LabUpload": "↑"
-      },
-      {
-        "DisolayCPUAndMemory": true,
-        "DisolayDisk": false,
-        "DisolayNet": true
-      },
-      {
-        "LocationExchangeCPUAndMenory": false,
-        "LocationExchangeDisk": false,
-        "LocationExchangeNet": false
-      },
-      {
-        "FractionalAccuracy": 2,
-        "RefreshInterval": 1000
-      }
-    ],
-    "DockWindow": {
-      "DoubleClick": "显示系统监视器（DDE）",
-      "DoubleClickIndex": 1,
-      "HoverDisplay": true
-    },
-    "GraphicsMode": 0,
-    "ModelSetting": {
-      "IsHorizontal": false,
-      "UnitModel": "Custom",
-      "UnitModelIndex": 3
-    }
-  },
-  "WinMain": {}
+    "WinMain": {}
 }
