@@ -178,6 +178,9 @@
                   </item>
                   <item row="0" column="6" rowspan="2">
                    <widget class="QPushButton" name="btnReset">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
                     <property name="text">
                      <string>重置</string>
                     </property>
@@ -269,6 +272,9 @@
                     </item>
                     <item row="0" column="2">
                      <widget class="QCheckBox" name="checkBoxDisolayDisk">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="text">
                        <string>显示 [读取/写入]</string>
                       </property>
@@ -293,6 +299,9 @@
                     </item>
                     <item row="1" column="2">
                      <widget class="QCheckBox" name="checkBoxLocationExchangeDisk">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="text">
                        <string>互换位置 [读取/写入]</string>
                       </property>
@@ -585,7 +594,7 @@
          <item>
           <widget class="QPushButton" name="btnSave">
            <property name="text">
-            <string>保存配置</string>
+            <string>应用</string>
            </property>
           </widget>
          </item>
@@ -609,6 +618,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_25" stretch="2,5">
          <item>
           <widget class="QGroupBox" name="groupBox_12">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="title">
             <string>应用程序设置</string>
            </property>
@@ -618,7 +630,7 @@
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_18">
                 <item>
-                 <widget class="QCheckBox" name="checkBox_22">
+                 <widget class="QCheckBox" name="checkBoxBootUpUpdate">
                   <property name="text">
                    <string>开机检查更新</string>
                   </property>
@@ -627,7 +639,7 @@
                </layout>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_9">
+               <widget class="QPushButton" name="btnCheckUpdate">
                 <property name="text">
                  <string>立即检查</string>
                 </property>
@@ -645,7 +657,13 @@
                </widget>
               </item>
               <item>
-               <widget class="QComboBox" name="comboBox_6">
+               <widget class="QComboBox" name="comboBoxLanguage">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="editable">
+                 <bool>false</bool>
+                </property>
                 <item>
                  <property name="text">
                   <string>跟随系统</string>
@@ -675,7 +693,7 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_20">
             <item>
-             <widget class="QRadioButton" name="radioButton_10">
+             <widget class="QRadioButton" name="radioDefaultPath">
               <property name="text">
                <string>保存在默认路径</string>
               </property>
@@ -685,14 +703,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_11">
+             <widget class="QRadioButton" name="radioCustomPath">
               <property name="text">
                <string>保存在自定义路径</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton_8">
+             <widget class="QPushButton" name="btnChangePath">
               <property name="text">
                <string>更改目录</string>
               </property>
@@ -705,15 +723,18 @@
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_14">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="title">
           <string>消息通知</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,2,1,1">
           <item row="1" column="1">
-           <widget class="QSpinBox" name="spinBoxCpuOver"/>
+           <widget class="QSpinBox" name="spinBoxCpuOverNum"/>
           </item>
           <item row="2" column="1">
-           <widget class="QSpinBox" name="spinBoxMemOver"/>
+           <widget class="QSpinBox" name="spinBoxMemOverNum"/>
           </item>
           <item row="1" column="0">
            <widget class="QCheckBox" name="checkBoxCpuOver">
@@ -751,10 +772,15 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QSpinBox" name="spinBoxNetOver"/>
+           <widget class="QSpinBox" name="spinBoxNetOverNum"/>
           </item>
           <item row="3" column="2">
-           <widget class="QComboBox" name="comboBoxNetUnit">
+           <widget class="QComboBox" name="comboBoxNetNumUnit">
+            <item>
+             <property name="text">
+              <string>Byte</string>
+             </property>
+            </item>
             <item>
              <property name="text">
               <string>MB</string>
@@ -783,7 +809,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox_15">
+        <widget class="QGroupBox" name="groupBoxThemeStyle">
          <property name="title">
           <string>主题风格</string>
          </property>
@@ -845,13 +871,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBoxStyle">
-              <item>
-               <property name="text">
-                <string>系统默认风格</string>
-               </property>
-              </item>
-             </widget>
+             <widget class="QComboBox" name="comboBoxStyle"/>
             </item>
             <item>
              <spacer name="horizontalSpacer_13">
@@ -900,14 +920,14 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_10">
+          <widget class="QPushButton" name="btnApplyWinMain">
            <property name="text">
             <string>应用</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_11">
+          <widget class="QPushButton" name="btnQuitWinMain">
            <property name="text">
             <string>取消</string>
            </property>

@@ -47,10 +47,37 @@
         },
         "GraphicsMode": 0,
         "ModelSetting": {
-            "IsHorizontal": false,
+            "IsHorizontal": true,
             "UnitModel": "Custom",
             "UnitModelIndex": 3
         }
     },
-    "WinMain": {}
+    "WinMain": {
+        "AppSetting": {
+            "BootUpUpdate": false,
+            "Outdated": false,
+            "LanguageIndex": 0,
+            "Language": "zh_CN"
+        },
+        "ConfigAndData": {
+            "IsDefaultPath": true,
+            "DefaultPath": "~/.config/lfxNet",
+            "CustomPath": "~/.config/lfxNet"
+        },
+        "Notification": {
+            "CpuOver": false,
+            "CpuOverNum": 90,
+            "MemoryOver": false,
+            "MemoryOverNum": 90,
+            "NetOver": false,
+            "NetOverNum": 1000,
+            "NetOverNumUnit": "MB",
+            "NetOverNumUnitIndex": 1
+        },
+        "ThemeStyle": {
+            "themeIndex:": 0,
+            "SystemStyleIndex": 0,
+            "SystemStyle": ""
+        }
+    }
 }

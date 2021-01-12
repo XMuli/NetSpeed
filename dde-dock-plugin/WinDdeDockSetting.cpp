@@ -9,8 +9,17 @@
 #include <iomanip>
 #include <QColorDialog>
 #include <QMouseEvent>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QCoreApplication>
 #include <QDebug>
+#include <QFileDialog>
+#include <QStyleFactory>
+#include <QApplication>
+#include <DGuiApplicationHelper>
 using namespace std;
+
+DGUI_USE_NAMESPACE
 
 #define DATA_JSON_PATH "/home/xmuli/project/github/lfxNet/config.json"
 
@@ -18,6 +27,13 @@ WinDdeDockSetting::WinDdeDockSetting(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WinDdeDockSetting)
     , m_isHorizontal(true)
+    , m_path("")
+    , m_btnGroupTheme(new QButtonGroup(ui->groupBoxThemeStyle))
+    , m_cpuOverNum(0)
+    , m_memOverNum(0)
+    , m_NetOverNum(0)
+    , m_netOverUnit("MB")
+    , m_info(nullptr)
 {
     ui->setupUi(this);
     init();
@@ -29,6 +45,39 @@ WinDdeDockSetting::~WinDdeDockSetting()
 }
 
 void WinDdeDockSetting::init()
+{
+    initSigConnectWinDdeDock();
+    initSigConnectWinMain();
+
+    // 读入 json 文件到流中
+    ifstream jfile(DATA_JSON_PATH);
+    jfile >> m_js;
+
+    // 控件的基本设置，其读写留其它函数完成
+    ui->labLabTextColor->setAutoFillBackground(true);
+    ui->labTextColor->setAutoFillBackground(true);
+    ui->labBackgroundColor->setAutoFillBackground(true);
+
+    ui->spinBoxFractionalAccuracy->setRange(0, 100);
+    ui->spinBoxFractionalAccuracy->setSingleStep(1);
+    ui->spinBoxFractionalAccuracy->setSuffix(tr("位"));
+    ui->spinBoxRefreshInterval->setRange(1000, 2147483647);
+    ui->spinBoxRefreshInterval->setSingleStep(1000);
+    ui->spinBoxRefreshInterval->setSuffix(tr("ms"));
+
+    ui->labLabTextColor->installEventFilter(this);
+    ui->labTextColor->installEventFilter(this);
+    ui->labBackgroundColor->installEventFilter(this);
+
+    m_btnGroupTheme->addButton(ui->radioButtonSystem);
+    m_btnGroupTheme->addButton(ui->radioButtonLight);
+    m_btnGroupTheme->addButton(ui->radioButtonDark);
+    ui->comboBoxStyle->addItems(QStyleFactory::keys());
+
+    setWindowFlags(Qt::WindowStaysOnTopHint);
+}
+
+void WinDdeDockSetting::initSigConnectWinDdeDock()
 {
     connect(ui->btnSave, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnSave);
     connect(ui->btnQuit, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuit);
@@ -56,34 +105,29 @@ void WinDdeDockSetting::init()
     connect(ui->spinBoxFractionalAccuracy, pFun, this, &WinDdeDockSetting::sigFractionalAccuracy);
     connect(ui->spinBoxRefreshInterval, pFun, this, &WinDdeDockSetting::sigRefreshInterval);
     connect(ui->checkBoxHoverDisplay, &QCheckBox::clicked, this, &WinDdeDockSetting::sigHoverDisplay);
+}
 
-    // 读入 json 文件到流中
-    ifstream jfile(DATA_JSON_PATH);
-    jfile >> m_js;
+void WinDdeDockSetting::initSigConnectWinMain()
+{
+    connect(ui->checkBoxBootUpUpdate, &QCheckBox::clicked, this, &WinDdeDockSetting::onBootUpUpdate);
+    connect(ui->btnChangePath, &QPushButton::clicked, this, &WinDdeDockSetting::onChangePath);
 
-    // 控件的基本设置，其读写留其它函数完成
-    ui->labLabTextColor->setAutoFillBackground(true);
-    ui->labTextColor->setAutoFillBackground(true);
-    ui->labBackgroundColor->setAutoFillBackground(true);
+    void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
+    connect(ui->spinBoxCpuOverNum, pFun, this, &WinDdeDockSetting::onCpuOverNum);
+    connect(ui->spinBoxMemOverNum, pFun, this, &WinDdeDockSetting::onMemOverNum);
+    connect(ui->spinBoxNetOverNum, pFun, this, &WinDdeDockSetting::onNetOverNum);
+    connect(ui->comboBoxNetNumUnit, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::onNetNumUnit);
 
-    ui->spinBoxFractionalAccuracy->setRange(0, 100);
-    ui->spinBoxFractionalAccuracy->setSingleStep(1);
-    ui->spinBoxFractionalAccuracy->setSuffix(tr("位"));
-    ui->spinBoxRefreshInterval->setRange(1000, 2147483647);
-    ui->spinBoxRefreshInterval->setSingleStep(1000);
-    ui->spinBoxRefreshInterval->setSuffix(tr("ms"));
-
-    ui->labLabTextColor->installEventFilter(this);
-    ui->labTextColor->installEventFilter(this);
-    ui->labBackgroundColor->installEventFilter(this);
-
-    setWindowFlags(Qt::WindowStaysOnTopHint);
+    void (QButtonGroup::*pFunTheme)(int, bool) = &QButtonGroup::buttonToggled;
+    connect(m_btnGroupTheme, pFunTheme, this, &WinDdeDockSetting::onBtnGroupTheme);
+    void (QComboBox::*pFuncomboBoxStyle)(int) = &QComboBox::currentIndexChanged;
+    connect(ui->comboBoxStyle, pFuncomboBoxStyle, this, &WinDdeDockSetting::onStyle);
 }
 
 /*!
- * \brief WinDdeDockSetting::readConfig 从 config.json 读取 config.json 写入到 UI 控件显示
+ * \brief WinDdeDockSetting::readConfigWinDdeDock 从 config.json 读取 config.json 写入到 UI 控件显示
  */
-void WinDdeDockSetting::readConfig()
+void WinDdeDockSetting::readConfigWinDdeDock()
 {
     json jsColorAndFont = m_js["WinDdeDock"]["ColorAndFont"];
     ui->fontComboBox->setCurrentIndex(jsColorAndFont["FontTypeIndex"]);
@@ -169,10 +213,10 @@ void WinDdeDockSetting::readConfig()
 }
 
 /*!
- * \brief WinDdeDockSetting::saveConfig 将 UI 控件的数值全部覆盖保存到 config.json 文件
+ * \brief WinDdeDockSetting::saveConfigWinDdeDock 将 UI 控件的数值全部覆盖保存到 config.json 文件
  * \note 功能函数
  */
-void WinDdeDockSetting::saveConfig()
+void WinDdeDockSetting::saveConfigWinDdeDock()
 {
     json &jsColorAndFont = m_js["WinDdeDock"]["ColorAndFont"];
     jsColorAndFont["FontSize"] = ui->spinBoxFontSize->value();
@@ -226,6 +270,65 @@ void WinDdeDockSetting::saveConfig()
 
     ofstream outFile(DATA_JSON_PATH);
     outFile << setw(2) << m_js << endl;
+}
+
+/*!
+ * \brief WinDdeDockSetting::readConfigWinMain 读取 json 的 WinMain 对象内容，对应 UI 窗口的 “常规设置”
+ */
+void WinDdeDockSetting::readConfigWinMain()
+{
+    json jsAppSetting = m_js["WinMain"]["AppSetting"];
+    ui->checkBoxBootUpUpdate->setChecked(jsAppSetting["BootUpUpdate"]);
+//    ui->btnCheckUpdate  // 检查更新，Outdated 判断是否需要更新
+    ui->comboBoxLanguage->setCurrentIndex(jsAppSetting["LanguageIndex"]);
+
+    json jsConfigAndData = m_js["WinMain"]["ConfigAndData"];
+    bool isDefultPath = jsConfigAndData["IsDefaultPath"];
+    if (isDefultPath) {
+        ui->radioDefaultPath->setChecked(isDefultPath);
+        m_path = QString::fromStdString(jsConfigAndData["DefaultPath"]);
+    } else {
+        ui->radioCustomPath->setChecked(!isDefultPath);
+        m_path = QString::fromStdString(jsConfigAndData["CustomPath"]);
+    }
+
+    json jsAppNotification = m_js["WinMain"]["Notification"];
+    ui->checkBoxCpuOver->setChecked(jsAppNotification["CpuOver"]);
+    ui->spinBoxCpuOverNum->setValue(jsAppNotification["CpuOverNum"]);
+    ui->checkBoxMemOver->setChecked(jsAppNotification["MemoryOver"]);
+    ui->spinBoxMemOverNum->setValue(jsAppNotification["MemoryOverNum"]);
+    ui->checkBoxNetOver->setChecked(jsAppNotification["NetOver"]);
+    ui->spinBoxNetOverNum->setValue(jsAppNotification["NetOverNum"]);
+    ui->comboBoxNetNumUnit->setCurrentIndex(jsAppNotification["NetOverNumUnitIndex"]);
+
+    json jsThemeStyle = m_js["WinMain"]["ThemeStyle"];
+    ui->comboBoxStyle->setCurrentIndex(ui->comboBoxStyle->currentIndex());
+    // themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-为止
+    int themeIndex = jsThemeStyle["themeIndex"];
+    if (themeIndex == 0)
+        ui->radioButtonSystem->setChecked(true);
+    else if (themeIndex == 1)
+        ui->radioButtonLight->setChecked(true);
+    else if (themeIndex == 2)
+        ui->radioButtonDark->setChecked(true);
+    else
+        QMessageBox::warning(nullptr, tr("主题选择数值错误"), tr("json 的 themeIndex 错误，此处采用约定：themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-为止"));
+
+    emit ui->checkBoxBootUpUpdate->clicked(ui->checkBoxBootUpUpdate->isChecked());
+    emit ui->radioDefaultPath->toggled(ui->radioDefaultPath->isChecked());
+    emit ui->checkBoxCpuOver->clicked(ui->checkBoxCpuOver->isChecked());
+    emit ui->checkBoxMemOver->clicked(ui->checkBoxMemOver->isChecked());
+    emit ui->checkBoxNetOver->clicked(ui->checkBoxNetOver->isChecked());
+    emit ui->radioButtonSystem->toggled(ui->radioButtonSystem->isChecked());
+    emit ui->comboBoxStyle->currentIndexChanged(ui->comboBoxStyle->currentIndex());
+}
+
+/*!
+ * \brief WinDdeDockSetting::saveConfigWinMain 保存 json 的 WinMain 对象内容，对应 UI 窗口的 “常规设置”
+ */
+void WinDdeDockSetting::saveConfigWinMain()
+{
+
 }
 
 /*!
@@ -317,7 +420,7 @@ bool WinDdeDockSetting::eventFilter(QObject *watched, QEvent *event)
 void WinDdeDockSetting::onBtnSave(bool check)
 {
     Q_UNUSED(check)
-    saveConfig();
+    saveConfigWinDdeDock();
 }
 
 /*!
@@ -329,3 +432,80 @@ void WinDdeDockSetting::onBtnQuit(bool check)
     Q_UNUSED(check)
     close();
 }
+
+/*!
+ * \brief WinDdeDockSetting::onBootUpUpdate 设置开机检查更新
+ * \param check
+ */
+void WinDdeDockSetting::onBootUpUpdate(bool check)
+{
+    // TODO: 2021-01-12
+}
+
+void WinDdeDockSetting::onChangePath()
+{
+    QString currPath = QCoreApplication::applicationDirPath();
+    QString path = QFileDialog::getExistingDirectory(this, tr("自定义保存路径"), currPath);   //最后一个参数，表示只显示路径
+
+    if (path.isEmpty())
+        QMessageBox::critical(this, tr("路径错误"), tr("选择路径不能为空"), QMessageBox::Ok, QMessageBox::NoButton);
+    qDebug()<<"============================>"<<path;
+    // TODO: 2021-01-12 将文件保存到保存到此路径中；
+}
+
+void WinDdeDockSetting::onCpuOver(bool check)
+{
+//    if (check)
+    // TODO: 2021-01-12
+}
+
+void WinDdeDockSetting::onCpuOverNum(int cpu)
+{
+    if (0 <= cpu << cpu <= 100 && m_cpuOverNum != cpu)
+        m_cpuOverNum = cpu;
+}
+
+void WinDdeDockSetting::onMemOverNum(int mem)
+{
+    if (0 <= mem && mem <= 100 && m_memOverNum != mem)
+        m_memOverNum = mem;
+}
+
+void WinDdeDockSetting::onNetOverNum(int net)
+{
+    if (0 <= net && net <= 1024 && m_NetOverNum != net)
+        m_NetOverNum = net;
+}
+
+void WinDdeDockSetting::onNetNumUnit(const QString &unit)
+{
+    if (m_netOverUnit != unit)
+        m_netOverUnit = unit;
+}
+
+void WinDdeDockSetting::onBtnGroupTheme(int index, bool checked)
+{
+    Q_UNUSED(index)
+    Q_UNUSED(checked)
+
+    if (ui->radioButtonSystem->isChecked()) {
+        DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::UnknownType);  // UnknownType 枚举就是自动模式
+    } else if (ui->radioButtonLight->isChecked()) {
+        DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::LightType);
+    } else if (ui->radioButtonDark->isChecked()) {
+        DGuiApplicationHelper::instance()->setPaletteType(DGuiApplicationHelper::DarkType);
+    }
+}
+
+/*!
+ * \brief WinDdeDockSetting::onStyle 设置系统风格
+ * \param[in] index 当前选中项的索引
+ */
+void WinDdeDockSetting::onStyle(int index)
+{
+    if (index != ui->comboBoxStyle->currentIndex())
+        ui->comboBoxStyle->setCurrentIndex(index);
+
+    qApp->setStyle(QStyleFactory::create(ui->comboBoxStyle->currentText()));
+}
+

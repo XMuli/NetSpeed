@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 //    winDockNet->resize(500, 600);
 //    winDockNet->show();
     WinDdeDockSetting *setting = new WinDdeDockSetting();
-    setting->readConfig();
+    setting->readConfigWinDdeDock();
     setting->show();
 
 

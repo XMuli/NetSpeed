@@ -76,7 +76,7 @@ void WinDockNet::init()
 
 //    setAutoFillBackground(true);  // 暂时不设置背景颜色
 
-   m_winSetting->readConfig();
+   m_winSetting->readConfigWinDdeDock();
 
    setLabWidgetLayout(m_winSetting->isHorizontal());
    m_info->netInfo(m_upload, m_down);
