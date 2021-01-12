@@ -1,9 +1,5 @@
 #include "WinDdeDockSetting.h"
 #include "ui_WinDdeDockSetting.h"
-//#include <QFile>
-//#include <QByteArray>
-//#include <QJsonDocument>
-//#include <QJsonParseError>
 #include <fstream>
 #include <iostream>
 #include <iomanip>
@@ -18,7 +14,6 @@
 #include <QApplication>
 #include <DGuiApplicationHelper>
 using namespace std;
-
 DGUI_USE_NAMESPACE
 
 #define DATA_JSON_PATH "/home/xmuli/project/github/lfxNet/config.json"
@@ -28,12 +23,11 @@ WinDdeDockSetting::WinDdeDockSetting(QWidget *parent)
     , ui(new Ui::WinDdeDockSetting)
     , m_isHorizontal(true)
     , m_path("")
-    , m_btnGroupTheme(new QButtonGroup(ui->groupBoxThemeStyle))
+    , m_btnGroupTheme(new QButtonGroup(nullptr))
     , m_cpuOverNum(0)
     , m_memOverNum(0)
     , m_NetOverNum(0)
     , m_netOverUnit("MB")
-    , m_info(nullptr)
 {
     ui->setupUi(this);
     init();
@@ -69,6 +63,7 @@ void WinDdeDockSetting::init()
     ui->labTextColor->installEventFilter(this);
     ui->labBackgroundColor->installEventFilter(this);
 
+    m_btnGroupTheme->setParent(ui->groupBoxThemeStyle);
     m_btnGroupTheme->addButton(ui->radioButtonSystem);
     m_btnGroupTheme->addButton(ui->radioButtonLight);
     m_btnGroupTheme->addButton(ui->radioButtonDark);

@@ -89,7 +89,6 @@ private:
     int m_memOverNum;
     int m_NetOverNum;
     QString m_netOverUnit;
-    MonitorInfo_x11 *m_info;
 };
 
 #endif // WINDDEDOCKSETTING_H
