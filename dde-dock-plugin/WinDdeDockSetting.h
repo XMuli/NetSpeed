@@ -61,8 +61,10 @@ signals:
     void sigHoverDisplay(bool);
 
 public slots:
-    void onBtnSave(bool check);
-    void onBtnQuit(bool check);
+    void onBtnApplyWinDdeDock(bool check);
+    void onBtnQuitWinDdeDock(bool check);
+    void onBtnApplyWinMain(bool check);
+    void onBtnQuitWinMain(bool check);
 
     void onBootUpUpdate(bool check);
 //    void onCheckUpdate(bool check);

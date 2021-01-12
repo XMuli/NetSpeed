@@ -74,8 +74,8 @@ void WinDdeDockSetting::init()
 
 void WinDdeDockSetting::initSigConnectWinDdeDock()
 {
-    connect(ui->btnSave, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnSave);
-    connect(ui->btnQuit, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuit);
+    connect(ui->btnSaveWinDdeDock, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnApplyWinDdeDock);
+    connect(ui->btnQuitWinDdeDock, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuitWinDdeDock);
 
     connect(ui->fontComboBox, &QFontComboBox::currentTextChanged, this, &WinDdeDockSetting::sigCurrentFont);
     void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
@@ -104,6 +104,9 @@ void WinDdeDockSetting::initSigConnectWinDdeDock()
 
 void WinDdeDockSetting::initSigConnectWinMain()
 {
+    connect(ui->btnApplyWinMain, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnApplyWinMain);
+    connect(ui->btnQuitWinMain, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuitWinMain);
+
     connect(ui->checkBoxBootUpUpdate, &QCheckBox::clicked, this, &WinDdeDockSetting::onBootUpUpdate);
     connect(ui->btnChangePath, &QPushButton::clicked, this, &WinDdeDockSetting::onChangePath);
 
@@ -191,15 +194,15 @@ void WinDdeDockSetting::readConfigWinDdeDock()
     emit ui->lineLabMemory->textChanged(ui->lineLabMemory->text());
 //    emit ui->lineLabDiskRead->textChanged(ui->lineLabDiskRead->text());
 //    emit ui->lineLabDiskWrite->textChanged(ui->lineLabDiskWrite->text());
-    emit ui->checkBoxDisolayNet->clicked(ui->checkBoxDisolayNet->checkState() == Qt::Checked);
-    emit ui->checkBoxDisolayCPUAndMemory->clicked(ui->checkBoxDisolayCPUAndMemory->checkState() == Qt::Checked);
-//    emit ui->checkBoxDisolayDisk->clicked(ui->checkBoxDisolayDisk->checkState() == Qt::Checked);
-//    emit ui->checkBoxLocationExchangeNet->clicked(ui->checkBoxLocationExchangeNet->checkState() == Qt::Checked);
-//    emit ui->checkBoxLocationExchangeCPUAndMenory->clicked(ui->checkBoxLocationExchangeCPUAndMenory->checkState() == Qt::Checked);
-//    emit ui->checkBoxLocationExchangeDisk->clicked(ui->checkBoxLocationExchangeDisk->checkState() == Qt::Checked);
+    emit ui->checkBoxDisolayNet->clicked(ui->checkBoxDisolayNet->isChecked());
+    emit ui->checkBoxDisolayCPUAndMemory->clicked(ui->checkBoxDisolayCPUAndMemory->isChecked());
+//    emit ui->checkBoxDisolayDisk->clicked(ui->checkBoxDisolayDisk->isChecked());
+//    emit ui->checkBoxLocationExchangeNet->clicked(ui->checkBoxLocationExchangeNet->isChecked());
+//    emit ui->checkBoxLocationExchangeCPUAndMenory->clicked(ui->checkBoxLocationExchangeCPUAndMenory->isChecked());
+//    emit ui->checkBoxLocationExchangeDisk->clicked(ui->checkBoxLocationExchangeDisk->isChecked());
     emit ui->spinBoxFractionalAccuracy->valueChanged(ui->spinBoxFractionalAccuracy->value());
     emit ui->spinBoxRefreshInterval->valueChanged(ui->spinBoxRefreshInterval->value());
-    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->checkState() == Qt::Checked);
+    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
 
     emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
     emit ui->radioHorizontal->clicked(ui->radioHorizontal->isChecked());
@@ -247,17 +250,17 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
         jsDisplayText[1]["LabDiskWrite"] = ui->lineLabDiskWrite->text().toStdString().c_str();
     }
 
-    jsDisplayText[2]["DisolayNet"] = ui->checkBoxDisolayNet->checkState() == Qt::Checked;
-    jsDisplayText[2]["DisolayCPUAndMemory"] = ui->checkBoxDisolayCPUAndMemory->checkState() == Qt::Checked;
-    jsDisplayText[2]["DisolayDisk"] = ui->checkBoxDisolayDisk->checkState() == Qt::Checked;
-    jsDisplayText[3]["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->checkState() == Qt::Checked;
-    jsDisplayText[3]["LocationExchangeCPUAndMenory"] = ui->checkBoxLocationExchangeCPUAndMenory->checkState() == Qt::Checked;
-    jsDisplayText[3]["LocationExchangeDisk"] = ui->checkBoxLocationExchangeDisk->checkState() == Qt::Checked;
+    jsDisplayText[2]["DisolayNet"] = ui->checkBoxDisolayNet->isChecked();
+    jsDisplayText[2]["DisolayCPUAndMemory"] = ui->checkBoxDisolayCPUAndMemory->isChecked();
+    jsDisplayText[2]["DisolayDisk"] = ui->checkBoxDisolayDisk->isChecked();
+    jsDisplayText[3]["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->isChecked();
+    jsDisplayText[3]["LocationExchangeCPUAndMenory"] = ui->checkBoxLocationExchangeCPUAndMenory->isChecked();
+    jsDisplayText[3]["LocationExchangeDisk"] = ui->checkBoxLocationExchangeDisk->isChecked();
     jsDisplayText[4]["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
     jsDisplayText[4]["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
 
     json &jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
-    jsDockWindow["HoverDisplay"] = ui->checkBoxHoverDisplay->checkState() == Qt::Checked;
+    jsDockWindow["HoverDisplay"] = ui->checkBoxHoverDisplay->isChecked();
     jsDockWindow["DoubleClickIndex"] = ui->comboBoxDoubleClick->currentIndex();
     jsDockWindow["DoubleClick"] = ui->comboBoxDoubleClick->currentText().toStdString().c_str();
 
@@ -307,7 +310,7 @@ void WinDdeDockSetting::readConfigWinMain()
     else if (themeIndex == 2)
         ui->radioButtonDark->setChecked(true);
     else
-        QMessageBox::warning(nullptr, tr("主题选择数值错误"), tr("json 的 themeIndex 错误，此处采用约定：themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-为止"));
+        QMessageBox::warning(nullptr, tr("主题选择数值错误"), tr("json 的 themeIndex 值错误，此处采用约定：themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-未知"));
 
     emit ui->checkBoxBootUpUpdate->clicked(ui->checkBoxBootUpUpdate->isChecked());
     emit ui->radioDefaultPath->toggled(ui->radioDefaultPath->isChecked());
@@ -323,7 +326,46 @@ void WinDdeDockSetting::readConfigWinMain()
  */
 void WinDdeDockSetting::saveConfigWinMain()
 {
+    json &jsAppSetting = m_js["WinMain"]["AppSetting"];
+    jsAppSetting["BootUpUpdate"] = ui->checkBoxBootUpUpdate->isChecked();
+    jsAppSetting["LanguageIndex"] = ui->comboBoxLanguage->currentIndex();
+    jsAppSetting["Language"] = ui->comboBoxLanguage->currentText().toStdString().c_str();
 
+    json &jsConfigAndData = m_js["WinMain"]["ConfigAndData"];
+    if (!m_path.isEmpty())
+        jsConfigAndData["CustomPath"] = m_path.toStdString().c_str();
+
+    if (ui->radioDefaultPath->isChecked())
+        jsConfigAndData["IsDefaultPath"] = true;
+    else
+        jsConfigAndData["IsDefaultPath"] = false;
+
+    json &jsAppNotification = m_js["WinMain"]["Notification"];
+    jsAppNotification["CpuOver"] = ui->checkBoxCpuOver->isChecked();
+    jsAppNotification["CpuOverNum"] = ui->spinBoxCpuOverNum->value();
+    jsAppNotification["MemoryOver"] = ui->checkBoxMemOver->isChecked();
+    jsAppNotification["MemoryOverNum"] = ui->spinBoxMemOverNum->value();
+    jsAppNotification["NetOver"] = ui->checkBoxNetOver->isChecked();
+    jsAppNotification["NetOverNum"] = ui->spinBoxNetOverNum->value();
+    jsAppNotification["NetOverNumUnitIndex"] = ui->comboBoxNetNumUnit->currentIndex();
+    jsAppNotification["NetOverNumUnit"] = ui->comboBoxNetNumUnit->currentText().toStdString().c_str();
+
+    json &jsThemeStyle = m_js["WinMain"]["ThemeStyle"];
+    // themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-为止
+    if (ui->radioButtonSystem->isChecked())
+        jsThemeStyle["themeIndex"] = 0;
+    else if (ui->radioButtonLight->isChecked())
+        jsThemeStyle["themeIndex"] = 1;
+    else if (ui->radioButtonDark->isChecked())
+        jsThemeStyle["themeIndex"] = 2;
+    else
+        QMessageBox::warning(nullptr, tr("主题选择数值错误"), tr("json 的 themeIndex 值错误，此处采用约定：themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-未知"));
+
+    jsThemeStyle["SystemStyleIndex"] = ui->comboBoxStyle->currentIndex();
+    jsThemeStyle["SystemStyle"] = ui->comboBoxStyle->currentText().toStdString().c_str();
+
+    ofstream outFile(DATA_JSON_PATH);
+    outFile << setw(2) << m_js << endl;
 }
 
 /*!
@@ -409,20 +451,32 @@ bool WinDdeDockSetting::eventFilter(QObject *watched, QEvent *event)
 }
 
 /*!
- * \brief WinDdeDockSetting::onBtnSave
+ * \brief WinDdeDockSetting::onBtnApplyWinDdeDock
  * \param check
  */
-void WinDdeDockSetting::onBtnSave(bool check)
+void WinDdeDockSetting::onBtnApplyWinDdeDock(bool check)
 {
     Q_UNUSED(check)
     saveConfigWinDdeDock();
 }
 
 /*!
- * \brief WinDdeDockSetting::onBtnQuit
+ * \brief WinDdeDockSetting::onBtnQuitWinDdeDock
  * \param check
  */
-void WinDdeDockSetting::onBtnQuit(bool check)
+void WinDdeDockSetting::onBtnQuitWinDdeDock(bool check)
+{
+    Q_UNUSED(check)
+    close();
+}
+
+void WinDdeDockSetting::onBtnApplyWinMain(bool check)
+{
+    Q_UNUSED(check)
+    saveConfigWinMain();
+}
+
+void WinDdeDockSetting::onBtnQuitWinMain(bool check)
 {
     Q_UNUSED(check)
     close();

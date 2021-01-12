@@ -592,14 +592,14 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="btnSave">
+          <widget class="QPushButton" name="btnSaveWinDdeDock">
            <property name="text">
             <string>应用</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="btnQuit">
+          <widget class="QPushButton" name="btnQuitWinDdeDock">
            <property name="text">
             <string>取消</string>
            </property>
@@ -619,7 +619,7 @@
          <item>
           <widget class="QGroupBox" name="groupBox_12">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="title">
             <string>应用程序设置</string>
@@ -633,6 +633,9 @@
                  <widget class="QCheckBox" name="checkBoxBootUpUpdate">
                   <property name="text">
                    <string>开机检查更新</string>
+                  </property>
+                  <property name="checked">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>
@@ -659,7 +662,7 @@
               <item>
                <widget class="QComboBox" name="comboBoxLanguage">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="editable">
                  <bool>false</bool>
@@ -724,7 +727,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_14">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="title">
           <string>消息通知</string>
