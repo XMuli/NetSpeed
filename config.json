@@ -66,14 +66,14 @@
       "IsDefaultPath": true
     },
     "Notification": {
-      "CpuOver": true,
-      "CpuOverNum": 34,
+      "CpuOver": false,
+      "CpuOverNum": 0,
       "MemoryOver": false,
-      "MemoryOverNum": 32,
+      "MemoryOverNum": 0,
       "NetOver": false,
-      "NetOverNum": 34,
+      "NetOverNum": 0,
       "NetOverNumUnit": "MB",
-      "NetOverNumUnitIndex": 1
+      "NetOverNumUnitIndex": 0
     },
     "ThemeStyle": {
       "SystemStyle": "chameleon",

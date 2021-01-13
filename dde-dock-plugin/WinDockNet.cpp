@@ -3,6 +3,8 @@
 #include <QTimer>
 #include <QDebug>
 #include <QObjectList>
+#include <QMessageBox>
+#include <QIcon>
 
 /*!
  * \brief WinDockNet::WinDockNet
@@ -25,6 +27,8 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     , m_timer(new QTimer())
     , m_modelUnit(Default)
     , m_precision(2)
+    , m_vecOverWarningTemp(3, QVariant(false))
+    , m_vecOverWarning(3, QVariant(false))
     , m_orientation(Qt::Horizontal)
     , m_gridLayout(new QGridLayout(this))
     , m_vecLabel(8, nullptr)
@@ -43,6 +47,11 @@ WinDockNet::~WinDockNet()
 {
 }
 
+WinDockNet *WinDockNet::winDockNetObject()
+{
+    return this;
+}
+
 void WinDockNet::init()
 {
     for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
@@ -51,36 +60,58 @@ void WinDockNet::init()
      m_gridLayout->setContentsMargins(0, 0, 0, 0);
      m_gridLayout->setSpacing(0);
 
-    connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
-    connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
-    connect(m_winSetting, &WinDdeDockSetting::sigUnitModel, this, &WinDockNet::onUnitModel);
-    connect(m_winSetting, &WinDdeDockSetting::sigShowModel, this, &WinDockNet::onShowModel);
-    connect(m_winSetting, &WinDdeDockSetting::sigLabTextColor, this, &WinDockNet::onLabTextColor);
-    connect(m_winSetting, &WinDdeDockSetting::sigTextColor, this, &WinDockNet::onTextColor);
-    connect(m_winSetting, &WinDdeDockSetting::sigBackgroundColor, this, &WinDockNet::onBackgroundColor);
-    connect(m_winSetting, &WinDdeDockSetting::sigLabUploadText, this, &WinDockNet::onLabUploadText);
-    connect(m_winSetting, &WinDdeDockSetting::sigLabDownText, this, &WinDockNet::onLabDownText);
-    connect(m_winSetting, &WinDdeDockSetting::sigLabCpuText, this, &WinDockNet::onLabCpuText);
-    connect(m_winSetting, &WinDdeDockSetting::sigLabMemoryText, this, &WinDockNet::onLabMemoryText);
-//    connect(m_winSetting, &WinDdeDockSetting::sigLabDiskReadText, this, &WinDockNet::onLabDiskReadText);
-//    connect(m_winSetting, &WinDdeDockSetting::sigLabDiskWriteText, this, &WinDockNet::onLabDiskWriteText);
-    connect(m_winSetting, &WinDdeDockSetting::sigDisolayNet, this, &WinDockNet::onDisolayNet);
-    connect(m_winSetting, &WinDdeDockSetting::sigDisolayCPUAndMemory, this, &WinDockNet::onDisolayCPUAndMemory);
-//    connect(m_winSetting, &WinDdeDockSetting::sigDisolayDisk, this, &WinDockNet::onDisolayDisk);
-    connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeNet, this, &WinDockNet::onLocationExchangeNet);
-    connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeCPUAndMenory, this, &WinDockNet::onLocationExchangeCPUAndMenory);
-//    connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeDisk, this, &WinDockNet::onLocationExchangeDisk);
-    connect(m_winSetting, &WinDdeDockSetting::sigFractionalAccuracy, this, &WinDockNet::onFractionalAccuracy);
-    connect(m_winSetting, &WinDdeDockSetting::sigRefreshInterval, this, &WinDockNet::onRefreshInterval);
-//    connect(m_winSetting, &WinDdeDockSetting::sigHoverDisplay, this, &WinDockNet::sigHoverDisplay);
+     m_vecOverWarning.reserve(7);
+     m_vecOverWarningTemp.reserve(7);
+     m_vecOverWarningTemp.push_back(QVariant(90));
+     m_vecOverWarningTemp.push_back(QVariant(90));
+     m_vecOverWarningTemp.push_back(QVariant(0));
+     m_vecOverWarningTemp.push_back(QVariant("MB"));
+
+     initSigConnect();
 
 //    setAutoFillBackground(true);  // 暂时不设置背景颜色
+     m_winSetting->readConfigWinDdeDock();
 
-   m_winSetting->readConfigWinDdeDock();
+     setLabWidgetLayout(m_winSetting->isHorizontal());
+     m_info->netInfo(m_upload, m_down);
+     m_info->cpuInfo(m_vec);
+}
 
-   setLabWidgetLayout(m_winSetting->isHorizontal());
-   m_info->netInfo(m_upload, m_down);
-   m_info->cpuInfo(m_vec);
+void WinDockNet::initSigConnect()
+{
+    // 响应 WinDdeDockSetting 发射的信号
+   connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
+   connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
+   connect(m_winSetting, &WinDdeDockSetting::sigUnitModel, this, &WinDockNet::onUnitModel);
+   connect(m_winSetting, &WinDdeDockSetting::sigShowModel, this, &WinDockNet::onShowModel);
+   connect(m_winSetting, &WinDdeDockSetting::sigLabTextColor, this, &WinDockNet::onLabTextColor);
+   connect(m_winSetting, &WinDdeDockSetting::sigTextColor, this, &WinDockNet::onTextColor);
+   connect(m_winSetting, &WinDdeDockSetting::sigBackgroundColor, this, &WinDockNet::onBackgroundColor);
+   connect(m_winSetting, &WinDdeDockSetting::sigLabUploadText, this, &WinDockNet::onLabUploadText);
+   connect(m_winSetting, &WinDdeDockSetting::sigLabDownText, this, &WinDockNet::onLabDownText);
+   connect(m_winSetting, &WinDdeDockSetting::sigLabCpuText, this, &WinDockNet::onLabCpuText);
+   connect(m_winSetting, &WinDdeDockSetting::sigLabMemoryText, this, &WinDockNet::onLabMemoryText);
+//    connect(m_winSetting, &WinDdeDockSetting::sigLabDiskReadText, this, &WinDockNet::onLabDiskReadText);
+//    connect(m_winSetting, &WinDdeDockSetting::sigLabDiskWriteText, this, &WinDockNet::onLabDiskWriteText);
+   connect(m_winSetting, &WinDdeDockSetting::sigDisolayNet, this, &WinDockNet::onDisolayNet);
+   connect(m_winSetting, &WinDdeDockSetting::sigDisolayCPUAndMemory, this, &WinDockNet::onDisolayCPUAndMemory);
+//    connect(m_winSetting, &WinDdeDockSetting::sigDisolayDisk, this, &WinDockNet::onDisolayDisk);
+   connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeNet, this, &WinDockNet::onLocationExchangeNet);
+   connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeCPUAndMenory, this, &WinDockNet::onLocationExchangeCPUAndMenory);
+//    connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeDisk, this, &WinDockNet::onLocationExchangeDisk);
+   connect(m_winSetting, &WinDdeDockSetting::sigFractionalAccuracy, this, &WinDockNet::onFractionalAccuracy);
+   connect(m_winSetting, &WinDdeDockSetting::sigRefreshInterval, this, &WinDockNet::onRefreshInterval);
+//    connect(m_winSetting, &WinDdeDockSetting::sigHoverDisplay, this, &WinDockNet::sigHoverDisplay);
+
+   // 响应 WinMain 发射的信号
+   connect(m_winSetting, &WinDdeDockSetting::sigCpuOver, this, &WinDockNet::onCpuOver);
+   connect(m_winSetting, &WinDdeDockSetting::sigMemOver, this, &WinDockNet::onMemOver);
+   connect(m_winSetting, &WinDdeDockSetting::sigNetOver, this, &WinDockNet::onNetOver);
+   connect(m_winSetting, &WinDdeDockSetting::sigCpuOverNum, this, &WinDockNet::onCpuOverNum);
+   connect(m_winSetting, &WinDdeDockSetting::sigMemOverNum, this, &WinDockNet::onMemOverNum);
+   connect(m_winSetting, &WinDdeDockSetting::sigNetOverNum, this, &WinDockNet::onNetOverNum);
+   connect(m_winSetting, &WinDdeDockSetting::sigNetNumUnit, this, &WinDockNet::onNetNumUnit);
+   connect(m_winSetting, &WinDdeDockSetting::sigBtnApplyWinMain, this, &WinDockNet::onBtnApplyWinMain);
 }
 
 /*!
@@ -129,6 +160,43 @@ void WinDockNet::setLabWidgetLayout(Qt::Orientation orientation)
 }
 
 /*!
+ * \brief WinDockNet::DataOverWarning 当 cpu、mem、net 勾选预警提示，并且超过各自指定预警值，弹出提示窗口
+ * \param tile 弹窗标题
+ * \param text 弹窗内容
+ * \param isTransient 是否为临时消息（默认显示 4000 ms 后自动消失）
+ * \param ms 临时弹窗消息，默认显示时间毫秒数
+ */\
+void WinDockNet::DataOverWarning(QString title, QString text, QWidget *parent, bool isTransient, int ms)
+{
+    if (isTransient) {
+        QMessageBox *msg = new QMessageBox(QMessageBox::Information, title, text);
+        msg->setWindowFlags(Qt::WindowStaysOnTopHint);
+        QTimer::singleShot(ms, msg, &QMessageBox::close);
+        msg->exec();
+    } else {
+        QMessageBox::information(parent, title, text);
+    }
+}
+
+/*!
+ * \brief WinDockNet::writeNetworkTraffic 保存每日的流量监控
+ * \return
+ */
+bool WinDockNet::writeNetworkTraffic()
+{
+    return false;
+}
+
+void WinDockNet::showTest(QString str)
+{
+    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarning
+           <<m_vecOverWarning.size()<<m_vecOverWarning.capacity();
+
+    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarningTemp
+           <<m_vecOverWarningTemp.size()<<m_vecOverWarningTemp.capacity();
+}
+
+/*!
  * \brief WinDockNet::onNet 定时刷新网速
  */
 void WinDockNet::onNet()
@@ -162,6 +230,20 @@ void WinDockNet::onCpu()
 
     double valCpu = (vec.begin()->cpuWork - m_vec.begin()->cpuWork) * 100.0 / (vec.begin()->cpuAll - m_vec.begin()->cpuAll);
     m_vecLabel[5]->setText(QString("%1%").arg(valCpu, 0, 'f', m_precision, QLatin1Char(' ')));
+
+    if (m_vecOverWarning[0].toBool()) {
+        QString title("CPU 提示");
+        QString text("");
+        bool ok = false;
+        int overNum = m_vecOverWarning[3].toInt(&ok);
+        if (ok)
+            text = "CPU 使用率超过" + QString::number(overNum) + "%";
+
+        if (valCpu >= overNum) {
+            m_vecOverWarning[0].setValue(false);
+            DataOverWarning(title, text, m_winSetting);
+        }
+    }
 }
 
 /*!
@@ -175,6 +257,20 @@ void WinDockNet::onMemory()
     double mem = (info.memoryAll - info.memoryFree) * 100.0 / info.memoryAll;
     m_vecLabel[7]->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
 //    ui->lab_34->setText(QString("%1%").arg(swap, 0, 'f', m_precision, QLatin1Char(' ')));
+
+    if (m_vecOverWarning[1].toBool()) {
+        QString title("内存提示");
+        QString text("");
+        bool ok = false;
+        int overNum = m_vecOverWarning[4].toInt(&ok);
+        if (ok)
+            text = "内存使用率超过" + QString::number(overNum) + "%";
+
+        if (mem >= overNum) {
+            DataOverWarning(title, text, m_winSetting);
+            m_vecOverWarning[1].setValue(false);
+        }
+    }
 }
 
 /*!
@@ -357,6 +453,56 @@ void WinDockNet::onRefreshInterval(int interval)
 {
     if (m_timer->interval() != interval)
         m_timer->setInterval(interval);
+}
+
+void WinDockNet::onCpuOver(bool check)
+{
+    m_vecOverWarningTemp[0].setValue(check);
+    onBtnApplyWinMain();
+    showTest("onCpuOver");
+}
+
+void WinDockNet::onMemOver(bool check)
+{
+    m_vecOverWarningTemp[1].setValue(check);
+    onBtnApplyWinMain();
+    showTest("onMemOver");
+}
+
+void WinDockNet::onNetOver(bool check)
+{
+    m_vecOverWarningTemp[2].setValue(check);
+    onBtnApplyWinMain();
+    showTest("onNetOver");
+}
+
+void WinDockNet::onCpuOverNum(int cpu)
+{
+    m_vecOverWarningTemp[3].setValue(cpu);
+    showTest("onCpuOverNum");
+}
+
+void WinDockNet::onMemOverNum(int mem)
+{
+    m_vecOverWarningTemp[4].setValue(mem);
+    showTest("onMemOverNum");
+}
+
+void WinDockNet::onNetOverNum(int net)
+{
+    m_vecOverWarningTemp[5].setValue(net);
+    showTest("onNetOverNum");
+}
+
+void WinDockNet::onNetNumUnit(const QString &unit)
+{
+    m_vecOverWarningTemp[6].setValue(unit);
+    showTest("onNetNumUnit");
+}
+
+void WinDockNet::onBtnApplyWinMain()
+{
+    m_vecOverWarning = m_vecOverWarningTemp;
 }
 
 //void WinDockNet::sigHoverDisplay(bool check)

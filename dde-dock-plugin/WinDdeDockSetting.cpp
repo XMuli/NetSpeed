@@ -54,7 +54,6 @@ void WinDdeDockSetting::init()
 
     ui->spinBoxFractionalAccuracy->setRange(0, 100);
     ui->spinBoxFractionalAccuracy->setSingleStep(1);
-    ui->spinBoxFractionalAccuracy->setSuffix(tr("位"));
     ui->spinBoxRefreshInterval->setRange(1000, 2147483647);
     ui->spinBoxRefreshInterval->setSingleStep(1000);
     ui->spinBoxRefreshInterval->setSuffix(tr("ms"));
@@ -110,16 +109,27 @@ void WinDdeDockSetting::initSigConnectWinMain()
     connect(ui->checkBoxBootUpUpdate, &QCheckBox::clicked, this, &WinDdeDockSetting::onBootUpUpdate);
     connect(ui->btnChangePath, &QPushButton::clicked, this, &WinDdeDockSetting::onChangePath);
 
+    connect(ui->checkBoxCpuOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigCpuOver);
+    connect(ui->checkBoxMemOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigMemOver);
+    connect(ui->checkBoxNetOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigNetOver);
     void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
-    connect(ui->spinBoxCpuOverNum, pFun, this, &WinDdeDockSetting::onCpuOverNum);
-    connect(ui->spinBoxMemOverNum, pFun, this, &WinDdeDockSetting::onMemOverNum);
-    connect(ui->spinBoxNetOverNum, pFun, this, &WinDdeDockSetting::onNetOverNum);
-    connect(ui->comboBoxNetNumUnit, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::onNetNumUnit);
+    connect(ui->spinBoxCpuOverNum, pFun, this, &WinDdeDockSetting::sigCpuOverNum);
+    connect(ui->spinBoxMemOverNum, pFun, this, &WinDdeDockSetting::sigMemOverNum);
+    connect(ui->spinBoxNetOverNum, pFun, this, &WinDdeDockSetting::sigNetOverNum);
+    connect(ui->comboBoxNetNumUnit, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::sigNetNumUnit);
+
+//    void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
+//    connect(ui->spinBoxCpuOverNum, pFun, this, &WinDdeDockSetting::onCpuOverNum);
+//    connect(ui->spinBoxMemOverNum, pFun, this, &WinDdeDockSetting::onMemOverNum);
+//    connect(ui->spinBoxNetOverNum, pFun, this, &WinDdeDockSetting::onNetOverNum);
+//    connect(ui->comboBoxNetNumUnit, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::onNetNumUnit);
 
     void (QButtonGroup::*pFunTheme)(int, bool) = &QButtonGroup::buttonToggled;
     connect(m_btnGroupTheme, pFunTheme, this, &WinDdeDockSetting::onBtnGroupTheme);
     void (QComboBox::*pFuncomboBoxStyle)(int) = &QComboBox::currentIndexChanged;
     connect(ui->comboBoxStyle, pFuncomboBoxStyle, this, &WinDdeDockSetting::onStyle);
+
+    connect(ui->btnApplyWinMain, &QPushButton::pressed, this, &WinDdeDockSetting::sigBtnApplyWinMain);
 }
 
 /*!
@@ -500,36 +510,6 @@ void WinDdeDockSetting::onChangePath()
         QMessageBox::critical(this, tr("路径错误"), tr("选择路径不能为空"), QMessageBox::Ok, QMessageBox::NoButton);
     qDebug()<<"============================>"<<path;
     // TODO: 2021-01-12 将文件保存到保存到此路径中；
-}
-
-void WinDdeDockSetting::onCpuOver(bool check)
-{
-//    if (check)
-    // TODO: 2021-01-12
-}
-
-void WinDdeDockSetting::onCpuOverNum(int cpu)
-{
-    if (0 <= cpu << cpu <= 100 && m_cpuOverNum != cpu)
-        m_cpuOverNum = cpu;
-}
-
-void WinDdeDockSetting::onMemOverNum(int mem)
-{
-    if (0 <= mem && mem <= 100 && m_memOverNum != mem)
-        m_memOverNum = mem;
-}
-
-void WinDdeDockSetting::onNetOverNum(int net)
-{
-    if (0 <= net && net <= 1024 && m_NetOverNum != net)
-        m_NetOverNum = net;
-}
-
-void WinDdeDockSetting::onNetNumUnit(const QString &unit)
-{
-    if (m_netOverUnit != unit)
-        m_netOverUnit = unit;
 }
 
 void WinDdeDockSetting::onBtnGroupTheme(int index, bool checked)

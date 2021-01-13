@@ -20,9 +20,17 @@ public:
     explicit WinDockNet(WinDdeDockSetting *winSetting = nullptr, Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
     ~WinDockNet();
 
+    WinDockNet* winDockNetObject();
+
     void init();
+    void initSigConnect();
     void setLabWidgetLayout(bool isHorizontal);
     void setLabWidgetLayout(Qt::Orientation orientation);
+    void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 4000);
+
+    bool writeNetworkTraffic();
+
+    void showTest(QString str);
 
 public slots:
     // 响应本身
@@ -57,16 +65,28 @@ public slots:
     void onRefreshInterval(int interval);
 //    void sigHoverDisplay(bool check);
 
+    // 响应 WinMain 发射的信号
+    void onCpuOver(bool check);
+    void onMemOver(bool check);
+    void onNetOver(bool check);
+    void onCpuOverNum(int cpu);
+    void onMemOverNum(int mem);
+    void onNetOverNum(int net);
+    void onNetNumUnit(const QString &unit);
+    void onBtnApplyWinMain();
+
 private:
     long m_upload;   // 网速的上次数值
     long m_down;
     QVector<CpuInfo> m_vec;
     int m_precision; // 精确度
 //    bool m_hover;    // 悬浮现实额外信息
+    QVector<QVariant> m_vecOverWarningTemp;  // 临时
+    QVector<QVariant> m_vecOverWarning; // 顺序：(0-2 是否选中预警):cpu、mem、net;(3-5 预警数值):cpu、mem、net;（6 net 预警单位）；
 
     MonitorInfo_x11 *m_info;
     ModelUnit m_modelUnit;
-    QTimer *m_timer;
+    QTimer *m_timer;             // 刷新时间
 
     WinDdeDockSetting *m_winSetting;
     Qt::Orientation m_orientation;

@@ -60,6 +60,17 @@ signals:
     void sigRefreshInterval(int);
     void sigHoverDisplay(bool);
 
+    // WinMain 相关
+    void sigCpuOver(bool check);
+    void sigMemOver(bool check);
+    void sigNetOver(bool check);
+    void sigCpuOverNum(int cpu);
+    void sigMemOverNum(int mem);
+    void sigNetOverNum(int net);
+    void sigNetNumUnit(const QString &unit);
+
+    void sigBtnApplyWinMain();
+
 public slots:
     void onBtnApplyWinDdeDock(bool check);
     void onBtnQuitWinDdeDock(bool check);
@@ -69,13 +80,6 @@ public slots:
     void onBootUpUpdate(bool check);
 //    void onCheckUpdate(bool check);
     void onChangePath();
-    void onCpuOver(bool check);
-//    void onMemOver(bool check);
-//    void onNetOver(bool check);
-    void onCpuOverNum(int cpu);
-    void onMemOverNum(int mem);
-    void onNetOverNum(int net);
-    void onNetNumUnit(const QString &unit);
 
     void onBtnGroupTheme(int index, bool checked);
     void onStyle(int index);
