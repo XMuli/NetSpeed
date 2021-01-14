@@ -9,7 +9,7 @@
 
     #include_directories(. DIR_INCLUDE_DDEDOCKdock_NET) # 配合下面使用，在 QtCreator 上头文件是灰色
     #aux_source_directory(. DIR_LIB_DDEDOCK_NET) # 查找仅当前路径下所有源文件，保存到后者变量
-    file(GLOB DIR_DDE_DOCK_NET "*.h" "*.cpp" "*.ui" "../lib/MonitorInfo_x11.cpp")
+    file(GLOB DIR_DDE_DOCK_NET "*.h" "*.cpp" "*.ui" "*.qrc" "../lib/MonitorInfo_x11.cpp")
     ADD_LIBRARY(${PLUGIN_NAME} SHARED ${DIR_DDE_DOCK_NET} "MonitorNet.json") # "MonitorNet.json" 仅项目树中显示，可不加
 
     target_include_directories(${PLUGIN_NAME} PUBLIC  # 添加头文件，在有目标文件后执行

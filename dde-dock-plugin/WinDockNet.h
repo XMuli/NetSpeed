@@ -26,11 +26,10 @@ public:
     void initSigConnect();
     void setLabWidgetLayout(bool isHorizontal);
     void setLabWidgetLayout(Qt::Orientation orientation);
-    void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 4000);
-
+    void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 1000 * 60 * 60 * 30);
     void writeNetworkTraffic(QString &log);
-    void readNetworkTraffic(const QString &log);
-
+    void readNetworkTraffic(long &net);
+    long netOverNumToByte(long net);
 
     void showTest(QString str);
 
@@ -42,7 +41,7 @@ public slots:
     void onSystemRunTime();
 
     void onWriteNetworkTraffic();
-    void onReadNetworkTraffic();
+    void onNetOverWarning();
 
     // 响应 WinDdeDockSetting 发射的信号
     void onCurrentFont(const QFont &font);
@@ -97,7 +96,7 @@ private:
     WinDdeDockSetting *m_winSetting;
     Qt::Orientation m_orientation;
     QGridLayout *m_gridLayout;
-    QVector<QLabel *> m_vecLabel;
+    QVector<QLabel *> m_vecLabel; // 顺序：0上传标签、1上传；2下载标签、3下载；4CPU标签、5CPU；6Mem标签、7Mem；
 };
 
 #endif // WINDOCKNET_H

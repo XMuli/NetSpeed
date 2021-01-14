@@ -7,6 +7,7 @@
 #include <QIcon>
 #include <QFile>
 #include <QDate>
+#include <climits>
 
 #define NETWORK_TRAFFIC_LOG_PATH "/home/xmuli/project/github/lfxNet/dde-dock-plugin/NetworkTraffic.log"
 /*!
@@ -43,6 +44,7 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onCpu);
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onMemory);
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onSystemRunTime);
+    connect(m_timer, &QTimer::timeout, this, &WinDockNet::onNetOverWarning);
     m_timer->setInterval(1000);
     m_timer->start();
 
@@ -70,8 +72,8 @@ void WinDockNet::init()
 
      m_vecOverWarning.reserve(7);
      m_vecOverWarningTemp.reserve(7);
-     m_vecOverWarningTemp.push_back(QVariant(90));
-     m_vecOverWarningTemp.push_back(QVariant(90));
+     m_vecOverWarningTemp.push_back(QVariant(0));
+     m_vecOverWarningTemp.push_back(QVariant(0));
      m_vecOverWarningTemp.push_back(QVariant(0));
      m_vecOverWarningTemp.push_back(QVariant("MB"));
 
@@ -202,14 +204,11 @@ void WinDockNet::writeNetworkTraffic(QString &log)
     }
 
     QTextStream stream(&file);
-
-
     QString firstLine = stream.readLine();
     QStringList listFirstLine = firstLine.simplified().split(QRegExp("\\s{1,}"));
     QStringList listLog = log.simplified().split(QRegExp("\\s{1,}"));
     stream.seek(0);
     QString dataAll = stream.readAll();
-
 
     if (listFirstLine[0] == listLog[0]) {
         dataAll.replace(0, dataAll.indexOf('\n') + 1, log);  // + 1 是因此返回为下标为 0 的序号，而填入参数为 替换字符的个数
@@ -227,11 +226,60 @@ void WinDockNet::writeNetworkTraffic(QString &log)
     file.close();
 }
 
-void WinDockNet::readNetworkTraffic(const QString &log)
+void WinDockNet::readNetworkTraffic(long &net)
 {
+    QFile file(NETWORK_TRAFFIC_LOG_PATH);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log  [ReadOnly]\"  don't open!");
+        return;
+    }
 
+    QTextStream stream(&file);
+    QStringList listDoday = stream.readLine().simplified().split(QRegExp("\\s{1,}"));
+    QStringList listYesterday = stream.readLine().simplified().split(QRegExp("\\s{1,}"));
+
+    bool ok = false;
+    long doday = listDoday[5].toLong(&ok);
+    long yesterday = listYesterday[5].toLong(&ok);
+    if (ok) {
+        net = doday - yesterday;
+    }
+    file.close();
 }
 
+/*!
+ * \brief WinDockNet::netOverNumToByte 将预警提示流量数值转换为字节输出
+ * \param[in] net 流量预警输入框输入的数值和单位，换算为对应的字节
+ * \return 以 Byte 单位的流量数值
+ */
+long WinDockNet::netOverNumToByte(long net)
+{
+    long ret = 0;
+    QString strNetUnit =  m_vecOverWarningTemp[6].toString();
+    if (strNetUnit == "Byte") {
+        ret = net;
+    } else if (strNetUnit == "KB") {
+        ret = net * 1024;
+    } else if (strNetUnit == "MB") {
+        ret = net * 1024 * 1024;
+    } else if (strNetUnit == "GB") {
+        ret = net * 1024 * 1024 * 1024;
+    } else if (strNetUnit == "TB") {
+        ret = net * 1024 * 1024 * 1024 * 1024;
+    }
+
+    if (net > LONG_MAX) {
+        QMessageBox::information(this, tr("数值过大"), tr("数值超过 long 型的最大值"));
+        return 0;
+    } else {
+        return ret;
+    }
+}
+
+/*!
+ * \brief WinDockNet::showTest 测试函数
+ * \param str 打印自定义字符串
+ */
 void WinDockNet::showTest(QString str)
 {
     qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarning
@@ -336,33 +384,41 @@ void WinDockNet::onWriteNetworkTraffic()
     writeNetworkTraffic(log);
 }
 
-void WinDockNet::onReadNetworkTraffic()
+/*!
+ * \brief WinDockNet::onNetOverWarning 槽函数，监测流量超过预警限制
+ */
+void WinDockNet::onNetOverWarning()
 {
-    //    QFile file(NETWORK_TRAFFIC_LOG_PATH);
-    //    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-    //        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log\"  don't open!");
-    //        return;
-    //    }
+    if (m_vecOverWarning[2].toBool()) {
+        QString title("流量提示");
+        QString text("");
+        bool ok = false;
+        long overNum = static_cast<long>(m_vecOverWarning[5].toLongLong(&ok));
 
-    //    bool ok = false;
-    //    QTextStream stream(&file);
-    //    QString line = stream.readLine().simplified();
-    //    while (!line.isNull()) {
-    //        QStringList list = line.split(QRegExp("\\s{1,}"));
-    //        if (list[0] == "MemTotal:")
-    //            info.memoryAll = list[1].toLong(&ok);
-    //        else if (list[0] == "MemAvailable:")
-    //            info.memoryFree = list[1].toLong(&ok);
-    //        else if (list[0] == "SwapTotal:")
-    //            info.swapAll = list[1].toLong(&ok);
-    //        else if (list[0] == "SwapFree:")
-    //            info.swapFree = list[1].toLong(&ok);
+        NetUnit unit = NetUnit::Byte;
+        long autoUnitOverNum = m_info->netShowUnit(overNum, unit);
+        if (ok) {
+            QString strUnit("");
+            if (unit == NetUnit::Byte)
+                strUnit = " Byte！";
+            else if (unit == NetUnit::Kb)
+                strUnit = " KB！";
+            else if (unit == NetUnit::Mb)
+                strUnit = " MB";
+            else if (unit == NetUnit::Gb)
+                strUnit = " GB";
+            else if (unit == NetUnit::Tb)
+                strUnit = " TB";
+            text = "今日下载流量使用超过" + QString::number(autoUnitOverNum) + strUnit;
+        }
 
-    //        line = stream.readLine().simplified();
-    //    }
-
-    //    file.close();
-    //    return false;
+        long net = 0;
+        readNetworkTraffic(net);
+        if (net >= overNum) {
+            m_vecOverWarning[2].setValue(false);
+            DataOverWarning(title, text, m_winSetting);
+        }
+    }
 }
 
 void WinDockNet::onCurrentFont(const QFont &font)
@@ -571,7 +627,7 @@ void WinDockNet::onMemOverNum(int mem)
 
 void WinDockNet::onNetOverNum(int net)
 {
-    m_vecOverWarningTemp[5].setValue(net);
+    m_vecOverWarningTemp[5].setValue(netOverNumToByte(net));
     showTest("onNetOverNum");
 }
 

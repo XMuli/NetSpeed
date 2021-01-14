@@ -70,9 +70,9 @@
       "CpuOverNum": 0,
       "MemoryOver": false,
       "MemoryOverNum": 0,
-      "NetOver": false,
-      "NetOverNum": 0,
-      "NetOverNumUnit": "MB",
+      "NetOver": true,
+      "NetOverNum": 16903628,
+      "NetOverNumUnit": "Byte",
       "NetOverNumUnitIndex": 0
     },
     "ThemeStyle": {
