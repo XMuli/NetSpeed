@@ -38,11 +38,17 @@ public:
     virtual const QString pluginDisplayName() const override;
     virtual const QString itemContextMenu(const QString &itemKey) override;
     virtual void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) override;
+    virtual QWidget *itemTipsWidget(const QString &itemKey) override;
+
+public slots:
+    void onHoverDisplay();
 
 private:
     WinDdeDockSetting *m_winSetting;
     WinDockNet *m_winDockNet;
     PluginProxyInterface *m_proxyInter;
+    QLabel *m_isHoverDisplay;
+    QTimer *m_timer;
 };
 
 #endif //LFXNET_NETPLUGIN_H

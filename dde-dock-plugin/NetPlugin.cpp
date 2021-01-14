@@ -14,7 +14,12 @@ NetPlugin::NetPlugin(QObject *parent)
     , m_winSetting(new WinDdeDockSetting())
     , m_winDockNet(new WinDockNet(m_winSetting))  // 利用 class 成员先后初始化机制，确保 m_winSetting 不是 nullptr
     , m_proxyInter(nullptr)
+    , m_timer(new QTimer(this))
+    , m_isHoverDisplay(new QLabel())
 {
+    connect(m_timer, &QTimer::timeout, this, &NetPlugin::onHoverDisplay);
+    m_timer->setInterval(1000);
+    m_timer->start();
 }
 
 /*!
@@ -149,5 +154,21 @@ void NetPlugin::invokedMenuItem(const QString &itemKey, const QString &menuId, c
     } else if (menuId == "setting") {
         m_winSetting->move((QApplication::desktop()->width() - m_winSetting->width())/2,(QApplication::desktop()->height() - m_winSetting->height())/2);
         m_winSetting->show();
+    }
+}
+
+QWidget *NetPlugin::itemTipsWidget(const QString &itemKey)
+{
+    Q_UNUSED(itemKey)
+    if (m_winDockNet->isHoverDisplay())
+        return m_isHoverDisplay;
+    else
+        return nullptr;
+}
+
+void NetPlugin::onHoverDisplay()
+{
+    if (m_winDockNet->isHoverDisplay()) {
+        m_isHoverDisplay->setText(m_winDockNet->hoverDisplayText());
     }
 }

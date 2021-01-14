@@ -26,12 +26,14 @@ public:
     void initSigConnect();
     void setLabWidgetLayout(bool isHorizontal);
     void setLabWidgetLayout(Qt::Orientation orientation);
+    bool isHoverDisplay();
     void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 1000 * 60 * 60 * 30);
     void writeNetworkTraffic(QString &log);
     void readNetworkTraffic(long &net);
     long netOverNumToByte(long net);
 
     void showTest(QString str);
+    QString hoverDisplayText();
 
 public slots:
     // 响应本身
@@ -42,6 +44,7 @@ public slots:
 
     void onWriteNetworkTraffic();
     void onNetOverWarning();
+
 
     // 响应 WinDdeDockSetting 发射的信号
     void onCurrentFont(const QFont &font);
@@ -67,7 +70,7 @@ public slots:
 
     void onFractionalAccuracy(int num);
     void onRefreshInterval(int interval);
-//    void sigHoverDisplay(bool check);
+    void onHoverDisplay(bool check);
 
     // 响应 WinMain 发射的信号
     void onCpuOver(bool check);
@@ -84,7 +87,7 @@ private:
     long m_down;
     QVector<CpuInfo> m_vec;
     int m_precision; // 精确度
-//    bool m_hover;    // 悬浮现实额外信息
+    bool m_hover;    // 悬浮现实额外信息
     QVector<QVariant> m_vecOverWarningTemp;  // 临时
     QVector<QVariant> m_vecOverWarning; // 顺序：(0-2 是否选中预警):cpu、mem、net;(3-5 预警数值):cpu、mem、net;（6 net 预警单位）；
 

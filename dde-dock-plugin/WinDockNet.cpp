@@ -37,7 +37,7 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     , m_orientation(Qt::Horizontal)
     , m_gridLayout(new QGridLayout(this))
     , m_vecLabel(8, nullptr)
-//    , m_hover(true)
+    , m_hover(true)
 {
     init();
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onNet);
@@ -111,7 +111,7 @@ void WinDockNet::initSigConnect()
 //    connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeDisk, this, &WinDockNet::onLocationExchangeDisk);
    connect(m_winSetting, &WinDdeDockSetting::sigFractionalAccuracy, this, &WinDockNet::onFractionalAccuracy);
    connect(m_winSetting, &WinDdeDockSetting::sigRefreshInterval, this, &WinDockNet::onRefreshInterval);
-//    connect(m_winSetting, &WinDdeDockSetting::sigHoverDisplay, this, &WinDockNet::sigHoverDisplay);
+   connect(m_winSetting, &WinDdeDockSetting::sigHoverDisplay, this, &WinDockNet::onHoverDisplay);
 
    // 响应 WinMain 发射的信号
    connect(m_winSetting, &WinDdeDockSetting::sigCpuOver, this, &WinDockNet::onCpuOver);
@@ -167,6 +167,11 @@ void WinDockNet::setLabWidgetLayout(Qt::Orientation orientation)
             m_gridLayout->addWidget(m_vecLabel[i], i / 2, iTo2, iTo2 ? Qt::AlignRight : Qt::AlignLeft);
         }
     }
+}
+
+bool WinDockNet::isHoverDisplay()
+{
+    return m_hover;
 }
 
 /*!
@@ -287,6 +292,18 @@ void WinDockNet::showTest(QString str)
 
     qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarningTemp
            <<m_vecOverWarningTemp.size()<<m_vecOverWarningTemp.capacity();
+}
+
+QString WinDockNet::hoverDisplayText()
+{
+    double run = 0;
+    double idle = 0;
+    if (m_hover) {
+        m_info->systemRunTime(run, idle);
+        return m_info->runTimeUnit(run);
+    } else {
+        return "";
+    }
 }
 
 /*!
@@ -592,6 +609,12 @@ void WinDockNet::onRefreshInterval(int interval)
         m_timer->setInterval(interval);
 }
 
+void WinDockNet::onHoverDisplay(bool check)
+{
+    if (m_hover != check)
+        m_hover = check;
+}
+
 void WinDockNet::onCpuOver(bool check)
 {
     m_vecOverWarningTemp[0].setValue(check);
@@ -641,11 +664,5 @@ void WinDockNet::onBtnApplyWinMain()
 {
     m_vecOverWarning = m_vecOverWarningTemp;
 }
-
-//void WinDockNet::sigHoverDisplay(bool check)
-//{
-//    if (m_hover != check)
-//        m_hover = check;
-//}
 
 
