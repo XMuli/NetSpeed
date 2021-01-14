@@ -28,7 +28,9 @@ public:
     void setLabWidgetLayout(Qt::Orientation orientation);
     void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 4000);
 
-    bool writeNetworkTraffic();
+    void writeNetworkTraffic(QString &log);
+    void readNetworkTraffic(const QString &log);
+
 
     void showTest(QString str);
 
@@ -38,6 +40,9 @@ public slots:
     void onCpu();
     void onMemory();
     void onSystemRunTime();
+
+    void onWriteNetworkTraffic();
+    void onReadNetworkTraffic();
 
     // 响应 WinDdeDockSetting 发射的信号
     void onCurrentFont(const QFont &font);
@@ -86,7 +91,8 @@ private:
 
     MonitorInfo_x11 *m_info;
     ModelUnit m_modelUnit;
-    QTimer *m_timer;             // 刷新时间
+    QTimer *m_timer;              // 刷新时间
+    QTimer *m_timerNetTrafficLog; // 写入日志间隔时间
 
     WinDdeDockSetting *m_winSetting;
     Qt::Orientation m_orientation;

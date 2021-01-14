@@ -5,7 +5,10 @@
 #include <QObjectList>
 #include <QMessageBox>
 #include <QIcon>
+#include <QFile>
+#include <QDate>
 
+#define NETWORK_TRAFFIC_LOG_PATH "/home/xmuli/project/github/lfxNet/dde-dock-plugin/NetworkTraffic.log"
 /*!
  * \brief WinDockNet::WinDockNet
  * \param parent
@@ -25,6 +28,7 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     , QWidget(parent)
     , m_info(new MonitorInfo_x11())
     , m_timer(new QTimer())
+    , m_timerNetTrafficLog(new QTimer())
     , m_modelUnit(Default)
     , m_precision(2)
     , m_vecOverWarningTemp(3, QVariant(false))
@@ -41,6 +45,10 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onSystemRunTime);
     m_timer->setInterval(1000);
     m_timer->start();
+
+    connect(m_timerNetTrafficLog, &QTimer::timeout, this, &WinDockNet::onWriteNetworkTraffic);
+    m_timerNetTrafficLog->setInterval(1000 * 4);
+    m_timerNetTrafficLog->start();
 }
 
 WinDockNet::~WinDockNet()
@@ -179,12 +187,49 @@ void WinDockNet::DataOverWarning(QString title, QString text, QWidget *parent, b
 }
 
 /*!
- * \brief WinDockNet::writeNetworkTraffic 保存每日的流量监控
- * \return
+ * \brief WinDockNet::writeNetworkTraffic 将网络接收发送网络总字节数字，保存在 .log中；时间最新的永远在
+ *                                        最上一行，同一天仅只能有一条流量记录
+ * \param[in] log 最新的一行数据，保存在第一行
+ * \note QIODevice:: WriteOnly、Append、Truncate，会打开时候就清空、或者调用 .readAll() 为 "" 空；
+ *                   ReadWrite 读没问题，写的时候 .readAll() 为 "" 空；故打开和两次，坑死了！！！
  */
-bool WinDockNet::writeNetworkTraffic()
+void WinDockNet::writeNetworkTraffic(QString &log)
 {
-    return false;
+    QFile file(NETWORK_TRAFFIC_LOG_PATH);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log  [ReadOnly]\"  don't open!");
+        return;
+    }
+
+    QTextStream stream(&file);
+
+
+    QString firstLine = stream.readLine();
+    QStringList listFirstLine = firstLine.simplified().split(QRegExp("\\s{1,}"));
+    QStringList listLog = log.simplified().split(QRegExp("\\s{1,}"));
+    stream.seek(0);
+    QString dataAll = stream.readAll();
+
+
+    if (listFirstLine[0] == listLog[0]) {
+        dataAll.replace(0, dataAll.indexOf('\n') + 1, log);  // + 1 是因此返回为下标为 0 的序号，而填入参数为 替换字符的个数
+    } else {
+          dataAll.prepend(log);
+    }
+    file.close();
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log [WriteOnly]\"  don't open!");
+        return;
+    }
+
+    stream << dataAll;
+    file.close();
+}
+
+void WinDockNet::readNetworkTraffic(const QString &log)
+{
+
 }
 
 void WinDockNet::showTest(QString str)
@@ -282,6 +327,42 @@ void WinDockNet::onSystemRunTime()
     double idle = 0;
     m_info->systemRunTime(run, idle);
     //    ui->lab_32->setText(m_info->runTimeUnit(run));
+}
+
+void WinDockNet::onWriteNetworkTraffic()
+{
+    QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    QString log = time + " upload: " + QString::number(m_upload) + " down: " + QString::number(m_down) + "\n";
+    writeNetworkTraffic(log);
+}
+
+void WinDockNet::onReadNetworkTraffic()
+{
+    //    QFile file(NETWORK_TRAFFIC_LOG_PATH);
+    //    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    //        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log\"  don't open!");
+    //        return;
+    //    }
+
+    //    bool ok = false;
+    //    QTextStream stream(&file);
+    //    QString line = stream.readLine().simplified();
+    //    while (!line.isNull()) {
+    //        QStringList list = line.split(QRegExp("\\s{1,}"));
+    //        if (list[0] == "MemTotal:")
+    //            info.memoryAll = list[1].toLong(&ok);
+    //        else if (list[0] == "MemAvailable:")
+    //            info.memoryFree = list[1].toLong(&ok);
+    //        else if (list[0] == "SwapTotal:")
+    //            info.swapAll = list[1].toLong(&ok);
+    //        else if (list[0] == "SwapFree:")
+    //            info.swapFree = list[1].toLong(&ok);
+
+    //        line = stream.readLine().simplified();
+    //    }
+
+    //    file.close();
+    //    return false;
 }
 
 void WinDockNet::onCurrentFont(const QFont &font)
