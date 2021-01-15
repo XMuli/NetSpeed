@@ -69,6 +69,8 @@ void WinDdeDockSetting::init()
     m_btnGroupTheme->addButton(ui->radioButtonDark);
     ui->comboBoxStyle->addItems(QStyleFactory::keys());
 
+    setWindowTitle(QString("MonitorNet"));
+
     setWindowFlags(Qt::WindowStaysOnTopHint);
 }
 
@@ -469,6 +471,7 @@ void WinDdeDockSetting::onBtnApplyWinDdeDock(bool check)
 {
     Q_UNUSED(check)
     saveConfigWinDdeDock();
+    close();
 }
 
 /*!
@@ -485,6 +488,7 @@ void WinDdeDockSetting::onBtnApplyWinMain(bool check)
 {
     Q_UNUSED(check)
     saveConfigWinMain();
+    close();
 }
 
 void WinDdeDockSetting::onBtnQuitWinMain(bool check)
