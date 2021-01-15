@@ -24,6 +24,7 @@ WinDdeDockSetting::WinDdeDockSetting(QWidget *parent)
     , m_isHorizontal(true)
     , m_path("")
     , m_btnGroupTheme(new QButtonGroup(nullptr))
+    , m_doubleClick(2)
     , m_cpuOverNum(0)
     , m_memOverNum(0)
     , m_NetOverNum(0)
@@ -97,6 +98,8 @@ void WinDdeDockSetting::initSigConnectWinDdeDock()
     connect(ui->checkBoxLocationExchangeDisk, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeDisk);
 
     connect(ui->spinBoxFractionalAccuracy, pFun, this, &WinDdeDockSetting::sigFractionalAccuracy);
+    void (QComboBox::*pFunDoubleClick)(int) = &QComboBox::currentIndexChanged;
+    connect(ui->comboBoxDoubleClick, pFunDoubleClick, this, &WinDdeDockSetting::onDoubleClick);
     connect(ui->spinBoxRefreshInterval, pFun, this, &WinDdeDockSetting::sigRefreshInterval);
     connect(ui->checkBoxHoverDisplay, &QCheckBox::clicked, this, &WinDdeDockSetting::sigHoverDisplay);
 }
@@ -118,17 +121,10 @@ void WinDdeDockSetting::initSigConnectWinMain()
     connect(ui->spinBoxNetOverNum, pFun, this, &WinDdeDockSetting::sigNetOverNum);
     connect(ui->comboBoxNetNumUnit, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::sigNetNumUnit);
 
-//    void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
-//    connect(ui->spinBoxCpuOverNum, pFun, this, &WinDdeDockSetting::onCpuOverNum);
-//    connect(ui->spinBoxMemOverNum, pFun, this, &WinDdeDockSetting::onMemOverNum);
-//    connect(ui->spinBoxNetOverNum, pFun, this, &WinDdeDockSetting::onNetOverNum);
-//    connect(ui->comboBoxNetNumUnit, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::onNetNumUnit);
-
     void (QButtonGroup::*pFunTheme)(int, bool) = &QButtonGroup::buttonToggled;
     connect(m_btnGroupTheme, pFunTheme, this, &WinDdeDockSetting::onBtnGroupTheme);
     void (QComboBox::*pFuncomboBoxStyle)(int) = &QComboBox::currentIndexChanged;
     connect(ui->comboBoxStyle, pFuncomboBoxStyle, this, &WinDdeDockSetting::onStyle);
-
     connect(ui->btnApplyWinMain, &QPushButton::pressed, this, &WinDdeDockSetting::sigBtnApplyWinMain);
 }
 
@@ -388,6 +384,11 @@ bool WinDdeDockSetting::isHorizontal()
     return ui->radioHorizontal->isChecked();
 }
 
+int WinDdeDockSetting::doubleClick()
+{
+    return m_doubleClick;
+}
+
 /*!
  * \brief WinDdeDockSetting::updateLabelText 根据当前 UI 界面的 radioHorizontal 控件是否被中（临时），来更新
  *                                           下面 网速、CPU、内存、磁盘的 QLineEdit 的内容
@@ -490,6 +491,12 @@ void WinDdeDockSetting::onBtnQuitWinMain(bool check)
 {
     Q_UNUSED(check)
     close();
+}
+
+void WinDdeDockSetting::onDoubleClick(int index)
+{
+    if (m_doubleClick != index)
+        m_doubleClick = index;
 }
 
 /*!

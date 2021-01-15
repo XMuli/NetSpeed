@@ -330,7 +330,7 @@
                  </layout>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,2,1,2,1">
+                 <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,2,1,2,0">
                   <item>
                    <widget class="QLabel" name="label_39">
                     <property name="text">
@@ -482,14 +482,22 @@
             </item>
             <item>
              <widget class="QComboBox" name="comboBoxDoubleClick">
+              <property name="currentIndex">
+               <number>2</number>
+              </property>
               <item>
                <property name="text">
-                <string>显示配置主窗口</string>
+                <string>无响应</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>显示系统监视器（DDE）</string>
+                <string>配置主窗口</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>系统监视器（DDE）</string>
                </property>
               </item>
              </widget>

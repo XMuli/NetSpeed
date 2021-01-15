@@ -5,6 +5,7 @@
 #include "NetPlugin.h"
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QProcess>
 #include <QDebug>
 
 DWIDGET_USE_NAMESPACE
@@ -164,6 +165,23 @@ QWidget *NetPlugin::itemTipsWidget(const QString &itemKey)
         return m_isHoverDisplay;
     else
         return nullptr;
+}
+
+QWidget *NetPlugin::itemPopupApplet(const QString &itemKey)
+{
+    Q_UNUSED(itemKey)
+
+    int doubleClick = m_winSetting->doubleClick();
+    if (doubleClick == 0) {
+        // 无响应
+    } else if (doubleClick == 1) {
+        m_winSetting->show();
+    } else if (doubleClick == 2) {
+        QProcess *process = new QProcess();
+        process->start("deepin-system-monitor");
+    }
+
+    return nullptr;
 }
 
 void NetPlugin::onHoverDisplay()

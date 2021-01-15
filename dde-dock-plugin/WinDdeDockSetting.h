@@ -20,14 +20,18 @@ public:
     explicit WinDdeDockSetting(QWidget *parent = nullptr);
     ~WinDdeDockSetting();
 
-    void init();
-    void initSigConnectWinDdeDock();
-    void initSigConnectWinMain();
+public:
+    bool isHorizontal();
+    int doubleClick();
     void readConfigWinDdeDock();
     void saveConfigWinDdeDock();
     void readConfigWinMain();
     void saveConfigWinMain();
-    bool isHorizontal();
+
+private:
+    void init();
+    void initSigConnectWinDdeDock();
+    void initSigConnectWinMain();
     void updateLabelText(bool isHorizontal);
 
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
@@ -77,6 +81,7 @@ public slots:
     void onBtnApplyWinMain(bool check);
     void onBtnQuitWinMain(bool check);
 
+    void onDoubleClick(int index);
     void onBootUpUpdate(bool check);
 //    void onCheckUpdate(bool check);
     void onChangePath();
@@ -90,6 +95,7 @@ private:
     bool m_isHorizontal; // 插件的水平、垂直状态
     QString m_path;      // 数据保存路径
     QButtonGroup *m_btnGroupTheme;
+    int m_doubleClick;
 
     int m_cpuOverNum;
     int m_memOverNum;

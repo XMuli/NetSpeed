@@ -42,8 +42,8 @@
       }
     ],
     "DockWindow": {
-      "DoubleClick": "显示系统监视器（DDE）",
-      "DoubleClickIndex": 1,
+      "DoubleClick": "系统监视器（DDE）",
+      "DoubleClickIndex": 2,
       "HoverDisplay": true
     },
     "GraphicsMode": 0,
