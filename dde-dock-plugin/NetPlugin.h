@@ -40,6 +40,7 @@ public:
     virtual void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) override;
     virtual QWidget *itemTipsWidget(const QString &itemKey) override;
     virtual QWidget *itemPopupApplet(const QString &itemKey) override;
+    virtual bool itemAllowContainer(const QString &itemKey) override;
 
 public slots:
     void onHoverDisplay();
@@ -50,7 +51,6 @@ private:
     PluginProxyInterface *m_proxyInter;
     QLabel *m_isHoverDisplay;
     QTimer *m_timer;
-public:
 };
 
 #endif //LFXNET_NETPLUGIN_H

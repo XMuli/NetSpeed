@@ -184,6 +184,17 @@ QWidget *NetPlugin::itemPopupApplet(const QString &itemKey)
     return nullptr;
 }
 
+/*!
+ * \brief NetPlugin::itemAllowContainer 插件是否允许被收纳
+ * \param itemKey
+ * \return 是否允许被收纳
+ */
+bool NetPlugin::itemAllowContainer(const QString &itemKey)
+{
+    Q_UNUSED(itemKey)
+    return true;
+}
+
 void NetPlugin::onHoverDisplay()
 {
     if (m_winDockNet->isHoverDisplay()) {

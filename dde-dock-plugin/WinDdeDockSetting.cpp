@@ -69,8 +69,7 @@ void WinDdeDockSetting::init()
     m_btnGroupTheme->addButton(ui->radioButtonDark);
     ui->comboBoxStyle->addItems(QStyleFactory::keys());
 
-    setWindowTitle(QString("MonitorNet"));
-
+    setWindowTitle(QString("lfxMonitorNet"));
     setWindowFlags(Qt::WindowStaysOnTopHint);
 }
 

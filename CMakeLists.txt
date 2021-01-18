@@ -38,4 +38,4 @@ add_executable(${PROJECT_NAME} ${DIR})
 #endif ()
 
 #find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-target_link_libraries(${PROJECT_NAME} MonitorInfo MonitorNet)
+target_link_libraries(${PROJECT_NAME} MonitorInfo lfxMonitorNet)

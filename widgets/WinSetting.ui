@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabMainSetting">
       <attribute name="title">
@@ -892,6 +892,12 @@
           <widget class="QGroupBox" name="groupBox_11">
            <property name="title">
             <string>CPU/内存占用图</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_20">
             <item>

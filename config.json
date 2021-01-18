@@ -42,8 +42,8 @@
       }
     ],
     "DockWindow": {
-      "DoubleClick": "系统监视器（DDE）",
-      "DoubleClickIndex": 2,
+      "DoubleClick": "配置主窗口",
+      "DoubleClickIndex": 1,
       "HoverDisplay": true
     },
     "GraphicsMode": 0,
@@ -55,7 +55,7 @@
   },
   "WinMain": {
     "AppSetting": {
-      "BootUpUpdate": true,
+      "BootUpUpdate": false,
       "Language": "跟随系统",
       "LanguageIndex": 0,
       "Outdated": false
@@ -70,15 +70,15 @@
       "CpuOverNum": 0,
       "MemoryOver": false,
       "MemoryOverNum": 0,
-      "NetOver": true,
-      "NetOverNum": 16903628,
-      "NetOverNumUnit": "Byte",
-      "NetOverNumUnitIndex": 0
+      "NetOver": false,
+      "NetOverNum": 0,
+      "NetOverNumUnit": "MB",
+      "NetOverNumUnitIndex": 2
     },
     "ThemeStyle": {
       "SystemStyle": "chameleon",
       "SystemStyleIndex": 0,
-      "themeIndex": 0
+      "themeIndex": 1
     }
   }
 }
