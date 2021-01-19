@@ -29,6 +29,8 @@ public:
     void readConfigWinMain();
     void saveConfigWinMain();
 
+    void readConfig();
+    void saveConfig();
     QString creatorConfigPath(QString path);
     bool writeDataToConfigPath(QString sour, QString dest, QString file);
     void writeDataToConfigPath();

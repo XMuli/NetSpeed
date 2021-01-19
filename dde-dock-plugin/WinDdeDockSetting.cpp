@@ -46,10 +46,7 @@ void WinDdeDockSetting::init()
     initSigConnectWinMain();
 
     // 读入 json 文件到流中
-    int index = -1;
-    ifstream jfile(configPath(index));
-    qDebug()<<"==读取json======================================>"<<index << configPath(index);
-    jfile >> m_js;
+    readConfig();
 
     // 控件的基本设置，其读写留其它函数完成
     ui->labLabTextColor->setAutoFillBackground(true);
@@ -275,17 +272,8 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
     jsDockWindow["DoubleClick"] = ui->comboBoxDoubleClick->currentText().toStdString().c_str();
 
     // TODO: 2021-01-07 占用图模式未写
-    int index = -1;
-    char *path = configPath(index);
-    qDebug()<<"===保存 saveConfigWinDdeDock=========================>"<<index;
-    if (index == 2)
-        writeDataToConfigPath();
 
-    qDebug()<<"===保存2 saveConfigWinDdeDock=========================>"<<index;
-
-    path = configPath(index);
-    ofstream outFile(path);
-    outFile << setw(2) << m_js << endl;
+    saveConfig();
 }
 
 /*!
@@ -382,13 +370,32 @@ void WinDdeDockSetting::saveConfigWinMain()
     jsThemeStyle["SystemStyleIndex"] = ui->comboBoxStyle->currentIndex();
     jsThemeStyle["SystemStyle"] = ui->comboBoxStyle->currentText().toStdString().c_str();
 
+    saveConfig();
+}
+
+/*!
+ * \brief WinDdeDockSetting::readConfig 读取配置文件
+ * \note 优先读取用户目录下的配置文件，其次去寻找系统级别下的配置文件
+ */
+void WinDdeDockSetting::readConfig()
+{
     int index = -1;
-    char *path = configPath(index);
+    ifstream jfile(configPath(index));
+    jfile >> m_js;
+}
+
+/*!
+ * \brief WinDdeDockSetting::saveConfig 奖修改好的配置文件，保存到文本文件中
+ */
+void WinDdeDockSetting::saveConfig()
+{
+    int index = -1;
+    configPath(index);
     if (index == 2)
         writeDataToConfigPath();
 
-    path = configPath(index);
-    ofstream outFile(path);
+    configPath(index);
+    ofstream outFile(configPath(index));
     outFile << setw(2) << m_js << endl;
 }
 
