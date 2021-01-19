@@ -14,6 +14,8 @@
 #include <QApplication>
 #include <DGuiApplicationHelper>
 #include <QStandardPaths>
+#include <QString>
+#include <QString>
 using namespace std;
 DGUI_USE_NAMESPACE
 
@@ -44,7 +46,9 @@ void WinDdeDockSetting::init()
     initSigConnectWinMain();
 
     // 读入 json 文件到流中
-    ifstream jfile(configPath().toStdString().c_str());
+    int index = -1;
+    ifstream jfile(configPath(index));
+    qDebug()<<"==读取json======================================>"<<index << configPath(index);
     jfile >> m_js;
 
     // 控件的基本设置，其读写留其它函数完成
@@ -271,8 +275,16 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
     jsDockWindow["DoubleClick"] = ui->comboBoxDoubleClick->currentText().toStdString().c_str();
 
     // TODO: 2021-01-07 占用图模式未写
+    int index = -1;
+    char *path = configPath(index);
+    qDebug()<<"===保存 saveConfigWinDdeDock=========================>"<<index;
+    if (index == 2)
+        writeDataToConfigPath();
 
-    ofstream outFile(configPath().toStdString().c_str());
+    qDebug()<<"===保存2 saveConfigWinDdeDock=========================>"<<index;
+
+    path = configPath(index);
+    ofstream outFile(path);
     outFile << setw(2) << m_js << endl;
 }
 
@@ -370,35 +382,129 @@ void WinDdeDockSetting::saveConfigWinMain()
     jsThemeStyle["SystemStyleIndex"] = ui->comboBoxStyle->currentIndex();
     jsThemeStyle["SystemStyle"] = ui->comboBoxStyle->currentText().toStdString().c_str();
 
-    ofstream outFile(configPath().toStdString().c_str());
+    int index = -1;
+    char *path = configPath(index);
+    if (index == 2)
+        writeDataToConfigPath();
+
+    path = configPath(index);
+    ofstream outFile(path);
     outFile << setw(2) << m_js << endl;
 }
 
-QString WinDdeDockSetting::configPath()
+/*!
+ * \brief WinDdeDockSetting::creatorConfigPath 创建配置文件
+
+ * \return 配置文件的保存路径
+ * \note 依据：当前用户创建创建后写入的文件，其是属于当前用户（即使程序本身是属于 root 用户的，但是在 xmuli 用户中执行
+ *       ，创建了修改后的文件，用来保存配置文件在 home/xmuli 下，则其是属于 xmuli 用户的，而对于 chmod 可以在程序中赋值）
+ */
+QString WinDdeDockSetting::creatorConfigPath(QString path)
 {
-    QString path(QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + "/lfxNet");
     QDir dir(path);
     if (!dir.exists()) {
-        if(!dir.mkdir(path))
+        if (!dir.mkpath(path)) {
             qDebug()<< "路径不存在且创建失败：" + path;
-    }
-
-    QString newFilePath = path + "/config.json";
-    QFileInfo dirNewFilePath(newFilePath);
-    if (!dirNewFilePath.isFile()) {
-        QFile fileData(":/config.json");
-        if (fileData.copy(newFilePath)) {
-            bool b = fileData.setPermissions(QFile::ReadOwner | QFile::WriteOwner
-                                    | QFile::ReadUser | QFile::WriteUser
-                                    | QFile::ReadGroup | QFile::WriteGroup
-                                    | QFile::ReadOther | QFile::WriteOther);
-            qDebug() << "====================设置成功===>" << b;
-        } else {
-            qDebug()<< "第一次拷贝文件 config.json 到" + path + "失败～";
+            return "";
         }
     }
 
-    return newFilePath;
+    return path;
+}
+
+/*!
+ * \brief WinDdeDockSetting::writeDataToConfigPath 将 sour 路径下的 file 文件，读取之后，写入一份新的到 dest 路径下
+ * \param[in] sour 源路径
+ * \param[in] dest 目标路径
+ * \param[in] file 文件名
+ * \return true 成功； false 失败
+ */
+bool WinDdeDockSetting::writeDataToConfigPath(QString sour, QString dest, QString file)
+{
+    QString sourPath = sour + "/" + file;
+    QString destPath = dest + "/" + file;
+    QFileInfo fileFile(sourPath);
+    QFileInfo fileNewFile(destPath);
+
+    if (fileFile.isFile() && !fileNewFile.isFile()) {
+        QDir dirDest(dest);
+        if (!dirDest.exists())
+            dirDest.mkpath(dest);
+
+        if (QFile::copy(sourPath, destPath)) {
+            bool ok = QFile::setPermissions(destPath, QFile::ReadOwner | QFile::WriteOwner
+                                              | QFile::ReadUser | QFile::WriteUser
+                                              | QFile::ReadGroup | QFile::WriteGroup
+                                              | QFile::ReadOther | QFile::WriteOther);
+            if (!ok)
+                qDebug() << "文件设置读写权限失败："<< dest + file;
+            return true;
+        } else {
+            qDebug() << "文件拷贝失败"<< sourPath << "---->" << destPath;
+            return false;
+        }
+    } else {
+        qDebug() << "文件"<< sourPath << "不存在; 或" << destPath << "已经存在！";
+        return false;
+    }
+}
+
+void WinDdeDockSetting::writeDataToConfigPath()
+{
+    int index = -1;
+    QString name("/lfxNet/MonitorNetConfig.json");
+    QString sour = QString("/usr/share") + name;
+    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+    configPath(sour, dest, index);
+
+    if (index == 2)
+        writeDataToConfigPath(sour.left(sour.lastIndexOf("/")), dest.left(dest.lastIndexOf("/")), name.right(name.size() - name.lastIndexOf("/") - 1));
+}
+
+/*!
+ * \brief WinDdeDockSetting::configPath 获取系统配置文件的路径
+ * \param[in] systemPath 系统目录的配置文件路径，优先级低
+ * \param[in] homePath 家目录的配置文件路径，优先级高（先去查找）
+ * \param[out] index 0 输出 homePath； 1 输出 systemPath；-1 输出 “”
+ * \return 文件的路径
+ * \note 先判断家目录下的文件是否存在，若有则返回；无则去尝试返回系统目录下文件路径
+ */
+QString WinDdeDockSetting::configPath(QString systemPath, QString homePath, int &index)
+{
+    QFileInfo fileSystem(systemPath);
+    QFileInfo fileHome(homePath);
+
+    if (fileHome.isFile()) {
+        index = 1;
+        return homePath;
+    } else if (fileSystem.isFile()) {
+        index = 2;
+        return systemPath;
+    } else {
+        index = -1;
+        return "";
+    }
+}
+
+/*!
+ * \brief WinDdeDockSetting::configPath 重载 configPath 函数
+ * \param path “相对”路径（包含文件名）
+ * \return 配置文件的路径
+ */
+char *WinDdeDockSetting::configPath(int &index, QString path)
+{
+    QString name("/lfxNet/MonitorNetConfig.json");
+    if (!path.isEmpty())
+        name = path;
+
+    QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+    QString systemPath("/usr/share");
+    systemPath += name;
+
+    QString ret = configPath(systemPath, homePath, index);
+    char *dataPath = const_cast<char *>(ret.toLatin1().data());  // 成功
+//    char *dataPath = const_cast<char *>(ret.toStdString().c_str());  // 会强制转换失败，
+    return dataPath;
 }
 
 /*!

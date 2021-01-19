@@ -28,7 +28,12 @@ public:
     void saveConfigWinDdeDock();
     void readConfigWinMain();
     void saveConfigWinMain();
-    QString configPath();
+
+    QString creatorConfigPath(QString path);
+    bool writeDataToConfigPath(QString sour, QString dest, QString file);
+    void writeDataToConfigPath();
+    QString configPath(QString systemPath, QString homePath, int &index);
+    char* configPath(int &index, QString path = "");
 
 private:
     void init();

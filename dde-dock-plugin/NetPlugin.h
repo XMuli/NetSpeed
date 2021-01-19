@@ -19,7 +19,7 @@ class NetPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
     Q_INTERFACES(PluginsItemInterface)  // 声明实现了的接口
-    Q_PLUGIN_METADATA(IID "com.deepin.dock.PluginsItemInterface" FILE "MonitorNet.json")  // 插件元数据
+    Q_PLUGIN_METADATA(IID "com.deepin.dock.PluginsItemInterface" FILE "MonitorNetApi.json")  // 插件元数据
 
 public:
     explicit NetPlugin(QObject *parent = nullptr);
