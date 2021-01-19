@@ -2,6 +2,7 @@
 #define WINDDEDOCKSETTING_H
 
 #include <QButtonGroup>
+#include <QDir>
 #include <QWidget>
 #include "../lib/MonitorInfo_x11.h"
 LFX_USE_NAESPACE
@@ -27,6 +28,7 @@ public:
     void saveConfigWinDdeDock();
     void readConfigWinMain();
     void saveConfigWinMain();
+    QString configPath();
 
 private:
     void init();

@@ -23,6 +23,7 @@
         )
 
     #set(CMAKE_INSTALL_PREFIX "/usr")  # 默认为 "/usr/local", 若指定 / 的绝对路径，则 install 命令使用此变量作作为前缀会失效
+#    install(FILES "../config.json" DESTINATION "~/.config")
     install(TARGETS ${PLUGIN_NAME} LIBRARY DESTINATION "/usr/lib/dde-dock/plugins")
 
 

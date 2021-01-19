@@ -13,10 +13,9 @@
 #include <QStyleFactory>
 #include <QApplication>
 #include <DGuiApplicationHelper>
+#include <QStandardPaths>
 using namespace std;
 DGUI_USE_NAMESPACE
-
-#define DATA_JSON_PATH "/home/xmuli/project/github/lfxNet/config.json"
 
 WinDdeDockSetting::WinDdeDockSetting(QWidget *parent)
     : QWidget(parent)
@@ -45,7 +44,7 @@ void WinDdeDockSetting::init()
     initSigConnectWinMain();
 
     // 读入 json 文件到流中
-    ifstream jfile(DATA_JSON_PATH);
+    ifstream jfile(configPath().toStdString().c_str());
     jfile >> m_js;
 
     // 控件的基本设置，其读写留其它函数完成
@@ -273,7 +272,7 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
 
     // TODO: 2021-01-07 占用图模式未写
 
-    ofstream outFile(DATA_JSON_PATH);
+    ofstream outFile(configPath().toStdString().c_str());
     outFile << setw(2) << m_js << endl;
 }
 
@@ -371,8 +370,27 @@ void WinDdeDockSetting::saveConfigWinMain()
     jsThemeStyle["SystemStyleIndex"] = ui->comboBoxStyle->currentIndex();
     jsThemeStyle["SystemStyle"] = ui->comboBoxStyle->currentText().toStdString().c_str();
 
-    ofstream outFile(DATA_JSON_PATH);
+    ofstream outFile(configPath().toStdString().c_str());
     outFile << setw(2) << m_js << endl;
+}
+
+QString WinDdeDockSetting::configPath()
+{
+    QString path(QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + "/lfxNet");
+    QDir dir(path);
+    if (!dir.exists()) {
+        if(!dir.mkdir(path))
+            qDebug()<< "路径不存在且创建失败：" + path;
+    }
+
+    QString newFilePath = path + "/config.json";
+    QFileInfo dirNewFilePath(newFilePath);
+    if (!dirNewFilePath.isFile()) {
+        if (!QFile::copy(":/config.json", newFilePath))
+            qDebug()<< "拷贝文件 config.json 到" + path + "失败～";
+    }
+
+    return newFilePath;
 }
 
 /*!
