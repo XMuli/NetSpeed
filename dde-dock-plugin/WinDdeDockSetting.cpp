@@ -386,8 +386,16 @@ QString WinDdeDockSetting::configPath()
     QString newFilePath = path + "/config.json";
     QFileInfo dirNewFilePath(newFilePath);
     if (!dirNewFilePath.isFile()) {
-        if (!QFile::copy(":/config.json", newFilePath))
-            qDebug()<< "拷贝文件 config.json 到" + path + "失败～";
+        QFile fileData(":/config.json");
+        if (fileData.copy(newFilePath)) {
+            bool b = fileData.setPermissions(QFile::ReadOwner | QFile::WriteOwner
+                                    | QFile::ReadUser | QFile::WriteUser
+                                    | QFile::ReadGroup | QFile::WriteGroup
+                                    | QFile::ReadOther | QFile::WriteOther);
+            qDebug() << "====================设置成功===>" << b;
+        } else {
+            qDebug()<< "第一次拷贝文件 config.json 到" + path + "失败～";
+        }
     }
 
     return newFilePath;
