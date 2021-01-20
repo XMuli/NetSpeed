@@ -27,7 +27,7 @@ public:
     void setLabWidgetLayout(bool isHorizontal);
     void setLabWidgetLayout(Qt::Orientation orientation);
     bool isHoverDisplay();
-    void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 1000 * 60 * 60 * 30);
+    void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 1000 * 60 * 10);
     void writeNetworkTraffic(QString &log);
     void readNetworkTraffic(long &net);
     long netOverNumToByte(long net);

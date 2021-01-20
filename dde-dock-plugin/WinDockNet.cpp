@@ -9,7 +9,6 @@
 #include <QDate>
 #include <climits>
 
-#define NETWORK_TRAFFIC_LOG_PATH "/home/xmuli/project/github/lfxNet/dde-dock-plugin/NetworkTraffic.log"
 /*!
  * \brief WinDockNet::WinDockNet
  * \param parent
@@ -202,7 +201,7 @@ void WinDockNet::DataOverWarning(QString title, QString text, QWidget *parent, b
  */
 void WinDockNet::writeNetworkTraffic(QString &log)
 {
-    QFile file(NETWORK_TRAFFIC_LOG_PATH);
+    QFile file(":/NetworkTraffic.log");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log  [ReadOnly]\"  don't open!");
         return;
@@ -233,7 +232,7 @@ void WinDockNet::writeNetworkTraffic(QString &log)
 
 void WinDockNet::readNetworkTraffic(long &net)
 {
-    QFile file(NETWORK_TRAFFIC_LOG_PATH);
+    QFile file(":/NetworkTraffic.log");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log  [ReadOnly]\"  don't open!");
         return;
