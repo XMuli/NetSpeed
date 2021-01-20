@@ -20,7 +20,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabDockSetting">
       <attribute name="title">
@@ -734,7 +734,7 @@
             <item>
              <widget class="QRadioButton" name="radioDefaultPath">
               <property name="text">
-               <string>保存在默认路径</string>
+               <string>系统路径下配置</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -744,14 +744,14 @@
             <item>
              <widget class="QRadioButton" name="radioCustomPath">
               <property name="text">
-               <string>保存在自定义路径</string>
+               <string>用户路径下配置</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QPushButton" name="btnChangePath">
               <property name="text">
-               <string>更改目录</string>
+               <string>导出配置</string>
               </property>
              </widget>
             </item>

@@ -36,6 +36,7 @@ public:
     void writeDataToConfigPath();
     QString configPath(QString systemPath, QString homePath, int &index);
     char* configPath(int &index, QString path = "");
+    QString configPath();
 
 private:
     void init();

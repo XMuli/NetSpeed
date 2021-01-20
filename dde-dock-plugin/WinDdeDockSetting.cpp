@@ -456,6 +456,9 @@ bool WinDdeDockSetting::writeDataToConfigPath(QString sour, QString dest, QStrin
     }
 }
 
+/*!
+ * \brief WinDdeDockSetting::writeDataToConfigPath 保存配置文件
+ */
 void WinDdeDockSetting::writeDataToConfigPath()
 {
     int index = -1;
@@ -509,9 +512,15 @@ char *WinDdeDockSetting::configPath(int &index, QString path)
     systemPath += name;
 
     QString ret = configPath(systemPath, homePath, index);
+
     char *dataPath = const_cast<char *>(ret.toLatin1().data());  // 成功
 //    char *dataPath = const_cast<char *>(ret.toStdString().c_str());  // 会强制转换失败，
     return dataPath;
+}
+
+QString WinDdeDockSetting::configPath()
+{
+    return "";
 }
 
 /*!
@@ -653,12 +662,25 @@ void WinDdeDockSetting::onBootUpUpdate(bool check)
 void WinDdeDockSetting::onChangePath()
 {
     QString currPath = QCoreApplication::applicationDirPath();
-    QString path = QFileDialog::getExistingDirectory(this, tr("自定义保存路径"), currPath);   //最后一个参数，表示只显示路径
+    QString CustomPath = QFileDialog::getExistingDirectory(this, tr("自定义保存路径"), currPath);   //最后一个参数，表示只显示路径
 
-    if (path.isEmpty())
-        QMessageBox::critical(this, tr("路径错误"), tr("选择路径不能为空"), QMessageBox::Ok, QMessageBox::NoButton);
-    qDebug()<<"============================>"<<path;
-    // TODO: 2021-01-12 将文件保存到保存到此路径中；
+    if (CustomPath.isEmpty())
+        QMessageBox::critical(this, tr("路径错误"), tr("选择路径不能为空,请重新选择"), QMessageBox::Ok, QMessageBox::NoButton);
+
+//    qDebug()<<"[导出配置]============================>"<<CustomPath << ui->radioCustomPath->isChecked() ;
+    m_path = CustomPath;
+    QString path = creatorConfigPath(m_path);
+
+    QString sour = "";
+    QString name("/lfxNet/MonitorNetConfig.json");
+    QString systemPath = QString("/usr/share") + name;
+    QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+    if (homePath.isEmpty())
+        sour = systemPath.left(systemPath.lastIndexOf("/"));
+    else
+        sour = homePath.left(homePath.lastIndexOf("/"));
+
+    writeDataToConfigPath(sour, path, name.right(name.size() - name.lastIndexOf("/") - 1));
 }
 
 void WinDdeDockSetting::onBtnGroupTheme(int index, bool checked)
