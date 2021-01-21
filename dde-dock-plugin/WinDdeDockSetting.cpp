@@ -661,26 +661,22 @@ void WinDdeDockSetting::onBootUpUpdate(bool check)
 
 void WinDdeDockSetting::onChangePath()
 {
-    QString currPath = QCoreApplication::applicationDirPath();
-    QString CustomPath = QFileDialog::getExistingDirectory(this, tr("自定义保存路径"), currPath);   //最后一个参数，表示只显示路径
-
-    if (CustomPath.isEmpty())
-        QMessageBox::critical(this, tr("路径错误"), tr("选择路径不能为空,请重新选择"), QMessageBox::Ok, QMessageBox::NoButton);
-
-//    qDebug()<<"[导出配置]============================>"<<CustomPath << ui->radioCustomPath->isChecked() ;
-    m_path = CustomPath;
-    QString path = creatorConfigPath(m_path);
-
     QString sour = "";
     QString name("/lfxNet/MonitorNetConfig.json");
     QString systemPath = QString("/usr/share") + name;
     QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
-    if (homePath.isEmpty())
-        sour = systemPath.left(systemPath.lastIndexOf("/"));
-    else
-        sour = homePath.left(homePath.lastIndexOf("/"));
+    QString filePathAndName = QFileDialog::getSaveFileName(this, tr("配置导出路径"), homePath, tr("导出配置文件(*.json);;所有文件(*.*)"));
+    m_path = filePathAndName.left(filePathAndName.lastIndexOf("/"));
 
-    writeDataToConfigPath(sour, path, name.right(name.size() - name.lastIndexOf("/") - 1));
+    if (!filePathAndName.isEmpty()) {
+//        qDebug()<<"[导出配置]============================>"<< homePath << filePathAndName << m_path;
+        if (homePath.isEmpty())
+            sour = systemPath.left(systemPath.lastIndexOf("/"));
+        else
+            sour = homePath.left(homePath.lastIndexOf("/"));
+
+        writeDataToConfigPath(sour, m_path, name.right(name.size() - name.lastIndexOf("/") - 1));
+    }
 }
 
 void WinDdeDockSetting::onBtnGroupTheme(int index, bool checked)
