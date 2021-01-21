@@ -20,7 +20,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabDockSetting">
       <attribute name="title">
@@ -643,7 +643,7 @@
          <item>
           <widget class="QGroupBox" name="groupBox_12">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="title">
             <string>应用程序设置</string>
@@ -695,7 +695,7 @@
               <item>
                <widget class="QComboBox" name="comboBoxLanguage">
                 <property name="enabled">
-                 <bool>true</bool>
+                 <bool>false</bool>
                 </property>
                 <property name="editable">
                  <bool>false</bool>
