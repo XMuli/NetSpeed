@@ -60,11 +60,6 @@
       "LanguageIndex": 0,
       "Outdated": false
     },
-    "ConfigAndData": {
-      "CustomPath": "~/.config/lfxNet",
-      "DefaultPath": "~/.config/lfxNet",
-      "IsDefaultPath": true
-    },
     "Notification": {
       "CpuOver": false,
       "CpuOverNum": 0,

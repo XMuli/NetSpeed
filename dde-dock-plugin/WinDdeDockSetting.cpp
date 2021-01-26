@@ -286,16 +286,6 @@ void WinDdeDockSetting::readConfigWinMain()
 //    ui->btnCheckUpdate  // 检查更新，Outdated 判断是否需要更新
     ui->comboBoxLanguage->setCurrentIndex(jsAppSetting["LanguageIndex"]);
 
-    json jsConfigAndData = m_js["WinMain"]["ConfigAndData"];
-    bool isDefultPath = jsConfigAndData["IsDefaultPath"];
-    if (isDefultPath) {
-        ui->radioDefaultPath->setChecked(isDefultPath);
-        m_path = QString::fromStdString(jsConfigAndData["DefaultPath"]);
-    } else {
-        ui->radioCustomPath->setChecked(!isDefultPath);
-        m_path = QString::fromStdString(jsConfigAndData["CustomPath"]);
-    }
-
     json jsAppNotification = m_js["WinMain"]["Notification"];
     ui->checkBoxCpuOver->setChecked(jsAppNotification["CpuOver"]);
     ui->spinBoxCpuOverNum->setValue(jsAppNotification["CpuOverNum"]);
@@ -336,15 +326,6 @@ void WinDdeDockSetting::saveConfigWinMain()
     jsAppSetting["BootUpUpdate"] = ui->checkBoxBootUpUpdate->isChecked();
     jsAppSetting["LanguageIndex"] = ui->comboBoxLanguage->currentIndex();
     jsAppSetting["Language"] = ui->comboBoxLanguage->currentText().toStdString().c_str();
-
-    json &jsConfigAndData = m_js["WinMain"]["ConfigAndData"];
-    if (!m_path.isEmpty())
-        jsConfigAndData["CustomPath"] = m_path.toStdString().c_str();
-
-    if (ui->radioDefaultPath->isChecked())
-        jsConfigAndData["IsDefaultPath"] = true;
-    else
-        jsConfigAndData["IsDefaultPath"] = false;
 
     json &jsAppNotification = m_js["WinMain"]["Notification"];
     jsAppNotification["CpuOver"] = ui->checkBoxCpuOver->isChecked();
