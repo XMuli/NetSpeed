@@ -32,7 +32,7 @@ public:
     void readConfig();
     void saveConfig();
     QString creatorConfigPath(QString path);
-    bool writeDataToConfigPath(QString sour, QString dest, QString file);
+    bool writeDataToConfigPath(QString sour, QString dest, QString sourName, QString destName);
     void writeDataToConfigPath();
     QString configPath(QString systemPath, QString homePath, int &index);
     char* configPath(int &index, QString path = "");

@@ -426,10 +426,10 @@ QString WinDdeDockSetting::creatorConfigPath(QString path)
  * \param[in] file 文件名
  * \return true 成功； false 失败
  */
-bool WinDdeDockSetting::writeDataToConfigPath(QString sour, QString dest, QString file)
+bool WinDdeDockSetting::writeDataToConfigPath(QString sour, QString dest, QString sourName, QString destName)
 {
-    QString sourPath = sour + "/" + file;
-    QString destPath = dest + "/" + file;
+    QString sourPath = sour + "/" + sourName;
+    QString destPath = dest + "/" + destName;
     QFileInfo fileFile(sourPath);
     QFileInfo fileNewFile(destPath);
 
@@ -444,7 +444,7 @@ bool WinDdeDockSetting::writeDataToConfigPath(QString sour, QString dest, QStrin
                                               | QFile::ReadGroup | QFile::WriteGroup
                                               | QFile::ReadOther | QFile::WriteOther);
             if (!ok)
-                qDebug() << "文件设置读写权限失败："<< dest + file;
+                qDebug() << "文件设置读写权限失败："<< dest + sourName;
             return true;
         } else {
             qDebug() << "文件拷贝失败"<< sourPath << "---->" << destPath;
@@ -467,8 +467,11 @@ void WinDdeDockSetting::writeDataToConfigPath()
     QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
     configPath(sour, dest, index);
 
+    sour = sour.left(sour.lastIndexOf("/"));
+    dest = dest.left(dest.lastIndexOf("/"));
+    name = name.right(name.size() - name.lastIndexOf("/") - 1);
     if (index == 2)
-        writeDataToConfigPath(sour.left(sour.lastIndexOf("/")), dest.left(dest.lastIndexOf("/")), name.right(name.size() - name.lastIndexOf("/") - 1));
+        writeDataToConfigPath(sour, dest, name, name);
 }
 
 /*!
@@ -662,20 +665,34 @@ void WinDdeDockSetting::onBootUpUpdate(bool check)
 void WinDdeDockSetting::onChangePath()
 {
     QString sour = "";
-    QString name("/lfxNet/MonitorNetConfig.json");
-    QString systemPath = QString("/usr/share") + name;
-    QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+    QString sourName("/lfxNet/MonitorNetConfig.json");
+    QString systemPath = QString("/usr/share") + sourName;
+    QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + sourName;
     QString filePathAndName = QFileDialog::getSaveFileName(this, tr("配置导出路径"), homePath, tr("导出配置文件(*.json);;所有文件(*.*)"));
+    sourName = sourName.right(sourName.size() - sourName.lastIndexOf("/") - 1);
+    QString destName = filePathAndName.right(filePathAndName.size() - filePathAndName.lastIndexOf("/") - 1);
     m_path = filePathAndName.left(filePathAndName.lastIndexOf("/"));
 
     if (!filePathAndName.isEmpty()) {
 //        qDebug()<<"[导出配置]============================>"<< homePath << filePathAndName << m_path;
-        if (homePath.isEmpty())
-            sour = systemPath.left(systemPath.lastIndexOf("/"));
-        else
-            sour = homePath.left(homePath.lastIndexOf("/"));
+        QFileInfo fileHomePath(homePath);
+        QFileInfo fileSystemPath(systemPath);
 
-        writeDataToConfigPath(sour, m_path, name.right(name.size() - name.lastIndexOf("/") - 1));
+        if (ui->radioDefaultPath->isChecked()) {
+            if (fileSystemPath.isFile())
+                sour = systemPath.left(systemPath.lastIndexOf("/"));
+            else
+                QMessageBox::information(this, tr("提示"), "源配置不存在：" + fileSystemPath.filePath());
+        } else {
+            if (fileHomePath.isFile())
+                sour = homePath.left(homePath.lastIndexOf("/"));
+            else
+                QMessageBox::information(this, tr("提示"), "源配置不存在：" + fileHomePath.filePath());
+        }
+
+        writeDataToConfigPath(sour, m_path, sourName, destName);
+    } else {
+        QMessageBox::information(this, "导出配置错误", "源配置不存在：" + filePathAndName);
     }
 }
 
