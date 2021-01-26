@@ -1,0 +1,43 @@
+lfxnet (0.9.1-1) unstable; urgency=low
+
+  * 修复导出配置数据时，若文件不存在，没有提示的缺陷
+  * 规范控件命名，同时删除无用接口
+  * 添加 debian 目录
+
+ -- xmuli tech <xmulitech@gmail.com>  Tue, 26 Jan 2021 15:16:03 +0800
+
+lfxnet (0.9.0-1) unstable; urgency=low
+
+  *  支持 Linux 多用户安装和各自自定义配置，提供对应的 UI 界面用来修改如下参数
+  *  支持功能如下：
+     - 显示的前缀内容和颜色
+     - 显示的标签内容和颜色
+     - 更改字体和字体大小
+     - 显示模式（水平和垂直）
+     - 自动切换单位（默认智能）
+     - 网络速率精确度
+     - 刷新时间间隔
+     - 额外显示的悬浮信息
+     - 左键单击显示的动作
+     - 更改字体和字体大小
+     - 导出插件的配置文件（可系统路径 | 用户路径）
+     - CPU、内存、的利用率；流量的使用预警
+     - 修改主题样式（浅色和暗色模式）
+     - 支持系统自带的所有风格
+
+
+ -- xmuli tech <xmulitech@gmail.com>  Tue, 19 Jan 2021 20:13:03 +0800
+
+lfxnet (0.8.0-1) unstable; urgency=low
+
+  * 优化多个QLabel初始化为QGridLayout的方式
+
+ -- xmuli tech <xmulitech@gmail.com>  Tue, 11 Jan 2021 20:32:08 +0800
+
+lfxnet (0.7.0-1) unstable; urgency=low
+
+  * 初始化版本，版本号继承于 lfxSpeed (https://github.com/xmuli/lfxSpeed)，是其彻底重构版本
+  * 支持的功能：显示网络速率（上传、下载）、CPU、内存使用率
+    
+
+ -- xmuli tech <xmulitech@gmail.com>  Tue, 05 Jan 2021 11:16:03 +0800
