@@ -111,7 +111,7 @@ void WinDdeDockSetting::initSigConnectWinMain()
     connect(ui->btnQuitWinMain, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuitWinMain);
 
     connect(ui->checkBoxBootUpUpdate, &QCheckBox::clicked, this, &WinDdeDockSetting::onBootUpUpdate);
-    connect(ui->btnChangePath, &QPushButton::clicked, this, &WinDdeDockSetting::onChangePath);
+    connect(ui->btnExportData, &QPushButton::clicked, this, &WinDdeDockSetting::onChangePath);
 
     connect(ui->checkBoxCpuOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigCpuOver);
     connect(ui->checkBoxMemOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigMemOver);

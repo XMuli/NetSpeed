@@ -749,7 +749,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="btnChangePath">
+             <widget class="QPushButton" name="btnExportData">
               <property name="text">
                <string>导出配置</string>
               </property>
