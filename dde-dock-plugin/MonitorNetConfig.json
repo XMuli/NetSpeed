@@ -12,16 +12,16 @@
     "DisplayText": [
       {
         "LabCpu": "  CPU: ",
-        "LabDiskRead": "Read: ",
-        "LabDiskWrite": "Write: ",
+        "LabDiskRead": "↗: ",
+        "LabDiskWrite": "↙: ",
         "LabDown": "↓: ",
-        "LabMemory": "  内存: ",
+        "LabMemory": "  MEM: ",
         "LabUpload": "↑: "
       },
       {
         "LabCpu": "C",
-        "LabDiskRead": "R",
-        "LabDiskWrite": "W",
+        "LabDiskRead": "↗",
+        "LabDiskWrite": "↙",
         "LabDown": "↓",
         "LabMemory": "M",
         "LabUpload": "↑"

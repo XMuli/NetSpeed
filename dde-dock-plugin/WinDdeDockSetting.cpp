@@ -49,6 +49,12 @@ void WinDdeDockSetting::init()
     readConfig();
 
     // 控件的基本设置，其读写留其它函数完成
+//    auto list = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
+//    for (auto v : list)
+//        v->setProperty("_d_dtk_spinBox", true);
+
+    ui->groupBoxShowModel->setEnabled(false);
+
     ui->labLabTextColor->setAutoFillBackground(true);
     ui->labTextColor->setAutoFillBackground(true);
     ui->labBackgroundColor->setAutoFillBackground(true);

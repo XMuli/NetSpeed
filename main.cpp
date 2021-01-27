@@ -7,13 +7,13 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-//    // TEST:
+    // TEST:
 //    WinDdeDockSetting *setting = new WinDdeDockSetting();
 //    setting->readConfigWinDdeDock();
 //    setting->show();
 
-    WinDockNet *dockNet = new WinDockNet();
-    dockNet->show();
+//    WinDockNet *dockNet = new WinDockNet();
+//    dockNet->show();
 
     return QApplication::exec();
 }

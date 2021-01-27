@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>669</width>
-    <height>739</height>
+    <width>645</width>
+    <height>721</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -138,7 +138,7 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_15">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="4,1">
+          <layout class="QHBoxLayout" name="horizontalLayout_14">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="0">
              <item>
@@ -187,7 +187,7 @@
                   <item row="0" column="5">
                    <widget class="QLineEdit" name="lineLabDiskRead">
                     <property name="text">
-                     <string>Read:</string>
+                     <string>↗:</string>
                     </property>
                    </widget>
                   </item>
@@ -215,7 +215,7 @@
                   <item row="1" column="3">
                    <widget class="QLineEdit" name="lineLabMemory">
                     <property name="text">
-                     <string>内存</string>
+                     <string>MEM:</string>
                     </property>
                    </widget>
                   </item>
@@ -229,7 +229,7 @@
                   <item row="1" column="5">
                    <widget class="QLineEdit" name="lineLabDiskWrite">
                     <property name="text">
-                     <string>Write:</string>
+                     <string>↙:</string>
                     </property>
                    </widget>
                   </item>
@@ -243,7 +243,7 @@
                  </widget>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="4,1">
+                 <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="4">
                   <item>
                    <layout class="QGridLayout" name="gridLayout_8">
                     <item row="0" column="0">
@@ -314,23 +314,10 @@
                     </item>
                    </layout>
                   </item>
-                  <item>
-                   <spacer name="horizontalSpacer_7">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>40</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
                  </layout>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,2,1,2">
+                 <layout class="QHBoxLayout" name="horizontalLayout_17" stretch="1,3,1,3">
                   <item>
                    <widget class="QLabel" name="label_39">
                     <property name="text">
@@ -506,7 +493,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_11">
+          <widget class="QGroupBox" name="groupBoxShowModel">
            <property name="title">
             <string>CPU/内存占用图</string>
            </property>
@@ -514,7 +501,7 @@
             <bool>false</bool>
            </property>
            <property name="checkable">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="checked">
             <bool>false</bool>
@@ -1066,10 +1053,10 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Thanks：&lt;/span&gt;若使用中有缺陷反馈或好的建议，欢迎&lt;a href=&quot;https://github.com/xmuli/lfxNet&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#007af4;&quot;&gt;在此&lt;/span&gt;&lt;/a&gt;提 issues 或参与贡献&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;版本： &lt;/span&gt;v0.9.0 &lt;span style=&quot; font-weight:600;&quot;&gt;      许可证：&lt;/span&gt;MIT&lt;span style=&quot; font-weight:600;&quot;&gt;           编译：&lt;/span&gt;2021-01&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;版本： &lt;/span&gt;v0.9.1 &lt;span style=&quot; font-weight:600;&quot;&gt;      许可证：&lt;/span&gt;MIT&lt;span style=&quot; font-weight:600;&quot;&gt;           编译：&lt;/span&gt;2021-01&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;    作者：&lt;/span&gt;偕臧  &lt;span style=&quot; font-weight:600;&quot;&gt;           GitHub：&lt;/span&gt;&lt;a href=&quot;https://github.com/xmuli&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#007af4;&quot;&gt;xmuli&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;            博客：&lt;/span&gt;&lt;a href=&quot;https://xmuli.tech&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#007af4;&quot;&gt;偕臧的小站&lt;/span&gt;&lt;/a&gt; | &lt;a href=&quot;https://xmuli.blog.csdn.net/&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#007af4;&quot;&gt;other&lt;/span&gt;&lt;/a&gt; &lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;    作者：&lt;/span&gt;xmuli &amp;lt;偕臧&amp;gt;  &lt;span style=&quot; font-weight:600;&quot;&gt;           GitHub：&lt;/span&gt;&lt;a href=&quot;https://github.com/xmuli&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#007af4;&quot;&gt;xmuli&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;            博客：&lt;/span&gt;&lt;a href=&quot;https://xmuli.tech&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#007af4;&quot;&gt;偕臧的小站&lt;/span&gt;&lt;/a&gt; | &lt;a href=&quot;https://xmuli.blog.csdn.net/&quot;&gt;&lt;span style=&quot; font-size:11pt; text-decoration: underline; color:#007af4;&quot;&gt;other&lt;/span&gt;&lt;/a&gt; &lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
