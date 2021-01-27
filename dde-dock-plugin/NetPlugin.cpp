@@ -99,7 +99,7 @@ void NetPlugin::pluginStateSwitched()
  */
 const QString NetPlugin::pluginDisplayName() const
 {
-    return QString("MonitorNet");
+    return QString("lfxMonitorNet");
 }
 
 /*!
