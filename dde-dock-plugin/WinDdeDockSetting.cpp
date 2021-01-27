@@ -42,6 +42,8 @@ WinDdeDockSetting::~WinDdeDockSetting()
 
 void WinDdeDockSetting::init()
 {
+    qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
+
     initSigConnectWinDdeDock();
     initSigConnectWinMain();
 
