@@ -38,4 +38,9 @@ add_executable(${PROJECT_NAME} ${DIR})
 #endif ()
 
 #find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-target_link_libraries(${PROJECT_NAME} MonitorInfo lfxMonitorNet)
+
+if (EXISTS "/usr/lib/dde-dock/plugins")
+    target_link_libraries(${PROJECT_NAME} MonitorInfo lfxMonitorNet)
+else()
+    target_link_libraries(${PROJECT_NAME} MonitorInfo)
+endif()

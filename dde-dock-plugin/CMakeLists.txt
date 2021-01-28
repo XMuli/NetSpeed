@@ -1,5 +1,5 @@
-#set(DDE_DOCK_PLUGINS_PATH "/usr/lib/dde-dock/plugins")
-#if (EXISTS ${DDE_DOCK_PLUGINS_PATH})
+set(DDE_DOCK_PLUGINS_PATH "/usr/lib/dde-dock/plugins")
+if (EXISTS ${DDE_DOCK_PLUGINS_PATH})
     set(PLUGIN_NAME "lfxMonitorNet")
     set(CMAKE_AUTOUIC ON)
 
@@ -25,7 +25,6 @@
     #set(CMAKE_INSTALL_PREFIX "/usr")  # 默认为 "/usr/local", 若指定 / 的绝对路径，则 install 命令使用此变量作作为前缀会失效
     install(FILES "MonitorNetConfig.json" DESTINATION "/usr/share/lfxNet")
     install(TARGETS ${PLUGIN_NAME} LIBRARY DESTINATION "/usr/lib/dde-dock/plugins")
-
 
     # 参考：https://github.com/linuxdeepin/dde-dock/blob/master/plugins/plugin-guide/plugins-developer-guide.md
 
@@ -55,6 +54,6 @@
     # DockInterface_INCLUDE_DIRS
     # DockInterface_LIBRARIES
     # 还有有另外的一些变量以及更灵活的用法，比如一次性查找多个库
-#endif()
+endif()
 
 
