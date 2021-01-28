@@ -1,3 +1,11 @@
+lfxnet (0.9.2-1) unstable; urgency=low
+
+  * 调整 UI 布局
+  * 支持高分屏
+  * 添加鸣谢
+
+ -- xmuli tech <xmulitech@gmail.com>  Tue, 27 Jan 2021 17:58:45 +0800
+
 lfxnet (0.9.1-1) unstable; urgency=low
 
   * 修复导出配置数据时，若文件不存在，没有提示的缺陷

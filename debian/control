@@ -11,6 +11,10 @@ Homepage: <insert the upstream URL, if relevant>
 Package: lfxnet
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+ cmake,
+ g++,
+ libdtkgui-dev,
+ dde-dock-dev
 Description: lfxMonitorNet is a network speed plugin
   lfxMonitorNet is a subpart of lfxNet and is available as a plugin for de-dock (DDE). It is used to display the network speed, CPU and memory usage in real time, and already has a traffic alert function.
 
