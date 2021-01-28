@@ -1,29 +1,59 @@
 # lfxMonitorNet
 
-<p align="right"><br><a href="README.md">English</a> | <a href="README.zh_CN.md">简体中文</a> | <a href="README.zh_TW.md">繁體中文</a></p>
+<p align="right"><br><a href="README.en_US.md">English</a> | <a href="README.md">简体中文</a> | <a href="README.zh_TW.md">繁體中文</a></p>
 
- `lfxMonitorNet` 是 `lfxNet` 的子项目，在 `DDE` 任务栏中，实时显示 “网速、CPU、内存” 等信息，附加自定义颜色、主题、相关流量预警提示等功能。
+ ![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/badge/language-Qt-orange.svg) ![](https://img.shields.io/github/license/xmuli/lfxNet) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xmuli/lfxNet)  
 
-<img src="../docs/lfxMonitorNetHor.gif" alt="lfxMonitorNetHor" width="65%">  <img src="../docs/lfxMonitorNetVer.gif" alt="lfxMonitorNetVer" width="30%">
+ ![GitHub All Releases](https://img.shields.io/github/downloads/xmuli/lfxNet/total)  ![GitHub stars](https://img.shields.io/github/stars/xmuli/lfxNet?style=social) ![GitHub forks](https://img.shields.io/github/forks/xmuli/lfxNet?style=social) 
 
-<img src="../docs/lfxMonitorNet.png" alt="lfxMonitorNet" width="100%">
+<br>
+
+> `lfxMonitorNet`  是 `dde-dock` 的网速插件，也是 [lfxspeed](https://github.com/xmuli/lfxspeed) 的重构版本。
+
+​		起初，仅自用查看实时网速，后开源在社区被大家喜欢，甚是开心；后决定重构加扩展其为 [lfxsNet](https://github.com/xmuli/lfxsNet)，目标先写成通用的 `Linux` 、后空闲扩展到 `Win` 和 `Mac` 平台，可显示网速、CPU、MEM 等信息。 
+
+<img src="../docs/lfxMonitorNetHor.gif" alt="lfxMonitorNetHor" width="65%"> <img src="../docs/lfxMonitorNetVer.gif" alt="lfxMonitorNetVer" width="30%">
 
 <br>
 
 ## 目录
 
 - [背景](#背景)
+- [功能](#功能)
 - [编译](#编译)
-- [卸载](#卸载)
-- [维护者](#维护者)
-- [许可协议](#许可协议)
+- [截图](#截图)
+- [作者](#作者)
+- [鸣谢](#鸣谢)
+- [协议](#协议)
 
 <br>
 
 ### 背景
 
-​		喜爱 `DDE` ，是 `Deepin` 爱好者、也是开发者之一。因习惯桌面上有一个任务栏网速，但在 `Deepin/UOS`上没有相似的，故开发 `dde-dock` 的一款网速插件 `lfxMonitorNet`；用来显示实时网速插件。 `lfxMonitorNet`  是  [lfxspeed](https://github.com/xmuli/lfxspeed) 的彻底重构版本，故版本号延续。
+​		重构之前的[旧项目](https://github.com/xmuli/lfxspeed)，修复诸多缺陷，和新添加许多新功能。当处于正式 `v1.0` 版本，才算一个达到我的预期版本，心里才觉得算是写好了。
 
+<br>
+
+### 功能
+
+- 支持功能：
+  - 高分屏显示
+  - 用户自定义配置
+  - 为系统所有用户安装
+  - 显示的前缀内容和颜色
+  - 显示的标签内容和颜色
+  - 更改显示字体和字体大小
+  - 适配 `dock` 的模式（水平和垂直）
+  - 自动切换单位（默认智能）
+  - 调整网络速率精确度
+  - 调整刷新时间间隔
+  - 显示额外显示的悬浮信息
+  - 左键单击显示的动作（可单击打开 “系统监视器”）
+  - 配置数据导出（可系统路径 | 用户路径）
+  - `CPU`、内存、的利用率；流量的使用预警
+  - 应用的主题样式（浅色和暗色模式）
+  - 更改系统所自带的所有风格选择
+  
 
 <br>
 
@@ -32,12 +62,13 @@
 采用 `cmake` 构建，进入源码目录后，执行如下：
 
 ```bash
-git clone https://github.com/xmuli/lfxNet.git
-cd lfxNet
-mkdir build && cd build
+sudo apt install g++ cmake libqt5*-dev libdtk{core,widget,gui}-dev dde-dock-dev # 依赖
+
+mkdir build && cd build # 编译
 cmake ..
 make -j16
-sudo make install
+
+sudo make install # 安装
 ```
 
 或直接使用 `IDE` 点击运行按钮，找到生成目录 `/dde-dock-plugin` 下，手动复制共享库： `sudo cp liblfxMonitorNet.so /usr/lib/dde-dock/plugins` ；
@@ -46,39 +77,39 @@ sudo make install
 
 **注意：** 若未生效，执行 `killall dde-dock` 重启任务栏后生效
 
-**开发文档：**  [Deepin 开发任务栏网速插件 lfxSpeed](https://xmuli.tech/posts/c225b552/) or [link](https://xmuli.blog.csdn.net/article/details/110672252)
+<br>
+
+### 截图
+
+设置个性化，更多截图效果参见：[链接](https://github.com/xmuli/lfxNet/tree/master/docs) 
+
+<img src="../docs/lfxMonitorNet.png" alt="lfxMonitorNet" width="100%">
+
+ <img src="../docs/DockSetting.png" alt="DockSetting" width="75%">
+
+ <img src="../docs/Config.png" alt="Config" width="75%">
+
+ <img src="../docs/About.png" alt="About" width="75%">
 
 <br>
 
-### 卸载
+### 作者
 
-任意路径下执行如下：
-
-```bash
-sudo rm -rf /usr/lib/dde-dock/plugins/liblfxMonitorNet.so
-```
+[偕臧](https://github.com/xmuli) 
 
 <br>
 
-### 运行截图
+### 鸣谢
 
-附 `lfxMonitorNet` 在 `DDE` 上实际运行的效果图：
-
-<img src="../docs/DockSetting.png" alt="DockSetting" width="70%">
-
-<img src="../docs/Config.png" alt="Config" width="70%">
-
-<img src="../docs/About.png" alt="About" width="70%">
+[流年匆忙](https://github.com/justforlxz) 、 [zccrs](https://github.com/zccrs) 、
 
 <br>
 
-### 开发者
+### 协议
 
-[@偕臧](https://github.com/xmuli)
+<img src="../docs/MIT.png" alt="MIT" width="15%">
 
-<br>
+该项目基于 `MIT` 协议进行分发和使用。 有关更多信息，请参阅 [协议文件](../LICENSE)。
 
-### 许可协议
 
-![](https://img.shields.io/github/license/xmuli/lfxSpeed) [MIT](LICENSE) © xmuli <偕臧>
 
