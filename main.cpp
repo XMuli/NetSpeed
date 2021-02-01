@@ -15,9 +15,9 @@ int main(int argc, char *argv[]) {
 //    setting->readConfigWinDdeDock();
 //    setting->show();
 
-    WinDockNet *dockNet = new WinDockNet();
-    dockNet->setWindowFlags( dockNet->windowFlags() &~Qt::WindowCloseButtonHint /* &~ Qt::WindowMinMaxButtonsHint*/);
-    dockNet->show();
+//    WinDockNet *dockNet = new WinDockNet();
+//    dockNet->setWindowFlags( dockNet->windowFlags() &~Qt::WindowCloseButtonHint /* &~ Qt::WindowMinMaxButtonsHint*/);
+//    dockNet->show();
 
 //    WinTransparent *winTrans = new WinTransparent();
 //    winTrans->show();

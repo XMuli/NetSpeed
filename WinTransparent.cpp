@@ -33,6 +33,8 @@ void WinTransparent::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton) {
         m_isMoveWindow = true;
         m_posStart = event->pos();
+    } else if (event->button() == Qt::MiddleButton) {
+        hide();
     }
 }
 
