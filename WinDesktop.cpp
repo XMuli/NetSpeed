@@ -5,12 +5,26 @@
 #include <QLabel>
 #include <QDebug>
 #include <QTimer>
+#include <QWidget>
+#include <QPushButton>
 #include "ProgressLabel.h"
 
 
+/*!
+ * \brief WinDesktop::WinDesktop
+ *
+ * \htmlonly
+ * <pre style="font-family: FreeMono, Consolas, Menlo, 'Noto Mono', 'Courier New', Courier, monospace;line-height: 100%;">
+ * ==============================
+ * ||      CPU 各核占用率       ||
+ * ==============================
+ * </pre>
+ * \endhtmlonly
+ * \param parent
+ */
 WinDesktop::WinDesktop(QWidget *parent)
     : WinTransparent(parent)
-    , mainLayout(new QVBoxLayout(this))
+    , m_mainLayout(new QVBoxLayout(this))
     , m_info(new MonitorInfo_x11())
     , m_timer(new QTimer())
 {
@@ -19,31 +33,59 @@ WinDesktop::WinDesktop(QWidget *parent)
 
 void WinDesktop::init()
 {
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->setMargin(6);
+    m_mainLayout->setMargin(6);
+    m_mainLayout->setSpacing(10);
 
     m_info->cpuInfo(m_vec);
     for (auto v : m_vec) {
-        QHBoxLayout *hLayout = new QHBoxLayout();
-        hLayout->setContentsMargins(0, 0, 0, 0);
+        QWidget *widget = new QWidget();
+        widget->setContentsMargins(0, 0, 0, 0);
+        widget->setMaximumHeight(12);
+//        QPalette pal = widget->palette();  // Test
+//        pal.setColor(QPalette::Background, Qt::green);
+//        widget->setAutoFillBackground(true);
+//        widget->setPalette(pal);
+
+        QHBoxLayout *hLayout = new QHBoxLayout(widget);
         hLayout->setMargin(0);
+        hLayout->setSpacing(0);
 
         QLabel *lab = new QLabel(QString("CPU") + QString::number(v.index) + ": ");
+        lab->setMargin(0);
+        lab->setMinimumWidth(50);
         ProgressLabel *progress = new ProgressLabel();
+
+//        QPalette pal2 = widget->palette();    // Test
+//        pal2.setColor(QPalette::Background, Qt::gray);
+//        progress->setAutoFillBackground(true);
+//        progress->setPalette(pal2);
         progress->winDestktopPtr(this);
         progress->m_val = v.cpuWork;
         progress->m_all = v.cpuAll;
-        QLabel *percentage = new QLabel(QString::number(v.cpuWork * 100.0 / v.cpuAll) + "%" );
 
-        hLayout->addWidget(lab);
-        hLayout->addWidget(progress);
-        hLayout->addWidget(percentage);
-        mainLayout->addLayout(hLayout);
+        QLabel *percentage = new QLabel("00.00%");
+        percentage->setMargin(0);
+        percentage->setMinimumWidth(50);
+        percentage->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+        hLayout->addWidget(lab, 1, Qt::AlignLeft);
+        hLayout->addWidget(progress, 9); // 不能加 Qt::AlignLeft
+        hLayout->addWidget(percentage, 1, Qt::AlignRight);
+        m_mainLayout->addWidget(widget);
     }
+    m_mainLayout->addStretch(10);
 
     connect(m_timer, &QTimer::timeout, this, &WinDesktop::onUpdate);
     m_timer->setInterval(1000);
     m_timer->start();
+
+    resize(300, 400);
+}
+
+
+QVBoxLayout* WinDesktop::mainLayout()
+{
+    return m_mainLayout;
 }
 
 void WinDesktop::onUpdate()
@@ -66,33 +108,6 @@ void WinDesktop::onUpdate()
         m_vec[index].cpuAll = vec[index].cpuAll;
 
     }
-
-//    int n = 0;
-//    for (auto v : list) {
-//        int num = n / 3;
-//        if (n % 3 == 1) {
-//            v->m_val = vec[num].cpuWork - m_vec[num].cpuWork;
-//            v->m_all = vec[num].cpuAll - m_vec[num].cpuAll;
-
-//            m_vec[num].cpuWork = vec[num].cpuWork;
-//            m_vec[num].cpuAll = vec[num].cpuAll;
-//            qDebug()<<"--abc-------------------------->"<< n << num << v->m_val << v->m_all;
-
-//        } else if (n % 3 == 2){
-//            num = (n - 2) / 3;
-
-////            v->m_val = vec[num].cpuWork - m_vec[num].cpuWork;
-////            v->m_all = vec[num].cpuAll - m_vec[num].cpuAll;
-
-//            qDebug()<<"--abc2-------------------------->"<< n << num << v->m_val << v->m_all;
-//            v->setText(QString::number(v->m_val * 100  / v->m_all) + "%" );
-////            m_vec[num].cpuWork = vec[num].cpuWork;
-////            m_vec[num].cpuAll = vec[num].cpuAll;
-//        }
-
-//         if (++n >= 3 * m_vec.count() - 1)
-//             break;
-//    }
 
     emit sigValChange();
 }

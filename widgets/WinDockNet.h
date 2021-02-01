@@ -20,9 +20,7 @@ class WinDockNet : public QWidget
 public:
     explicit WinDockNet(QWidget *parent = nullptr);
     ~WinDockNet();
-
     void init();
-
 
 public slots:
     void onNet();

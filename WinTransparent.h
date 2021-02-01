@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVector>
 #include <QPoint>
+#include <QGraphicsBlurEffect>
 
 class WinTransparent : public QWidget
 {

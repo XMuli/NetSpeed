@@ -8,9 +8,9 @@
 #include <QObject>
 #include <pluginsiteminterface.h>
 #include <dtkwidget_global.h>
-
 #include "WinDockNet.h"
 #include "WinDdeDockSetting.h"
+#include "../WinDesktop.h"
 
 DWIDGET_USE_NAMESPACE
 

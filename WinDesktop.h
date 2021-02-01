@@ -13,8 +13,8 @@ class WinDesktop : public WinTransparent
     Q_OBJECT
 public:
     explicit WinDesktop(QWidget *parent = nullptr);
-
     void init();
+    QVBoxLayout* mainLayout();
 
 signals:
     void sigValChange();
@@ -23,7 +23,7 @@ public slots:
     void onUpdate();
 
 private:
-    QVBoxLayout *mainLayout;
+    QVBoxLayout *m_mainLayout;
     MonitorInfo_x11 *m_info;
     QVector<CpuInfo> m_vec;
     QTimer *m_timer;

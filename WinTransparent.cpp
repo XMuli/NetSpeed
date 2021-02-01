@@ -3,6 +3,8 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QBoxLayout>
+#include <QGraphicsEffect>
+#include <QGraphicsBlurEffect>
 
 WinTransparent::WinTransparent(QWidget *parent)
     : QWidget(parent)
@@ -10,14 +12,20 @@ WinTransparent::WinTransparent(QWidget *parent)
     , m_isMoveWindow(false)
 {
     init();
+
 }
 
 void WinTransparent::init()
 {
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
-    setWindowOpacity(0.5);
+    setWindowOpacity(0.8);
     resize(400, 600);
 //    setAttribute(Qt::WA_TranslucentBackground);
+
+//    QGraphicsBlurEffect *blur = new QGraphicsBlurEffect();
+//    blur->setBlurRadius(0.5);
+//    blur->setBlurHints(QGraphicsBlurEffect::QualityHint);
+//    setGraphicsEffect(blur);
 }
 
 void WinTransparent::mousePressEvent(QMouseEvent *event)
