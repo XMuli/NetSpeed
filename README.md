@@ -35,7 +35,9 @@
 
 <br>
 
-**lfxNet：** 努力完善中，，，
+**lfxNet：** 制作一个固定在桌面的 `CPU` 使用率透明窗口（默认不打开）
+
+<img src="docs/RunWindow.gif" alt="RunWindow" width="40%">
 
 <br>
 
@@ -44,6 +46,8 @@
 > **详细展示和运行效果，参见 💘  [README](https://github.com/xmuli/lfxNet/tree/master/dde-dock-plugin)** 
 
 ​		是 [lfxspeed](https://github.com/xmuli/lfxspeed) 的重构版本，起初，仅自用查看实时网速，后开源在社区被大家喜欢，甚是开心；后决定重构加扩展其为 [lfxsNet](https://github.com/xmuli/lfxsNet)，目标先写成通用的 `Linux` 、后空闲扩展到 `Win` 和 `Mac` 平台，可显示网速、CPU、MEM 等信息。
+
+<img src="docs/DockSetting.png" alt="DockSetting" width="80%">
 
 <br>
 

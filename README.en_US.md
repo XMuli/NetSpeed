@@ -35,7 +35,9 @@
 
 <br>
 
-**lfxNet:** working on perfection,,,
+**lfxNet:** Create a `CPU` usage-rate transparent window fixed to the desktop (not open by default)
+
+<img src="docs/RunWindow.gif" alt="RunWindow" width="40%">
 
 <br>
 
@@ -44,6 +46,8 @@
 > **For detailed demonstration and running results, see 💘 [README](https://github.com/xmuli/lfxNet/tree/master/dde-dock-plugin)** 
 
 ​		is a refactored version of [lfxspeed](https://github.com/xmuli/lfxspeed), at first, it was only for self-use to check the real-time network speed, then it was open-sourced in the community and people liked it, so I was very happy; then I decided to refactor and extend it to [lfxNet](https://github.com/xmuli/lfxsNet), the goal is to first write it for general purpose `Linux`, and then extend it to `Win` and `Mac` platforms at leisure, to display network speed, CPU, MEM and other information.
+
+<img src="docs/DockSetting.png" alt="DockSetting" width="80%">
 
 <br>
 
