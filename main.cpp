@@ -22,8 +22,9 @@ int main(int argc, char *argv[]) {
 //    WinTransparent *winTrans = new WinTransparent();
 //    winTrans->show();
 
-    WinDesktop *winDesktop = new WinDesktop();
-    winDesktop->show();
+    // 鼠标中键关闭（后面加个鼠标穿透固定在桌面）
+//    WinDesktop *winDesktop = new WinDesktop();
+//    winDesktop->show();
 
     return QApplication::exec();
 }

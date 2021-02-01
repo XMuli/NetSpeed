@@ -37,6 +37,7 @@ void WinDesktop::init()
     m_mainLayout->setSpacing(10);
 
     m_info->cpuInfo(m_vec);
+    bool isBegin = true;
     for (auto v : m_vec) {
         QWidget *widget = new QWidget();
         widget->setContentsMargins(0, 0, 0, 0);
@@ -50,7 +51,15 @@ void WinDesktop::init()
         hLayout->setMargin(0);
         hLayout->setSpacing(0);
 
-        QLabel *lab = new QLabel(QString("CPU") + QString::number(v.index) + ": ");
+        QString text("");
+        if (isBegin) {
+            text = QString("CPU") + ": ";
+            isBegin = false;
+        } else {
+            text = QString("CPU") + QString::number(v.index) + ": ";
+        }
+
+        QLabel *lab = new QLabel(text);
         lab->setMargin(0);
         lab->setMinimumWidth(50);
         ProgressLabel *progress = new ProgressLabel();
@@ -65,7 +74,7 @@ void WinDesktop::init()
 
         QLabel *percentage = new QLabel("00.00%");
         percentage->setMargin(0);
-        percentage->setMinimumWidth(50);
+        percentage->setMinimumWidth(55);
         percentage->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
         hLayout->addWidget(lab, 1, Qt::AlignLeft);
