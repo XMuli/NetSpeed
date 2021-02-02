@@ -45,7 +45,6 @@ public slots:
     void onWriteNetworkTraffic();
     void onNetOverWarning();
 
-
     // 响应 WinDdeDockSetting 发射的信号
     void onCurrentFont(const QFont &font);
     void onFontSize(int size);

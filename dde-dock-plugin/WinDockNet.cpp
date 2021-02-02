@@ -220,7 +220,8 @@ void WinDockNet::writeNetworkTraffic(QString &log)
     file.close();
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log [WriteOnly]\"  don't open!");
+        // 屏蔽流量预警提示功能，文件沒有写权限，所以会提示，后面讲文件放入 log 配置文件加中即可有权限统计流量预警，
+//        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log [WriteOnly]\"  don't open!");
         return;
     }
 
