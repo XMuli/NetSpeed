@@ -77,8 +77,6 @@ void WinDockNet::init()
      m_vecOverWarningTemp.push_back(QVariant("MB"));
 
      initSigConnect();
-
-//    setAutoFillBackground(true);  // 暂时不设置背景颜色
      m_winSetting->readConfigWinDdeDock();
 
      setLabWidgetLayout(m_winSetting->isHorizontal());
@@ -95,7 +93,6 @@ void WinDockNet::initSigConnect()
    connect(m_winSetting, &WinDdeDockSetting::sigShowModel, this, &WinDockNet::onShowModel);
    connect(m_winSetting, &WinDdeDockSetting::sigLabTextColor, this, &WinDockNet::onLabTextColor);
    connect(m_winSetting, &WinDdeDockSetting::sigTextColor, this, &WinDockNet::onTextColor);
-   connect(m_winSetting, &WinDdeDockSetting::sigBackgroundColor, this, &WinDockNet::onBackgroundColor);
    connect(m_winSetting, &WinDdeDockSetting::sigLabUploadText, this, &WinDockNet::onLabUploadText);
    connect(m_winSetting, &WinDdeDockSetting::sigLabDownText, this, &WinDockNet::onLabDownText);
    connect(m_winSetting, &WinDdeDockSetting::sigLabCpuText, this, &WinDockNet::onLabCpuText);
@@ -514,16 +511,6 @@ void WinDockNet::onTextColor(const QColor color)
     m_vecLabel[3]->setPalette(palette);
     m_vecLabel[5]->setPalette(palette);
     m_vecLabel[7]->setPalette(palette);
-}
-
-void WinDockNet::onBackgroundColor(const QColor color)
-{
-    if (palette().color(QPalette::Background) == color)
-        return;
-
-    QPalette pale = const_cast<QPalette&>(palette());
-    pale.setColor(QPalette::Background, color);
-    setPalette(pale);
 }
 
 void WinDockNet::onLabUploadText(const QString &text)

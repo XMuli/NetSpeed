@@ -52,7 +52,6 @@ signals:
     void sigFontSize(int);
     void sigLabTextColor(const QColor);
     void sigTextColor(const QColor);
-    void sigBackgroundColor(const QColor);
 
     void sigShowModel(bool);
     void sigUnitModel(const QString &);

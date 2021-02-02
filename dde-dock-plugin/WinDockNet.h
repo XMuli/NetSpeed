@@ -53,7 +53,6 @@ public slots:
     void onUnitModel(const QString &text);
     void onLabTextColor(const QColor color);
     void onTextColor(const QColor color);
-    void onBackgroundColor(const QColor color);
     void onLabUploadText(const QString &text);
     void onLabDownText(const QString &text);
     void onLabCpuText(const QString &text);

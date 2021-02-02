@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 set(PROJECT_NAME lfxNet)
-set(PROJECT_VERSION_MAJOR 0)
-set(PROJECT_VERSION_MINOR 7)
+set(PROJECT_VERSION_MAJOR 1)
+set(PROJECT_VERSION_MINOR 0)
 project(${PROJECT_NAME})
 
 #set(CMAKE_CXX_FLAGS "-g -Wall")  # gdb 调试信息

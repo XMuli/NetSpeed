@@ -1,8 +1,6 @@
 {
-  "WinConfig": {},
   "WinDdeDock": {
     "ColorAndFont": {
-      "BackgroundColor": "#ffffff",
       "FontSize": 11,
       "FontType": "Noto Sans CJK SC",
       "FontTypeIndex": 59,
@@ -49,8 +47,8 @@
     "GraphicsMode": 0,
     "ModelSetting": {
       "IsHorizontal": true,
-      "UnitModel": "Custom",
-      "UnitModelIndex": 3
+      "UnitModel": "默认",
+      "UnitModelIndex": 0
     }
   },
   "WinMain": {

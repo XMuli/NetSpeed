@@ -55,11 +55,8 @@ void WinDdeDockSetting::init()
 //    for (auto v : list)
 //        v->setProperty("_d_dtk_spinBox", true);
 
-    ui->groupBoxShowModel->setEnabled(false);
-
     ui->labLabTextColor->setAutoFillBackground(true);
     ui->labTextColor->setAutoFillBackground(true);
-    ui->labBackgroundColor->setAutoFillBackground(true);
 
     ui->spinBoxFractionalAccuracy->setRange(0, 100);
     ui->spinBoxFractionalAccuracy->setSingleStep(1);
@@ -69,9 +66,7 @@ void WinDdeDockSetting::init()
 
     ui->labLabTextColor->installEventFilter(this);
     ui->labTextColor->installEventFilter(this);
-    ui->labBackgroundColor->installEventFilter(this);
 
-    m_btnGroupTheme->setParent(ui->groupBoxThemeStyle);
     m_btnGroupTheme->addButton(ui->radioButtonSystem);
     m_btnGroupTheme->addButton(ui->radioButtonLight);
     m_btnGroupTheme->addButton(ui->radioButtonDark);
@@ -150,8 +145,6 @@ void WinDdeDockSetting::readConfigWinDdeDock()
     ui->labLabTextColor->setPalette(palette);
     palette.setColor(QPalette::Background, QString::fromStdString(jsColorAndFont["TextColor"]));
     ui->labTextColor->setPalette(palette);
-    palette.setColor(QPalette::Background, QString::fromStdString(jsColorAndFont["BackgroundColor"]));
-    ui->labBackgroundColor->setPalette(palette);
 
     json jsModelSetting = m_js["WinDdeDock"]["ModelSetting"];
     ui->comboBoxUnitModel->setCurrentIndex(jsModelSetting["UnitModelIndex"]);
@@ -200,7 +193,6 @@ void WinDdeDockSetting::readConfigWinDdeDock()
     emit ui->spinBoxFontSize->valueChanged(ui->spinBoxFontSize->value());
     emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
     emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
-    emit sigBackgroundColor(ui->labBackgroundColor->palette().color(QPalette::Background));
 //    emit ui->radioHorizontal->toggled(ui->radioHorizontal->isChecked());
 //    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
     emit ui->lineLabUpload->textChanged(ui->lineLabUpload->text());
@@ -237,7 +229,6 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
     jsColorAndFont["FontTypeIndex"] = ui->fontComboBox->currentIndex();
     jsColorAndFont["LabTextColor"] = ui->labLabTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
     jsColorAndFont["TextColor"] = ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
-    jsColorAndFont["BackgroundColor"] = ui->labBackgroundColor->palette().color(QPalette::Background).name().toStdString().c_str();
 
     json &jsModelSetting = m_js["WinDdeDock"]["ModelSetting"];
     jsModelSetting["UnitModel"] = ui->comboBoxUnitModel->currentText().toStdString().c_str();
@@ -583,16 +574,6 @@ bool WinDdeDockSetting::eventFilter(QObject *watched, QEvent *event)
             palette.setColor(QPalette::Background, labTextColor);
             ui->labTextColor->setPalette(palette);
             emit sigTextColor(labTextColor);
-            return true;
-        }
-    } else if (watched == ui->labBackgroundColor) {
-        if (event->type() == QEvent::MouseButtonRelease) {
-            QColor labBackgroundColor = QColorDialog::getColor(ui->labTextColor->palette().color(QPalette::Background), this, tr("选择背景颜色"));
-
-            QPalette palette;
-            palette.setColor(QPalette::Background, labBackgroundColor);
-            ui->labBackgroundColor->setPalette(palette);
-            emit sigBackgroundColor(labBackgroundColor);
             return true;
         }
     } else {
