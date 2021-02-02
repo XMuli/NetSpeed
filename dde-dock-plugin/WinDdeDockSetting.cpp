@@ -15,7 +15,7 @@
 #include <DGuiApplicationHelper>
 #include <QStandardPaths>
 #include <QString>
-#include <QString>
+#include <QComboBox>
 using namespace std;
 DGUI_USE_NAMESPACE
 
@@ -87,6 +87,8 @@ void WinDdeDockSetting::initSigConnectWinDdeDock()
 
     connect(ui->radioHorizontal, &QRadioButton::toggled, this, &WinDdeDockSetting::sigShowModel);
     connect(ui->radioHorizontal, &QRadioButton::toggled, this, &WinDdeDockSetting::updateLabelText);
+    void (QComboBox::*pFunIndex)(int) = &QComboBox::currentIndexChanged;
+    connect(ui->comboBoxUnitModel, pFunIndex, this, &WinDdeDockSetting::sigUnitModelIndex);
     connect(ui->comboBoxUnitModel, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::sigUnitModel);
     connect(ui->lineLabUpload, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabUploadText);
     connect(ui->lineLabDown, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDownText);
@@ -311,7 +313,7 @@ void WinDdeDockSetting::readConfigWinMain()
     emit ui->radioDefaultPath->toggled(ui->radioDefaultPath->isChecked());
     emit ui->checkBoxCpuOver->clicked(ui->checkBoxCpuOver->isChecked());
     emit ui->checkBoxMemOver->clicked(ui->checkBoxMemOver->isChecked());
-    emit ui->checkBoxNetOver->clicked(ui->checkBoxNetOver->isChecked());
+//    emit ui->checkBoxNetOver->clicked(ui->checkBoxNetOver->isChecked());
     emit ui->radioButtonSystem->toggled(ui->radioButtonSystem->isChecked());
     emit ui->comboBoxStyle->currentIndexChanged(ui->comboBoxStyle->currentIndex());
 }

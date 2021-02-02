@@ -36,10 +36,10 @@ enum NetUnit {
 };
 
 enum ModelUnit {
-    Default,  // 大小写混合
-    Upper,    // 全部大写
-    Lower,    // 全部小写
-    Custom    // 自定义格式
+    Default,   // 默认格式
+    Mixed,     // 大小写混合
+    Upper,     // 全部大写
+    Lower      // 全部小写
 };
 
 class MonitorInfo_x11 {

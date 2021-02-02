@@ -51,6 +51,7 @@ public slots:
     void onFontSize(int size);
     void onShowModel(bool check);
     void onUnitModel(const QString &text);
+    void onUnitModelIndex(int index);
     void onLabTextColor(const QColor color);
     void onTextColor(const QColor color);
     void onLabUploadText(const QString &text);

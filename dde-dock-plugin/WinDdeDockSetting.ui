@@ -801,6 +801,9 @@
           </item>
           <item row="3" column="0">
            <widget class="QCheckBox" name="checkBoxNetOver">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>今日流量使用超过</string>
             </property>

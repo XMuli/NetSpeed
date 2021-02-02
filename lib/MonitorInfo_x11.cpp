@@ -211,7 +211,7 @@ double MonitorInfo_x11::netShowUnit(long net, NetUnit &unit)
 QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit model)
 {
     switch (model) {
-    case Default: {
+    case Mixed: {
         switch (unit) {
         case Bit:
             return QString("b/s");
@@ -268,7 +268,7 @@ QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit model)
             return QString("");
         }
     }
-    case Custom: {
+    case Default: {
         switch (unit) {
         case Bit:
             return QString("b/s");
@@ -288,7 +288,7 @@ QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit model)
         }
     }
     default: {
-        qWarning()<<QObject::tr("ModelUnit::Custom,  MonitorInfo_x11 is Custom.");
+        qWarning()<<QObject::tr("ModelUnit::???,  MonitorInfo_x11 is ???.");
         // TODO: 2020-12-29
         return QString("");
     }

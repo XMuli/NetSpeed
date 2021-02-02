@@ -55,6 +55,7 @@ signals:
 
     void sigShowModel(bool);
     void sigUnitModel(const QString &);
+    void sigUnitModelIndex(int);
     void sigLabUploadText(const QString &);
     void sigLabDownText(const QString &);
     void sigLabCpuText(const QString &);

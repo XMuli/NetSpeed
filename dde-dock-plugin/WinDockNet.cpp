@@ -90,6 +90,7 @@ void WinDockNet::initSigConnect()
    connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
    connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
    connect(m_winSetting, &WinDdeDockSetting::sigUnitModel, this, &WinDockNet::onUnitModel);
+   connect(m_winSetting, &WinDdeDockSetting::sigUnitModelIndex, this, &WinDockNet::onUnitModelIndex);
    connect(m_winSetting, &WinDdeDockSetting::sigShowModel, this, &WinDockNet::onShowModel);
    connect(m_winSetting, &WinDdeDockSetting::sigLabTextColor, this, &WinDockNet::onLabTextColor);
    connect(m_winSetting, &WinDdeDockSetting::sigTextColor, this, &WinDockNet::onTextColor);
@@ -229,6 +230,7 @@ void WinDockNet::writeNetworkTraffic(QString &log)
 
 void WinDockNet::readNetworkTraffic(long &net)
 {
+    // 此插件库在 /usr/lib/dde-dock/plugins 下，NetworkTraffic.log 没有权限写，后面有空改一下，暂时屏蔽
     QFile file(":/NetworkTraffic.log");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log  [ReadOnly]\"  don't open!");
@@ -480,15 +482,27 @@ void WinDockNet::onShowModel(bool check)
  * \brief WinDockNet::onUnitModel 单位显示模式
  */
 void WinDockNet::onUnitModel(const QString &text)
+{   
+//    if (text == "Default")
+//        m_modelUnit = ModelUnit::Default;
+//    else if (text == "Upper")
+//        m_modelUnit = ModelUnit::Upper;
+//    else if (text == "Lower")
+//        m_modelUnit = ModelUnit::Lower;
+//    else if (text == "Mixed")
+//        m_modelUnit = ModelUnit::Mixed;
+}
+
+void WinDockNet::onUnitModelIndex(int index)
 {
-    if (text == "Default")
+    if (index == 0)
         m_modelUnit = ModelUnit::Default;
-    else if (text == "Upper")
+    else if (index == 1)
+        m_modelUnit = ModelUnit::Mixed;
+    else if (index == 2)
         m_modelUnit = ModelUnit::Upper;
-    else if (text == "Lower")
+    else if (index == 3)
         m_modelUnit = ModelUnit::Lower;
-    else if (text == "Custom")
-        m_modelUnit = ModelUnit::Custom;
 }
 
 void WinDockNet::onLabTextColor(const QColor color)
