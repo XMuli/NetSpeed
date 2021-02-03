@@ -77,8 +77,6 @@ public slots:
     void onNetOver(bool check);
     void onCpuOverNum(int cpu);
     void onMemOverNum(int mem);
-    void onNetOverNum(int net);
-    void onNetNumUnit(const QString &unit);
     void onBtnApplyWinMain();
 
 private:
@@ -88,7 +86,7 @@ private:
     int m_precision; // 精确度
     bool m_hover;    // 悬浮现实额外信息
     QVector<QVariant> m_vecOverWarningTemp;  // 临时
-    QVector<QVariant> m_vecOverWarning; // 顺序：(0-2 是否选中预警):cpu、mem、net;(3-5 预警数值):cpu、mem、net;（6 net 预警单位）；
+    QVector<QVariant> m_vecOverWarning; // 顺序：(0-2 是否选中预警):cpu、mem、net;(3-5 预警数值):cpu、mem、net;（6 net 预警单位）[2/5/6 已经废弃使用]；
 
     MonitorInfo_x11 *m_info;
     ModelUnit m_modelUnit;

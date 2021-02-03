@@ -114,11 +114,8 @@ void WinDockNet::initSigConnect()
    // 响应 WinMain 发射的信号
    connect(m_winSetting, &WinDdeDockSetting::sigCpuOver, this, &WinDockNet::onCpuOver);
    connect(m_winSetting, &WinDdeDockSetting::sigMemOver, this, &WinDockNet::onMemOver);
-   connect(m_winSetting, &WinDdeDockSetting::sigNetOver, this, &WinDockNet::onNetOver);
    connect(m_winSetting, &WinDdeDockSetting::sigCpuOverNum, this, &WinDockNet::onCpuOverNum);
    connect(m_winSetting, &WinDdeDockSetting::sigMemOverNum, this, &WinDockNet::onMemOverNum);
-   connect(m_winSetting, &WinDdeDockSetting::sigNetOverNum, this, &WinDockNet::onNetOverNum);
-   connect(m_winSetting, &WinDdeDockSetting::sigNetNumUnit, this, &WinDockNet::onNetNumUnit);
    connect(m_winSetting, &WinDdeDockSetting::sigBtnApplyWinMain, this, &WinDockNet::onBtnApplyWinMain);
 }
 
@@ -681,18 +678,6 @@ void WinDockNet::onMemOverNum(int mem)
 {
     m_vecOverWarningTemp[4].setValue(mem);
     showTest("onMemOverNum");
-}
-
-void WinDockNet::onNetOverNum(int net)
-{
-    m_vecOverWarningTemp[5].setValue(netOverNumToByte(net));
-    showTest("onNetOverNum");
-}
-
-void WinDockNet::onNetNumUnit(const QString &unit)
-{
-    m_vecOverWarningTemp[6].setValue(unit);
-    showTest("onNetNumUnit");
 }
 
 void WinDockNet::onBtnApplyWinMain()

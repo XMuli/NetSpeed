@@ -1,77 +1,71 @@
 {
-  "WinDdeDock": {
-    "ColorAndFont": {
-      "FontSize": 11,
-      "FontType": "Noto Sans CJK SC",
-      "FontTypeIndex": 59,
-      "LabTextColor": "#000000",
-      "TextColor": "#000000"
+    "WinDdeDock":{
+        "ColorAndFont":{
+            "FontSize":11,
+            "FontType":"Noto Sans CJK SC",
+            "FontTypeIndex":59,
+            "LabTextColor":"#000000",
+            "TextColor":"#000000"
+        },
+        "DisplayText":[
+            {
+                "LabCpu":"  CPU: ",
+                "LabDiskRead":"↗: ",
+                "LabDiskWrite":"↙: ",
+                "LabDown":"↓: ",
+                "LabMemory":"  MEM: ",
+                "LabUpload":"↑: "
+            },
+            {
+                "LabCpu":"C",
+                "LabDiskRead":"↗",
+                "LabDiskWrite":"↙",
+                "LabDown":"↓",
+                "LabMemory":"M",
+                "LabUpload":"↑"
+            },
+            {
+                "DisolayCPUAndMemory":true,
+                "DisolayDisk":false,
+                "DisolayNet":true
+            },
+            {
+                "LocationExchangeCPUAndMenory":false,
+                "LocationExchangeDisk":false,
+                "LocationExchangeNet":false
+            },
+            {
+                "FractionalAccuracy":2,
+                "RefreshInterval":1000
+            }
+        ],
+        "DockWindow":{
+            "DoubleClick":"配置主窗口",
+            "DoubleClickIndex":1,
+            "HoverDisplay":true
+        },
+        "GraphicsMode":0,
+        "ModelSetting":{
+            "IsHorizontal":true,
+            "UnitModel":"默认",
+            "UnitModelIndex":0
+        }
     },
-    "DisplayText": [
-      {
-        "LabCpu": "  CPU: ",
-        "LabDiskRead": "↗: ",
-        "LabDiskWrite": "↙: ",
-        "LabDown": "↓: ",
-        "LabMemory": "  MEM: ",
-        "LabUpload": "↑: "
-      },
-      {
-        "LabCpu": "C",
-        "LabDiskRead": "↗",
-        "LabDiskWrite": "↙",
-        "LabDown": "↓",
-        "LabMemory": "M",
-        "LabUpload": "↑"
-      },
-      {
-        "DisolayCPUAndMemory": true,
-        "DisolayDisk": false,
-        "DisolayNet": true
-      },
-      {
-        "LocationExchangeCPUAndMenory": false,
-        "LocationExchangeDisk": false,
-        "LocationExchangeNet": false
-      },
-      {
-        "FractionalAccuracy": 2,
-        "RefreshInterval": 1000
-      }
-    ],
-    "DockWindow": {
-      "DoubleClick": "配置主窗口",
-      "DoubleClickIndex": 1,
-      "HoverDisplay": true
-    },
-    "GraphicsMode": 0,
-    "ModelSetting": {
-      "IsHorizontal": true,
-      "UnitModel": "默认",
-      "UnitModelIndex": 0
+    "WinMain":{
+        "AppSetting":{
+            "Language":"跟随系统",
+            "LanguageIndex":0
+        },
+        "Notification":{
+            "CpuOver":false,
+            "CpuOverNum":0,
+            "MemoryOver":false,
+            "MemoryOverNum":0
+        },
+        "ThemeStyle":{
+            "SystemStyle":"chameleon",
+            "SystemStyleIndex":0,
+            "themeIndex":0
+        }
     }
-  },
-  "WinMain": {
-    "AppSetting": {
-      "BootUpUpdate": false,
-      "Language": "跟随系统",
-      "LanguageIndex": 0,
-      "Outdated": false
-    },
-    "Notification": {
-      "CpuOver": false,
-      "CpuOverNum": 0,
-      "MemoryOver": false,
-      "MemoryOverNum": 0,
-      "NetOver": false,
-      "NetOverNum": 0,
-      "NetOverNumUnit": "MB",
-      "NetOverNumUnitIndex": 2
-    },
-    "ThemeStyle": {
-      "SystemStyle": "chameleon",
-      "SystemStyleIndex": 0,
-      "themeIndex": 0
-    }
-  }
 }

@@ -28,8 +28,6 @@ WinDdeDockSetting::WinDdeDockSetting(QWidget *parent)
     , m_doubleClick(2)
     , m_cpuOverNum(0)
     , m_memOverNum(0)
-    , m_NetOverNum(0)
-    , m_netOverUnit("MB")
 {
     ui->setupUi(this);
     init();
@@ -113,18 +111,13 @@ void WinDdeDockSetting::initSigConnectWinMain()
 {
     connect(ui->btnApplyWinMain, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnApplyWinMain);
     connect(ui->btnQuitWinMain, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuitWinMain);
-
-    connect(ui->checkBoxBootUpUpdate, &QCheckBox::clicked, this, &WinDdeDockSetting::onBootUpUpdate);
     connect(ui->btnExportData, &QPushButton::clicked, this, &WinDdeDockSetting::onChangePath);
 
     connect(ui->checkBoxCpuOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigCpuOver);
     connect(ui->checkBoxMemOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigMemOver);
-    connect(ui->checkBoxNetOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigNetOver);
     void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
     connect(ui->spinBoxCpuOverNum, pFun, this, &WinDdeDockSetting::sigCpuOverNum);
     connect(ui->spinBoxMemOverNum, pFun, this, &WinDdeDockSetting::sigMemOverNum);
-    connect(ui->spinBoxNetOverNum, pFun, this, &WinDdeDockSetting::sigNetOverNum);
-    connect(ui->comboBoxNetNumUnit, &QComboBox::currentTextChanged, this, &WinDdeDockSetting::sigNetNumUnit);
 
     void (QButtonGroup::*pFunTheme)(int, bool) = &QButtonGroup::buttonToggled;
     connect(m_btnGroupTheme, pFunTheme, this, &WinDdeDockSetting::onBtnGroupTheme);
@@ -282,8 +275,6 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
 void WinDdeDockSetting::readConfigWinMain()
 {
     json jsAppSetting = m_js["WinMain"]["AppSetting"];
-    ui->checkBoxBootUpUpdate->setChecked(jsAppSetting["BootUpUpdate"]);
-//    ui->btnCheckUpdate  // 检查更新，Outdated 判断是否需要更新
     ui->comboBoxLanguage->setCurrentIndex(jsAppSetting["LanguageIndex"]);
 
     json jsAppNotification = m_js["WinMain"]["Notification"];
@@ -291,9 +282,6 @@ void WinDdeDockSetting::readConfigWinMain()
     ui->spinBoxCpuOverNum->setValue(jsAppNotification["CpuOverNum"]);
     ui->checkBoxMemOver->setChecked(jsAppNotification["MemoryOver"]);
     ui->spinBoxMemOverNum->setValue(jsAppNotification["MemoryOverNum"]);
-    ui->checkBoxNetOver->setChecked(jsAppNotification["NetOver"]);
-    ui->spinBoxNetOverNum->setValue(jsAppNotification["NetOverNum"]);
-    ui->comboBoxNetNumUnit->setCurrentIndex(jsAppNotification["NetOverNumUnitIndex"]);
 
     json jsThemeStyle = m_js["WinMain"]["ThemeStyle"];
     ui->comboBoxStyle->setCurrentIndex(ui->comboBoxStyle->currentIndex());
@@ -308,7 +296,6 @@ void WinDdeDockSetting::readConfigWinMain()
     else
         QMessageBox::warning(nullptr, tr("主题选择数值错误"), tr("json 的 themeIndex 值错误，此处采用约定：themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-未知"));
 
-    emit ui->checkBoxBootUpUpdate->clicked(ui->checkBoxBootUpUpdate->isChecked());
     emit ui->radioDefaultPath->toggled(ui->radioDefaultPath->isChecked());
     emit ui->checkBoxCpuOver->clicked(ui->checkBoxCpuOver->isChecked());
     emit ui->checkBoxMemOver->clicked(ui->checkBoxMemOver->isChecked());
@@ -323,7 +310,6 @@ void WinDdeDockSetting::readConfigWinMain()
 void WinDdeDockSetting::saveConfigWinMain()
 {
     json &jsAppSetting = m_js["WinMain"]["AppSetting"];
-    jsAppSetting["BootUpUpdate"] = ui->checkBoxBootUpUpdate->isChecked();
     jsAppSetting["LanguageIndex"] = ui->comboBoxLanguage->currentIndex();
     jsAppSetting["Language"] = ui->comboBoxLanguage->currentText().toStdString().c_str();
 
@@ -332,10 +318,6 @@ void WinDdeDockSetting::saveConfigWinMain()
     jsAppNotification["CpuOverNum"] = ui->spinBoxCpuOverNum->value();
     jsAppNotification["MemoryOver"] = ui->checkBoxMemOver->isChecked();
     jsAppNotification["MemoryOverNum"] = ui->spinBoxMemOverNum->value();
-    jsAppNotification["NetOver"] = ui->checkBoxNetOver->isChecked();
-    jsAppNotification["NetOverNum"] = ui->spinBoxNetOverNum->value();
-    jsAppNotification["NetOverNumUnitIndex"] = ui->comboBoxNetNumUnit->currentIndex();
-    jsAppNotification["NetOverNumUnit"] = ui->comboBoxNetNumUnit->currentText().toStdString().c_str();
 
     json &jsThemeStyle = m_js["WinMain"]["ThemeStyle"];
     // themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-为止
@@ -361,7 +343,8 @@ void WinDdeDockSetting::saveConfigWinMain()
 void WinDdeDockSetting::readConfig()
 {
     int index = -1;
-    ifstream jfile(configPath(index));
+    char * path = const_cast<char *>(configPath(index).toLatin1().data());
+    ifstream jfile(path);
     jfile >> m_js;
 }
 
@@ -376,7 +359,8 @@ void WinDdeDockSetting::saveConfig()
         writeDataToConfigPath();
 
     configPath(index);
-    ofstream outFile(configPath(index));
+    char * path = const_cast<char *>(configPath(index).toLatin1().data());
+    ofstream outFile(path);
     outFile << setw(2) << m_js << endl;
 }
 
@@ -485,7 +469,7 @@ QString WinDdeDockSetting::configPath(QString systemPath, QString homePath, int 
  * \param path “相对”路径（包含文件名）
  * \return 配置文件的路径
  */
-char *WinDdeDockSetting::configPath(int &index, QString path)
+QString WinDdeDockSetting::configPath(int &index, QString path)
 {
     QString name("/lfxNet/MonitorNetConfig.json");
     if (!path.isEmpty())
@@ -495,16 +479,10 @@ char *WinDdeDockSetting::configPath(int &index, QString path)
     QString systemPath("/usr/share");
     systemPath += name;
 
-    QString ret = configPath(systemPath, homePath, index);
+    return configPath(systemPath, homePath, index);
 
-    char *dataPath = const_cast<char *>(ret.toLatin1().data());  // 成功
+//    char *dataPath = const_cast<char *>(ret.toLatin1().data());  // 成功
 //    char *dataPath = const_cast<char *>(ret.toStdString().c_str());  // 会强制转换失败，
-    return dataPath;
-}
-
-QString WinDdeDockSetting::configPath()
-{
-    return "";
 }
 
 /*!

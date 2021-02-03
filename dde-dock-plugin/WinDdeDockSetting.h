@@ -35,8 +35,7 @@ public:
     bool writeDataToConfigPath(QString sour, QString dest, QString sourName, QString destName);
     void writeDataToConfigPath();
     QString configPath(QString systemPath, QString homePath, int &index);
-    char* configPath(int &index, QString path = "");
-    QString configPath();
+    QString configPath(int &index, QString path = "");
 
 private:
     void init();
@@ -80,8 +79,6 @@ signals:
     void sigNetOver(bool check);
     void sigCpuOverNum(int cpu);
     void sigMemOverNum(int mem);
-    void sigNetOverNum(int net);
-    void sigNetNumUnit(const QString &unit);
 
     void sigBtnApplyWinMain();
 
@@ -109,8 +106,6 @@ private:
 
     int m_cpuOverNum;
     int m_memOverNum;
-    int m_NetOverNum;
-    QString m_netOverUnit;
 };
 
 #endif // WINDDEDOCKSETTING_H
