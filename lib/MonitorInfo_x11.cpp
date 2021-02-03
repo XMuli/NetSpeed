@@ -271,19 +271,19 @@ QString MonitorInfo_x11::netModelUnit(NetUnit unit, ModelUnit model)
     case Default: {
         switch (unit) {
         case Bit:
-            return QString("b/s");
+            return QString("b/S");
         case Byte:
-            return QString("B/s");
+            return QString("B/S");
         case Kb:
-            return QString("K/s");
+            return QString("K/S");
         case Mb:
-            return QString("M/s");
+            return QString("M/S");
         case Gb:
-            return QString("G/s");
+            return QString("G/S");
         case Tb:
-            return QString("T/s");
+            return QString("T/S");
         default:
-            qWarning()<<QObject::tr("ModelUnit::Custom,  MonitorInfo_x11 is Unknow.");
+            qWarning()<<QObject::tr("ModelUnit::Default,  MonitorInfo_x11 is Unknow.");
             return QString("");
         }
     }
