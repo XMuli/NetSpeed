@@ -67,7 +67,17 @@ void WinDdeDockSetting::init()
     m_btnGroupTheme->addButton(ui->radioButtonSystem);
     m_btnGroupTheme->addButton(ui->radioButtonLight);
     m_btnGroupTheme->addButton(ui->radioButtonDark);
-    ui->comboBoxStyle->addItems(QStyleFactory::keys());
+
+    QStringList list = QStyleFactory::keys();
+    ui->comboBoxStyle->addItems(list);
+    for (auto v : list) {
+        QString style("Fusion");
+        if (v == "chameleon") {
+            style = "chameleon";
+            ui->comboBoxStyle->setCurrentText(style);
+            qApp->setStyle(QStyleFactory::create(ui->comboBoxStyle->currentText()));
+        }
+    }
 
     setWindowTitle(QString("lfxMonitorNet"));
     setWindowFlags(Qt::WindowStaysOnTopHint);
