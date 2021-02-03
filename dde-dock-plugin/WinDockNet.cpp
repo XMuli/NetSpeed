@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QDate>
 #include <climits>
+#include <QPalette>
 
 /*!
  * \brief WinDockNet::WinDockNet
@@ -153,15 +154,39 @@ void WinDockNet::setLabWidgetLayout(Qt::Orientation orientation)
     if (orientation == Qt::Horizontal && m_gridLayout->children().count() == 0) {
         for (int i = 0; i < m_vecLabel.count(); i += 4) {
             int iTo2 = i % 2;
-            m_gridLayout->addWidget(m_vecLabel[i], 0, i / 2 + iTo2, Qt::AlignLeft);
-            m_gridLayout->addWidget(m_vecLabel[i + 1], 0, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight);
-            m_gridLayout->addWidget(m_vecLabel[i + 2], 1, i / 2 + iTo2, Qt::AlignLeft);
-            m_gridLayout->addWidget(m_vecLabel[i + 3], 1, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight);
+            m_gridLayout->addWidget(m_vecLabel[i], 0, i / 2 + iTo2, Qt::AlignLeft | Qt::AlignBottom);
+            m_gridLayout->addWidget(m_vecLabel[i + 1], 0, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight | Qt::AlignBottom);
+            m_gridLayout->addWidget(m_vecLabel[i + 2], 1, i / 2 + iTo2, Qt::AlignLeft | Qt::AlignTop);
+            m_gridLayout->addWidget(m_vecLabel[i + 3], 1, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight | Qt::AlignTop);
+
+            const int space = -7;
+            m_vecLabel[i]->setContentsMargins(0, 0, 0, space);
+            m_vecLabel[i + 1]->setContentsMargins(0, 0, 0, space);
+            m_vecLabel[i + 2]->setContentsMargins(0, space, 0, 0);
+            m_vecLabel[i + 3]->setContentsMargins(0, space, 0, 0);
+
+//            // 调试布局代码
+//            m_vecLabel[i]->setAutoFillBackground(true);
+//            m_vecLabel[i + 1]->setAutoFillBackground(true);
+//            m_vecLabel[i + 2]->setAutoFillBackground(true);
+//            m_vecLabel[i + 3]->setAutoFillBackground(true);
+//            QPalette pa = m_vecLabel[i]->palette();
+//            pa.setColor(QPalette::Background, Qt::green);
+//            m_vecLabel[i]->setPalette(pa);
+//            pa.setColor(QPalette::Background, Qt::red);
+//            m_vecLabel[i + 1]->setPalette(pa);
+//            pa.setColor(QPalette::Background, Qt::blue);
+//            m_vecLabel[i + 2]->setPalette(pa);
+//            pa.setColor(QPalette::Background, Qt::gray);
+//            m_vecLabel[i + 3]->setPalette(pa);
         }
     } else {
-        for (int i = 0; i < m_vecLabel.count(); ++i) {
-            int iTo2 = i % 2;
-            m_gridLayout->addWidget(m_vecLabel[i], i / 2, iTo2, iTo2 ? Qt::AlignRight : Qt::AlignLeft);
+        for (int i = 0; i < m_vecLabel.count(); i += 2) {
+            m_gridLayout->addWidget(m_vecLabel[i], i, 0, Qt::AlignLeft | Qt::AlignVCenter);
+            m_gridLayout->addWidget(m_vecLabel[i + 1], i, 1, Qt::AlignRight | Qt::AlignVCenter);
+
+            m_vecLabel[i]->setContentsMargins(0, 0, 0, 0);
+            m_vecLabel[i + 1]->setContentsMargins(0, 0, 0, 0);
         }
     }
 }
