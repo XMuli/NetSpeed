@@ -74,12 +74,10 @@ void MonitorInfo_x11::cpuInfo(QVector<CpuInfo> &vec)
         line = stream.readLine().simplified();
         list = line.split(QRegExp("\\s{1,}"));
 
-        for (auto v = list.begin() + 1; v != list.end(); ++v) {
-            info.cpuAll += v->toLong(&ok);
-
-            if(v <= list.begin() + 3)
-                info.cpuWork += v->toLong(&ok);
-        }
+        for (auto v : list)
+            info.cpuAll += v.toLong(&ok);
+        for (auto v = list.begin() + 1; v <= list.begin() + 3; ++v)
+            info.cpuWork += v->toLong(&ok);
 
         vec.push_back(info);
     } while(i++, list[0] != "intr");

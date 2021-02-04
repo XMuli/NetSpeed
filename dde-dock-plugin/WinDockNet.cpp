@@ -362,14 +362,8 @@ void WinDockNet::onCpu()
     double valCpu = (vec.begin()->cpuWork - m_vec.begin()->cpuWork) * 100.0 / (vec.begin()->cpuAll - m_vec.begin()->cpuAll);
     m_vecLabel[5]->setText(QString("%1%").arg(valCpu, 0, 'f', m_precision, QLatin1Char(' ')));
 
-    // CPU 显示为负数
-    if (valCpu < 0) {
-         __builtin_trap();
-         int n = 0;
-         for (auto it : vec) {
-             qDebug() << "=====================>【" << n++ <<"】" << it.index << "  " << it.cpuWork << "  " << it.cpuAll;
-         }
-    }
+    m_vec.begin()->cpuWork = vec.begin()->cpuWork;
+    m_vec.begin()->cpuAll = vec.begin()->cpuAll;
 
     if (m_vecOverWarning[0].toBool()) {
         QString title("CPU 提示");
