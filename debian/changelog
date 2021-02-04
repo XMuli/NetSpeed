@@ -1,3 +1,12 @@
+lfxnet (1.1.0-1) unstable; urgency=medium
+
+  * 精简 UI，重大改版
+  * 去掉流量预警功能
+  * 修复 CPU 显示异常的 bug
+  * 优化水平模式下，缩小每一行之间的间隙
+
+ -- xmuli tech <xmulitech@gmail.com>  Thu, 04 Feb 2021 15:08:48 +0800
+
 lfxnet (1.0.0-1) unstable; urgency=low
 
   * CPU 多核使用率窗口（固定，默认不开启、不显示；备用）
