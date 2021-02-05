@@ -68,21 +68,21 @@ void MonitorInfo_x11::cpuInfo(QVector<CpuInfo> &vec)
     bool ok = false;
     CpuInfo info = {-1, 0, 0};
     int i = 0;
+    line = stream.readLine().simplified();
+    list = line.split(QRegExp("\\s{1,}"));
 
-    do {
-        info.index = i;
-        line = stream.readLine().simplified();
-        list = line.split(QRegExp("\\s{1,}"));
-
+    while (list[0] != "intr") {
         for (auto v : list)
             info.cpuAll += v.toLong(&ok);
         for (auto v = list.begin() + 1; v <= list.begin() + 3; ++v)
             info.cpuWork += v->toLong(&ok);
 
+        info.index = i++;
+        line = stream.readLine().simplified();
+        list = line.split(QRegExp("\\s{1,}"));
         vec.push_back(info);
-    } while(i++, list[0] != "intr");
+    }
 
-    vec.pop_back(); // 去掉多余
     file.close();
 }
 
