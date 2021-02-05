@@ -76,7 +76,6 @@ signals:
     // WinMain 相关
     void sigCpuOver(bool check);
     void sigMemOver(bool check);
-    void sigNetOver(bool check);
     void sigCpuOverNum(int cpu);
     void sigMemOverNum(int mem);
 

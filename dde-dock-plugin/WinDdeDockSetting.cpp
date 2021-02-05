@@ -309,7 +309,6 @@ void WinDdeDockSetting::readConfigWinMain()
     emit ui->radioDefaultPath->toggled(ui->radioDefaultPath->isChecked());
     emit ui->checkBoxCpuOver->clicked(ui->checkBoxCpuOver->isChecked());
     emit ui->checkBoxMemOver->clicked(ui->checkBoxMemOver->isChecked());
-//    emit ui->checkBoxNetOver->clicked(ui->checkBoxNetOver->isChecked());
     emit ui->radioButtonSystem->toggled(ui->radioButtonSystem->isChecked());
     emit ui->comboBoxStyle->currentIndexChanged(ui->comboBoxStyle->currentIndex());
 }

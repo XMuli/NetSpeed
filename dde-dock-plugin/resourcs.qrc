@@ -2,6 +2,5 @@
     <qresource prefix="/">
         <file>images/xmuli.png</file>
         <file>MonitorNetConfig.json</file>
-        <file>NetworkTraffic.log</file>
     </qresource>
 </RCC>

@@ -28,9 +28,6 @@ public:
     void setLabWidgetLayout(Qt::Orientation orientation);
     bool isHoverDisplay();
     void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 1000 * 60 * 10);
-    void writeNetworkTraffic(QString &log);
-    void readNetworkTraffic(long &net);
-    long netOverNumToByte(long net);
 
     void showTest(QString str);
     QString hoverDisplayText();
@@ -41,9 +38,6 @@ public slots:
     void onCpu();
     void onMemory();
     void onSystemRunTime();
-
-    void onWriteNetworkTraffic();
-    void onNetOverWarning();
 
     // 响应 WinDdeDockSetting 发射的信号
     void onCurrentFont(const QFont &font);
@@ -74,7 +68,6 @@ public slots:
     // 响应 WinMain 发射的信号
     void onCpuOver(bool check);
     void onMemOver(bool check);
-    void onNetOver(bool check);
     void onCpuOverNum(int cpu);
     void onMemOverNum(int mem);
     void onBtnApplyWinMain();
@@ -91,7 +84,6 @@ private:
     MonitorInfo_x11 *m_info;
     ModelUnit m_modelUnit;
     QTimer *m_timer;              // 刷新时间
-    QTimer *m_timerNetTrafficLog; // 写入日志间隔时间
 
     WinDdeDockSetting *m_winSetting;
     Qt::Orientation m_orientation;

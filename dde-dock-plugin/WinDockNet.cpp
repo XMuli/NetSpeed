@@ -29,7 +29,6 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     , QWidget(parent)
     , m_info(new MonitorInfo_x11())
     , m_timer(new QTimer())
-    , m_timerNetTrafficLog(new QTimer())
     , m_modelUnit(Default)
     , m_precision(2)
     , m_vecOverWarningTemp(3, QVariant(false))
@@ -44,13 +43,8 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onCpu);
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onMemory);
     connect(m_timer, &QTimer::timeout, this, &WinDockNet::onSystemRunTime);
-    connect(m_timer, &QTimer::timeout, this, &WinDockNet::onNetOverWarning);
     m_timer->setInterval(1000);
     m_timer->start();
-
-    connect(m_timerNetTrafficLog, &QTimer::timeout, this, &WinDockNet::onWriteNetworkTraffic);
-    m_timerNetTrafficLog->setInterval(1000 * 4);
-    m_timerNetTrafficLog->start();
 }
 
 WinDockNet::~WinDockNet()
@@ -213,96 +207,6 @@ void WinDockNet::DataOverWarning(QString title, QString text, QWidget *parent, b
 }
 
 /*!
- * \brief WinDockNet::writeNetworkTraffic 将网络接收发送网络总字节数字，保存在 .log中；时间最新的永远在
- *                                        最上一行，同一天仅只能有一条流量记录
- * \param[in] log 最新的一行数据，保存在第一行
- * \note QIODevice:: WriteOnly、Append、Truncate，会打开时候就清空、或者调用 .readAll() 为 "" 空；
- *                   ReadWrite 读没问题，写的时候 .readAll() 为 "" 空；故打开和两次，坑死了！！！
- */
-void WinDockNet::writeNetworkTraffic(QString &log)
-{
-    QFile file(":/NetworkTraffic.log");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log  [ReadOnly]\"  don't open!");
-        return;
-    }
-
-    QTextStream stream(&file);
-    QString firstLine = stream.readLine();
-    QStringList listFirstLine = firstLine.simplified().split(QRegExp("\\s{1,}"));
-    QStringList listLog = log.simplified().split(QRegExp("\\s{1,}"));
-    stream.seek(0);
-    QString dataAll = stream.readAll();
-
-    if (listFirstLine[0] == listLog[0]) {
-        dataAll.replace(0, dataAll.indexOf('\n') + 1, log);  // + 1 是因此返回为下标为 0 的序号，而填入参数为 替换字符的个数
-    } else {
-          dataAll.prepend(log);
-    }
-    file.close();
-
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        // 屏蔽流量预警提示功能，文件沒有写权限，所以会提示，后面讲文件放入 log 配置文件加中即可有权限统计流量预警，
-//        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log [WriteOnly]\"  don't open!");
-        return;
-    }
-
-    stream << dataAll;
-    file.close();
-}
-
-void WinDockNet::readNetworkTraffic(long &net)
-{
-    // 此插件库在 /usr/lib/dde-dock/plugins 下，NetworkTraffic.log 没有权限写，后面有空改一下，暂时屏蔽
-    QFile file(":/NetworkTraffic.log");
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qErrnoWarning("../dde-dock-plugin/NetworkTraffic.log  [ReadOnly]\"  don't open!");
-        return;
-    }
-
-    QTextStream stream(&file);
-    QStringList listDoday = stream.readLine().simplified().split(QRegExp("\\s{1,}"));
-    QStringList listYesterday = stream.readLine().simplified().split(QRegExp("\\s{1,}"));
-
-    bool ok = false;
-    long doday = listDoday[5].toLong(&ok);
-    long yesterday = listYesterday[5].toLong(&ok);
-    if (ok) {
-        net = doday - yesterday;
-    }
-    file.close();
-}
-
-/*!
- * \brief WinDockNet::netOverNumToByte 将预警提示流量数值转换为字节输出
- * \param[in] net 流量预警输入框输入的数值和单位，换算为对应的字节
- * \return 以 Byte 单位的流量数值
- */
-long WinDockNet::netOverNumToByte(long net)
-{
-    long ret = 0;
-    QString strNetUnit =  m_vecOverWarningTemp[6].toString();
-    if (strNetUnit == "Byte") {
-        ret = net;
-    } else if (strNetUnit == "KB") {
-        ret = net * 1024;
-    } else if (strNetUnit == "MB") {
-        ret = net * 1024 * 1024;
-    } else if (strNetUnit == "GB") {
-        ret = net * 1024 * 1024 * 1024;
-    } else if (strNetUnit == "TB") {
-        ret = net * 1024 * 1024 * 1024 * 1024;
-    }
-
-    if (net > LONG_MAX) {
-        QMessageBox::information(this, tr("数值过大"), tr("数值超过 long 型的最大值"));
-        return 0;
-    } else {
-        return ret;
-    }
-}
-
-/*!
  * \brief WinDockNet::showTest 测试函数
  * \param str 打印自定义字符串
  */
@@ -416,50 +320,6 @@ void WinDockNet::onSystemRunTime()
     double idle = 0;
     m_info->systemRunTime(run, idle);
     //    ui->lab_32->setText(m_info->runTimeUnit(run));
-}
-
-void WinDockNet::onWriteNetworkTraffic()
-{
-    QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-    QString log = time + " upload: " + QString::number(m_upload) + " down: " + QString::number(m_down) + "\n";
-    writeNetworkTraffic(log);
-}
-
-/*!
- * \brief WinDockNet::onNetOverWarning 槽函数，监测流量超过预警限制
- */
-void WinDockNet::onNetOverWarning()
-{
-    if (m_vecOverWarning[2].toBool()) {
-        QString title("流量提示");
-        QString text("");
-        bool ok = false;
-        long overNum = static_cast<long>(m_vecOverWarning[5].toLongLong(&ok));
-
-        NetUnit unit = NetUnit::Byte;
-        long autoUnitOverNum = m_info->netShowUnit(overNum, unit);
-        if (ok) {
-            QString strUnit("");
-            if (unit == NetUnit::Byte)
-                strUnit = " Byte！";
-            else if (unit == NetUnit::Kb)
-                strUnit = " KB！";
-            else if (unit == NetUnit::Mb)
-                strUnit = " MB";
-            else if (unit == NetUnit::Gb)
-                strUnit = " GB";
-            else if (unit == NetUnit::Tb)
-                strUnit = " TB";
-            text = "今日下载流量使用超过" + QString::number(autoUnitOverNum) + strUnit;
-        }
-
-        long net = 0;
-        readNetworkTraffic(net);
-        if (net >= overNum) {
-            m_vecOverWarning[2].setValue(false);
-            DataOverWarning(title, text, m_winSetting);
-        }
-    }
 }
 
 void WinDockNet::onCurrentFont(const QFont &font)
@@ -653,13 +513,6 @@ void WinDockNet::onMemOver(bool check)
     m_vecOverWarningTemp[1].setValue(check);
     onBtnApplyWinMain();
     showTest("onMemOver");
-}
-
-void WinDockNet::onNetOver(bool check)
-{
-    m_vecOverWarningTemp[2].setValue(check);
-    onBtnApplyWinMain();
-    showTest("onNetOver");
 }
 
 void WinDockNet::onCpuOverNum(int cpu)
