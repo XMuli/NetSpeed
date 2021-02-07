@@ -25,7 +25,7 @@ add_subdirectory(dde-dock-plugin)
 #message(${PROJECT_SOURCE_DIR}) # 源码路径
 #message(${PROJECT_BINARY_DIR}) # 二进制产物输出路径
 
-file(GLOB DIR "widgets/*.h" "widgets/*.cpp" "widgets/*.ui" "*.h" "*.hpp" "*.cpp" "*.json")
+file(GLOB DIR "widgets/*.h" "widgets/*.cpp" "widgets/*.ui" "*.h" "*.hpp" "*.cpp" "*.ui" "*.qrc" "*.json")
 
 #foreach(v ${DIR})
 #    message(${v})
