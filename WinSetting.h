@@ -27,9 +27,14 @@ public:
 
     void init();
     void readConfig();
+    void saveConfig();
 
     bool isHorizontal();
     bool isLightTheme();
+
+
+public slots:
+    void onBtnApplyToJson();
 
 
 private:

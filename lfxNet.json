@@ -8,7 +8,7 @@
       "LocationExchangeNet": false,
       "RefreshInterval": 1000
     },
-    "IsExportSystenPath": false,
+    "IsExportSystenPath": true,
     "IsHorizontal": true,
     "Notification": {
       "CpuOver": false,
@@ -18,22 +18,22 @@
     },
     "systemStyle": {
       "IsHoverDisplay": true,
-      "SystemStyle": "chameleon",
-      "SystemStyleIndex": 0
+      "SystemStyle": "Windows",
+      "SystemStyleIndex": 1
     }
   },
   "Personalization": {
     "DisplayTextHor": {
       "TextColorDark": {
-        "LabBackgroundColor": "#000000",
-        "LabTextColor": "#000000",
-        "TextColor": "#000000",
+        "LabBackgroundColor": "#593123",
+        "LabTextColor": "#A64826",
+        "TextColor": "#D95E32",
         "labBackgroundImage": "xxx.png"
       },
       "TextColorLight": {
-        "LabBackgroundColor": "#000000",
-        "LabTextColor": "#000000",
-        "TextColor": "#000000",
+        "LabBackgroundColor": "#405B73",
+        "LabTextColor": "#759CBF",
+        "TextColor": "#ADC5D9",
         "labBackgroundImage": "xxx.png"
       },
       "TextHor": {
@@ -48,15 +48,15 @@
     },
     "DisplayTextVer": {
       "TextColorDark": {
-        "LabBackgroundColor": "#000000",
-        "LabTextColor": "#000000",
-        "TextColor": "#000000",
+        "LabBackgroundColor": "#593123",
+        "LabTextColor": "#A64826",
+        "TextColor": "#D95E32",
         "labBackgroundImage": "xxx.png"
       },
       "TextColorLight": {
-        "LabBackgroundColor": "#000000",
-        "LabTextColor": "#000000",
-        "TextColor": "#000000",
+        "LabBackgroundColor": "#405B73",
+        "LabTextColor": "#759CBF",
+        "TextColor": "#ADC5D9",
         "labBackgroundImage": "xxx.png"
       },
       "TextVer": {
