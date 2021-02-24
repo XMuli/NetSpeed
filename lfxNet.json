@@ -1,61 +1,80 @@
 {
-    "Personalization":{
-        "Language":{
-            "Language":"跟随系统",
-            "LanguageIndex":0
-        },
-        "ModelSetting":{
-            "UnitModel":"默认",
-            "UnitModelIndex":0
-        },
-        "DisplayTextHor":{
-            "LabCpu":"  CPU: ",
-            "LabDown":"↓: ",
-            "LabMemory":"  MEM: ",
-            "LabUpload":"↑: ",
-            "FontSize":9,
-            "FontType":"Noto Sans CJK SC",
-            "FontTypeIndex":59,
-            "LabTextColor":"#000000",
-            "TextColor":"#000000",
-            "LabBackgroundColor":"#000000",
-            "labBackgroundImage":"xxx.png"
-        },
-        "DisplayTextVer":{
-            "LabCpu":"C: ",
-            "LabDown":"↓: ",
-            "LabMemory":"M: ",
-            "LabUpload":"↑: ",
-            "FontSize":9,
-            "FontType":"Noto Sans CJK SC",
-            "FontTypeIndex":59,
-            "LabTextColor":"#000000",
-            "TextColor":"#000000",
-            "LabBackgroundColor":"#000000",
-            "labBackgroundImage":"xxx.png"
-        }
+  "GeneralSetting": {
+    "DisolayText": {
+      "DisolayCPUAndMemory": true,
+      "DisolayNet": true,
+      "FractionalAccuracy": 2,
+      "LocationExchangeCPUAndMenory": false,
+      "LocationExchangeNet": false,
+      "RefreshInterval": 1000
     },
-    "GeneralSetting":{
-        "systemStyle":{
-            "SystemStyle":"chameleon",
-            "SystemStyleIndex":0,
-            "isHoverDisplay":"false"
-        },
-        "DisolayText":{
-            "DisolayCPUAndMemory":true,
-            "DisolayNet":true,
-            "LocationExchangeCPUAndMenory":false,
-            "LocationExchangeNet":false,
-            "FractionalAccuracy":2,
-            "RefreshInterval":1000
-        },
-        "Notification":{
-            "CpuOver":false,
-            "CpuOverNum":0,
-            "MemoryOver":false,
-            "MemoryOverNum":0
-        },
-        "IsHorizontal":true,
-        "isSystenPath":false
+    "IsExportSystenPath": false,
+    "IsHorizontal": true,
+    "Notification": {
+      "CpuOver": false,
+      "CpuOverNum": 0,
+      "MemoryOver": false,
+      "MemoryOverNum": 0
+    },
+    "systemStyle": {
+      "IsHoverDisplay": true,
+      "SystemStyle": "chameleon",
+      "SystemStyleIndex": 0
     }
+  },
+  "Personalization": {
+    "DisplayTextHor": {
+      "TextColorDark": {
+        "LabBackgroundColor": "#000000",
+        "LabTextColor": "#000000",
+        "TextColor": "#000000",
+        "labBackgroundImage": "xxx.png"
+      },
+      "TextColorLight": {
+        "LabBackgroundColor": "#000000",
+        "LabTextColor": "#000000",
+        "TextColor": "#000000",
+        "labBackgroundImage": "xxx.png"
+      },
+      "TextHor": {
+        "FontSize": 9,
+        "FontType": "Noto Sans CJK SC",
+        "FontTypeIndex": 59,
+        "LabCpu": "  CPU: ",
+        "LabDown": "↓: ",
+        "LabMemory": "  MEM: ",
+        "LabUpload": "↑: "
+      }
+    },
+    "DisplayTextVer": {
+      "TextColorDark": {
+        "LabBackgroundColor": "#000000",
+        "LabTextColor": "#000000",
+        "TextColor": "#000000",
+        "labBackgroundImage": "xxx.png"
+      },
+      "TextColorLight": {
+        "LabBackgroundColor": "#000000",
+        "LabTextColor": "#000000",
+        "TextColor": "#000000",
+        "labBackgroundImage": "xxx.png"
+      },
+      "TextVer": {
+        "FontSize": 9,
+        "FontType": "Noto Sans CJK SC",
+        "FontTypeIndex": 59,
+        "LabCpu": "C: ",
+        "LabDown": "↓: ",
+        "LabMemory": "M: ",
+        "LabUpload": "↑: "
+      }
+    },
+    "Language": {
+      "Language": "跟随系统",
+      "LanguageIndex": 0,
+      "UnitModel": "混合",
+      "UnitModelIndex": 1
+    },
+    "ThemeIsLight": true
+  }
 }

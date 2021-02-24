@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>lfxNet.json</file>
+        <file>backGround.png</file>
     </qresource>
 </RCC>

@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 //    WinSetting *winSetting = new WinSetting();
 //    winSetting->show();
 
-    WinHoverNet *net = new WinHoverNet();
+    WinSetting *net = new WinSetting();
     net->show();
 
     return QApplication::exec();
