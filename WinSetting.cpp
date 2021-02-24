@@ -15,20 +15,18 @@
 #include <QStandardPaths>
 #include <QString>
 #include <QComboBox>
-//using namespace std;
+using namespace std;
 
 WinSetting::WinSetting(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WinSetting)
-//    , m_isHorizontal(true)
-//    , m_path("")
-//    , m_btnGroupTheme(new QButtonGroup(nullptr))
-//    , m_doubleClick(2)
-//    , m_cpuOverNum(0)
-//    , m_memOverNum(0)
+    , m_isHorizontal(true)
+    , m_path("")
 {
     ui->setupUi(this);
-//    init();
+    ifstream jfile("/home/xmuli/project/github/lfxnet-1.1.0/lfxNet.json");
+    jfile >> m_js;
+    init();
 }
 
 WinSetting::~WinSetting()
@@ -36,19 +34,97 @@ WinSetting::~WinSetting()
     delete ui;
 }
 
-//void WinSetting::init()
-//{
-//    qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
+void WinSetting::readConfig()
+{
+    json jPersona = m_js["Personalization"];   // 个性化
+    json jGeneralSet = m_js["GeneralSetting"]; // 常规配置
+
+    //--------------------------个性化初始化--------------------------------
+    json jLanguage = jPersona["Language"];
+    ui->comboBoxLanguage->setCurrentIndex(jLanguage["LanguageIndex"]);
+    ui->comboBoxUnitModel->setCurrentIndex(jLanguage["UnitModelIndex"]);
+
+    json jDisplayText;
+    json jText;
+    if (jGeneralSet["isHorizontal"]) {
+        jDisplayText = jPersona["DisplayTextHor"];
+        jText = jDisplayText["TextHor"];
+    } else {
+        jDisplayText = jPersona["DisplayTextVer"];
+        jText = jDisplayText["TextVer"];
+    }
+
+    bool themeIsLight = jPersona["themeIsLight"];
+    json jTextColor;
+    if (themeIsLight) {
+        jTextColor = jDisplayText["TextColorLight"];
+        ui->radioButtonLight->setChecked(true);
+    } else {
+        jTextColor = jDisplayText["TextColorDark"];
+        ui->radioButtonDark->setChecked(true);
+    }
+
+    ui->lineLabUpload->setText(QString::fromStdString(jText["LabUpload"]));
+    ui->lineLabDown->setText(QString::fromStdString(jText["LabDown"]));
+    ui->lineLabCpu->setText(QString::fromStdString(jText["LabCpu"]));
+    ui->lineLabMemory->setText(QString::fromStdString(jText["LabMemory"]));
+    ui->fontComboBox->setCurrentIndex(jText["FontTypeIndex"]);
+    ui->spinBoxFontSize->setValue(jText["FontSize"]);
+
+    QPalette palette;
+    palette.setColor(QPalette::Background, QString::fromStdString(jTextColor["LabTextColor"]));
+    ui->labLabTextColor->setPalette(palette);
+    palette.setColor(QPalette::Background, QString::fromStdString(jTextColor["TextColor"]));
+    ui->labTextColor->setPalette(palette);
+    palette.setColor(QPalette::Background, QString::fromStdString(jTextColor["LabBackgroundColor"]));
+    ui->labBackgroundColor->setPalette(palette);
+    ui->labBackgroundImage->setPixmap(QPixmap(":/backGround.png"));  // TODO: 2021-02-24 图片后面设置为可自选，用作背景图片
+
+    //--------------------------常规配置初始化--------------------------------
+    json jSystemStyle = jGeneralSet["systemStyle"];
+    ui->checkBoxHoverDisplay->setChecked(jSystemStyle["isHoverDisplay"]);
+    ui->comboBoxsystemStyle->setCurrentIndex(jSystemStyle["SystemStyleIndex"]);
+
+    json jDisolayText = jGeneralSet["DisolayText"];
+    ui->checkBoxDisolayCPUAndMemory->setChecked(jDisolayText["DisolayCPUAndMemory"]);
+    ui->checkBoxDisolayNet->setChecked(jDisolayText["DisolayNet"]);
+    ui->checkBoxLocationExchangeCPUAndMenory->setChecked(jDisolayText["LocationExchangeCPUAndMenory"]);
+    ui->checkBoxLocationExchangeNet->setChecked(jDisolayText["LocationExchangeNet"]);
+    ui->spinBoxFractionalAccuracy->setValue(jDisolayText["FractionalAccuracy"]);
+    ui->spinBoxRefreshInterval->setValue(jDisolayText["RefreshInterval"]);
+
+    json jNotification = jGeneralSet["Notification"];
+    ui->checkBoxCpuOver->setChecked(jNotification["CpuOver"]);
+    ui->spinBoxCpuOverNum->setValue(jNotification["CpuOverNum"]);
+    ui->checkBoxMemOver->setChecked(jNotification["MemoryOver"]);
+    ui->spinBoxMemOverNum->setValue(jNotification["MemoryOverNum"]);
+
+    if (jGeneralSet["isExportSystenPath"])
+        ui->radioSystemPath->setChecked(true);
+    else
+        ui->radioCustomPath->setChecked(true);
+}
+
+void WinSetting::init()
+{
+    qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
 //    initSigConnectWinDdeDock();
 //    initSigConnectWinMain();
 
-//    // 读入 json 文件到流中
-//    readConfig();
+    // readConfig() 先将某些控件预设好
+    ui->labLabTextColor->setAutoFillBackground(true);
+    ui->labTextColor->setAutoFillBackground(true);
+    ui->labBackgroundColor->setAutoFillBackground(true);
 
-//    // 控件的基本设置，其读写留其它函数完成
-////    auto list = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
-////    for (auto v : list)
-////        v->setProperty("_d_dtk_spinBox", true);
+
+    // 读入 json 文件到流中
+    readConfig();
+
+
+    // 控件的基本设置，其读写留其它函数完成
+//    auto list = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
+//    for (auto v : list)
+//        v->setProperty("_d_dtk_spinBox", true);
 
 //    ui->labLabTextColor->setAutoFillBackground(true);
 //    ui->labTextColor->setAutoFillBackground(true);
@@ -62,7 +138,7 @@ WinSetting::~WinSetting()
 //    ui->labLabTextColor->installEventFilter(this);
 //    ui->labTextColor->installEventFilter(this);
 
-//    m_btnGroupTheme->addButton(ui->radioButtonSystem);
+//    m_btnGroupTheme->addButton(ui->radioButtonSystem);  // m_btnGroupTheme 可以移除
 //    m_btnGroupTheme->addButton(ui->radioButtonLight);
 //    m_btnGroupTheme->addButton(ui->radioButtonDark);
 
@@ -79,7 +155,18 @@ WinSetting::~WinSetting()
 
 //    setWindowTitle(QString("lfxMonitorNet"));
 //    setWindowFlags(Qt::WindowStaysOnTopHint);
-//}
+}
+
+
+bool WinSetting::isHorizontal()
+{
+
+}
+
+bool WinSetting::isLightTheme()
+{
+
+}
 
 //void WinSetting::initSigConnectWinDdeDock()
 //{
@@ -135,11 +222,11 @@ WinSetting::~WinSetting()
 //}
 
 ///*!
-// * \brief WinSetting::readConfigWinDdeDock 从 config.json 读取 config.json 写入到 UI 控件显示
+// * \brief WinSetting::readConfig 从 config.json 读取 config.json 写入到 UI 控件显示
 // */
-//void WinSetting::readConfigWinDdeDock()
+//void WinSetting::readConfig()
 //{
-//    json jsColorAndFont = m_js["WinDdeDock"]["ColorAndFont"];
+//    json jsColorAndFont = m_js["Personalization"]["ColorAndFont"];
 //    ui->fontComboBox->setCurrentIndex(jsColorAndFont["FontTypeIndex"]);
 //    ui->spinBoxFontSize->setValue(jsColorAndFont["FontSize"]);
 //    QPalette palette;
@@ -347,7 +434,7 @@ WinSetting::~WinSetting()
 // * \brief WinSetting::readConfig 读取配置文件
 // * \note 优先读取用户目录下的配置文件，其次去寻找系统级别下的配置文件
 // */
-//void WinSetting::readConfig()
+//void WinSetting::readConfig(int a)
 //{
 //    int index = -1;
 //    char * path = const_cast<char *>(configPath(index).toLatin1().data());
