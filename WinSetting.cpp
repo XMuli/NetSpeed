@@ -24,9 +24,15 @@ WinSetting::WinSetting(QWidget *parent)
     , m_path("")
 {
     ui->setupUi(this);
+
+    connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
+    connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
+
     ifstream jfile("/home/xmuli/project/github/lfxnet-1.1.0/lfxNet.json");
     jfile >> m_js;
     init();
+
+
 }
 
 WinSetting::~WinSetting()
@@ -34,6 +40,9 @@ WinSetting::~WinSetting()
     delete ui;
 }
 
+/*!
+ * \brief WinSetting::readConfig 读取 json 文件，初始化 UI 的控件初始值
+ */
 void WinSetting::readConfig()
 {
     json jPersona = m_js["Personalization"];   // 个性化
@@ -46,7 +55,7 @@ void WinSetting::readConfig()
 
     json jDisplayText;
     json jText;
-    if (jGeneralSet["isHorizontal"]) {
+    if (jGeneralSet["IsHorizontal"]) {
         jDisplayText = jPersona["DisplayTextHor"];
         jText = jDisplayText["TextHor"];
     } else {
@@ -54,7 +63,7 @@ void WinSetting::readConfig()
         jText = jDisplayText["TextVer"];
     }
 
-    bool themeIsLight = jPersona["themeIsLight"];
+    bool themeIsLight = jPersona["ThemeIsLight"];
     json jTextColor;
     if (themeIsLight) {
         jTextColor = jDisplayText["TextColorLight"];
@@ -82,7 +91,7 @@ void WinSetting::readConfig()
 
     //--------------------------常规配置初始化--------------------------------
     json jSystemStyle = jGeneralSet["systemStyle"];
-    ui->checkBoxHoverDisplay->setChecked(jSystemStyle["isHoverDisplay"]);
+    ui->checkBoxHoverDisplay->setChecked(jSystemStyle["IsHoverDisplay"]);
     ui->comboBoxsystemStyle->setCurrentIndex(jSystemStyle["SystemStyleIndex"]);
 
     json jDisolayText = jGeneralSet["DisolayText"];
@@ -99,10 +108,84 @@ void WinSetting::readConfig()
     ui->checkBoxMemOver->setChecked(jNotification["MemoryOver"]);
     ui->spinBoxMemOverNum->setValue(jNotification["MemoryOverNum"]);
 
-    if (jGeneralSet["isExportSystenPath"])
+    if (jGeneralSet["IsExportSystenPath"])
         ui->radioSystemPath->setChecked(true);
     else
         ui->radioCustomPath->setChecked(true);
+}
+
+/*!
+ * \brief WinSetting::saveConfig 将当前 UI: WinSetting 界面的数值保存到 json 文件中
+ */
+void WinSetting::saveConfig()
+{
+    json& jPersona = m_js["Personalization"];   // 个性化
+    json& jGeneralSet = m_js["GeneralSetting"]; // 常规配置
+
+    //--------------------------保存个性化的数据到 JSON 中--------------------------------
+    json& jLanguage = jPersona["Language"];
+    jLanguage["LanguageIndex"] = ui->comboBoxLanguage->currentIndex();
+    jLanguage["Language"] = ui->comboBoxLanguage->currentText().toStdString().c_str();
+    jLanguage["UnitModelIndex"] = ui->comboBoxUnitModel->currentIndex();
+    jLanguage["UnitModel"] = ui->comboBoxUnitModel->currentText().toStdString().c_str();
+
+    bool isHorizontal = ui->radioHorizontal->isChecked();
+    bool isThemeLight = ui->radioButtonLight->isChecked();
+
+    json jDisplayText;
+    json jText;
+    if (isHorizontal) {
+        jDisplayText = jPersona["DisplayTextHor"];
+        jText = jDisplayText["TextHor"];
+    } else {
+        jDisplayText = jPersona["DisplayTextVer"];
+        jText = jDisplayText["TextVer"];
+    }
+
+    json jTextColor;
+    if (isThemeLight)
+        jTextColor = jDisplayText["TextColorLight"];
+    else
+        jTextColor = jDisplayText["TextColorDark"];
+
+    jText["LabUpload"] = ui->lineLabUpload->text().toStdString().c_str();
+    jText["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
+    jText["LabCpu"] = ui->lineLabCpu->text().toStdString().c_str();
+    jText["LabMemory"] = ui->lineLabMemory->text().toStdString().c_str();
+    jText["FontSize"] = ui->spinBoxFontSize->value();
+    jText["FontType"] = ui->fontComboBox->currentText().toStdString().c_str();
+    jText["FontTypeIndex"] = ui->fontComboBox->currentIndex();
+
+    jTextColor["LabTextColor"] = ui->labLabTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
+    jTextColor["TextColor"] = ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
+    jTextColor["LabBackgroundColor"] = ui->labBackgroundColor->palette().color(QPalette::Background).name().toStdString().c_str();
+    // jTextColor["labBackgroundImage"] = 某路径
+
+    //--------------------------保存常规配置的数据到 JSON 中--------------------------------
+    json& jSystemStyle = jGeneralSet["systemStyle"];
+    jSystemStyle["IsHoverDisplay"] = ui->checkBoxHoverDisplay->isChecked();
+    jSystemStyle["SystemStyleIndex"] = ui->comboBoxsystemStyle->currentIndex();
+    jSystemStyle["SystemStyle"] = ui->comboBoxsystemStyle->currentText().toStdString().c_str();
+
+    json& jDisolayText = jGeneralSet["DisolayText"];
+    jDisolayText["DisolayCPUAndMemory"] = ui->checkBoxDisolayCPUAndMemory->isChecked();
+    jDisolayText["DisolayNet"] = ui->checkBoxDisolayNet->isChecked();
+    jDisolayText["LocationExchangeCPUAndMenory"] = ui->checkBoxLocationExchangeCPUAndMenory->isChecked();
+    jDisolayText["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->isChecked();
+    jDisolayText["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
+    jDisolayText["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
+
+    json& jNotification = jGeneralSet["Notification"];
+    jNotification["CpuOver"] = ui->checkBoxCpuOver->isChecked();
+    jNotification["CpuOverNum"] = ui->spinBoxCpuOverNum->value();
+    jNotification["MemoryOver"] = ui->checkBoxMemOver->isChecked();
+    jNotification["MemoryOverNum"] = ui->spinBoxMemOverNum->value();
+
+    jGeneralSet["IsHorizontal"] = ui->radioHorizontal->isChecked();
+    jGeneralSet["IsExportSystenPath"] = ui->radioSystemPath->isChecked();
+
+    ofstream outFile("/home/xmuli/project/github/lfxnet-1.1.0/lfxNet.json");
+    outFile << setw(2) << m_js << endl;
 }
 
 void WinSetting::init()
@@ -115,7 +198,6 @@ void WinSetting::init()
     ui->labLabTextColor->setAutoFillBackground(true);
     ui->labTextColor->setAutoFillBackground(true);
     ui->labBackgroundColor->setAutoFillBackground(true);
-
 
     // 读入 json 文件到流中
     readConfig();
@@ -142,18 +224,18 @@ void WinSetting::init()
 //    m_btnGroupTheme->addButton(ui->radioButtonLight);
 //    m_btnGroupTheme->addButton(ui->radioButtonDark);
 
-//    QStringList list = QStyleFactory::keys();
-//    ui->comboBoxStyle->addItems(list);
-//    for (auto v : list) {
-//        QString style("Fusion");
-//        if (v == "chameleon") {
-//            style = "chameleon";
-//            ui->comboBoxStyle->setCurrentText(style);
-//            qApp->setStyle(QStyleFactory::create(ui->comboBoxStyle->currentText()));
-//        }
-//    }
+    QStringList list = QStyleFactory::keys();
+    ui->comboBoxsystemStyle->addItems(list);
+    for (auto v : list) {
+        QString style("Fusion");
+        if (v == "chameleon") {
+            style = "chameleon";
+            ui->comboBoxsystemStyle->setCurrentText(style);
+            qApp->setStyle(QStyleFactory::create(ui->comboBoxsystemStyle->currentText()));
+        }
+    }
 
-//    setWindowTitle(QString("lfxMonitorNet"));
+    setWindowTitle(QString("lfxMonitorNet"));
 //    setWindowFlags(Qt::WindowStaysOnTopHint);
 }
 
@@ -166,6 +248,11 @@ bool WinSetting::isHorizontal()
 bool WinSetting::isLightTheme()
 {
 
+}
+
+void WinSetting::onBtnApplyToJson()
+{
+    saveConfig();
 }
 
 //void WinSetting::initSigConnectWinDdeDock()
