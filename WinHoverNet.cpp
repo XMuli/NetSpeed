@@ -1,68 +1,83 @@
-//#include "WinHoverNet.h"
+#include "WinHoverNet.h"
 
-//#include <QTimer>
-//#include <QDebug>
-//#include <QObjectList>
-//#include <QMessageBox>
-//#include <QIcon>
-//#include <QFile>
-//#include <QDate>
-//#include <climits>
-//#include <QPalette>
+#include <QTimer>
+#include <QDebug>
+#include <QObjectList>
+#include <QMessageBox>
+#include <QIcon>
+#include <QFile>
+#include <QDate>
+#include <climits>
+#include <QPalette>
 
-///*!
-// * \brief WinHoverNet::WinHoverNet
-// * \param parent
-// *
-// * \htmlonly
-// * <pre style="font-family: FreeMono, Consolas, Menlo, 'Noto Mono', 'Courier New', Courier, monospace;line-height: 100%;">
-// * ==========================================================================
-// * ||    上传标签    ||    网速 + 单位    ||    CPU标签    ||    CPU 使用率    ||
-// * ==========================================================================
-// * ||    下载标签    ||    网速 + 单位    ||    内存标签    ||    内存 使用率   ||
-// * ==========================================================================
-// * </pre>
-// * \endhtmlonly
-// */
-//WinHoverNet::WinHoverNet(WinSetting *winSetting, Qt::Orientation orientation, QWidget *parent)
+/*!
+ * \brief WinHoverNet::WinHoverNet
+ * \param parent
+ *
+ * \htmlonly
+ * <pre style="font-family: FreeMono, Consolas, Menlo, 'Noto Mono', 'Courier New', Courier, monospace;line-height: 100%;">
+ * ==========================================================================
+ * ||    上传标签    ||    网速 + 单位    ||    CPU标签    ||    CPU 使用率    ||
+ * ==========================================================================
+ * ||    下载标签    ||    网速 + 单位    ||    内存标签    ||    内存 使用率   ||
+ * ==========================================================================
+ * </pre>
+ * \endhtmlonly
+ *
+ * \htmlonly
+ * <pre style="font-family: FreeMono, Consolas, Menlo, 'Noto Mono', 'Courier New', Courier, monospace;line-height: 100%;">
+ * =======================================
+ * ||    上传标签    ||    网速 + 单位     ||
+ * =======================================
+ * ||    下载标签    ||    网速 + 单位     ||
+ * =======================================
+ * ||    CPU标签    ||    CPU 使用率      ||
+ * =======================================
+ * ||    内存标签    ||    内存 使用率     ||
+ * =======================================
+ * </pre>
+ * \endhtmlonly
+ */
+WinHoverNet::WinHoverNet(WinSetting *winSetting, Qt::Orientation orientation, QWidget *parent)
+    : WinTransparent(parent)
 //    : m_winSetting(winSetting)
-//    , QWidget(parent)
-//    , m_info(new MonitorInfo_x11())
-//    , m_timer(new QTimer())
-//    , m_modelUnit(Default)
-//    , m_precision(2)
+    , m_info(new MonitorInfo_x11())
+    , m_timer(new QTimer())
+    , m_modelUnit(Default)
+    , m_precision(2)
 //    , m_vecOverWarningTemp(3, QVariant(false))
 //    , m_vecOverWarning(3, QVariant(false))
-//    , m_orientation(Qt::Horizontal)
-//    , m_gridLayout(new QGridLayout(this))
-//    , m_vecLabel(8, nullptr)
+    , m_orientation(orientation)
+    , m_gridLayout(new QGridLayout(this))
+    , m_vecLabel(8, nullptr)
 //    , m_hover(true)
-//{
-//    init();
-//    connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onNet);
-//    connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onCpu);
-//    connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onMemory);
+{
+    init();
+    connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onNet);
+    connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onCpu);
+    connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onMemory);
 //    connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onSystemRunTime);
-//    m_timer->setInterval(1000);
-//    m_timer->start();
-//}
+    m_timer->setInterval(1000);
+    m_timer->start();
+}
 
-//WinHoverNet::~WinHoverNet()
-//{
-//}
+
+WinHoverNet::~WinHoverNet()
+{
+}
 
 //WinHoverNet *WinHoverNet::winHoverNetObject()
 //{
 //    return this;
 //}
 
-//void WinHoverNet::init()
-//{
-//    for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
-//        *it = new QLabel();
+void WinHoverNet::init()
+{
+    for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
+        *it = new QLabel();
 
-//     m_gridLayout->setContentsMargins(0, 0, 0, 0);
-//     m_gridLayout->setSpacing(0);
+     m_gridLayout->setContentsMargins(0, 0, 0, 0);
+     m_gridLayout->setSpacing(0);
 
 //     m_vecOverWarning.reserve(4);
 //     m_vecOverWarningTemp.reserve(4);
@@ -74,10 +89,10 @@
 //     initSigConnect();
 //     m_winSetting->readConfigWinDdeDock();
 
-//     setLabWidgetLayout(m_winSetting->isHorizontal());
-//     m_info->netInfo(m_upload, m_down);
-//     m_info->cpuInfo(m_vec);
-//}
+     setLabWidgetLayout(m_orientation);
+     m_info->netInfo(m_upload, m_down);
+     m_info->cpuInfo(m_vec);
+}
 
 //void WinHoverNet::initSigConnect()
 //{
@@ -113,74 +128,74 @@
 //   connect(m_winSetting, &WinSetting::sigBtnApplyWinMain, this, &WinHoverNet::onBtnApplyWinMain);
 //}
 
-///*!
-// * \brief WinHoverNet::setLabWidgetLayout 设置 dde 的插件布局（水平 、垂直）
-// * \param[in] isHorizontal true 水平； false 垂直
-// */
-//void WinHoverNet::setLabWidgetLayout(bool isHorizontal)
-//{
-//    if (isHorizontal)
-//        m_orientation = Qt::Horizontal;
-//    else
-//        m_orientation = Qt::Vertical;
+/*!
+ * \brief WinHoverNet::setLabWidgetLayout 设置 dde 的插件布局（水平 、垂直）
+ * \param[in] isHorizontal true 水平； false 垂直
+ */
+void WinHoverNet::setLabWidgetLayout(bool isHorizontal)
+{
+    if (isHorizontal)
+        m_orientation = Qt::Horizontal;
+    else
+        m_orientation = Qt::Vertical;
 
-//    setLabWidgetLayout(m_orientation);
-//}
+    setLabWidgetLayout(m_orientation);
+}
 
-///*!
-// * \brief WinHoverNet::setLabWidgetLayout 设置 dde 的插件布局（水平 、垂直）
-// * \param[in] orientation 希望设置为的布局方式
-// */
-//void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
-//{
-//    if (m_gridLayout == nullptr)
-//        return;
+/*!
+ * \brief WinHoverNet::setLabWidgetLayout 设置 dde 的插件布局（水平 、垂直）
+ * \param[in] orientation 希望设置为的布局方式
+ */
+void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
+{
+    if (m_gridLayout == nullptr)
+        return;
 
-//    const int nNum = m_gridLayout->children().count();
-//    for (int i = 0; i < nNum; ++i) {
-//        QLayoutItem *item = m_gridLayout->layout()->itemAt(i);
-//        m_gridLayout->removeItem(item);
-//    }
+    const int nNum = m_gridLayout->children().count();
+    for (int i = 0; i < nNum; ++i) {
+        QLayoutItem *item = m_gridLayout->layout()->itemAt(i);
+        m_gridLayout->removeItem(item);
+    }
 
-//    if (orientation == Qt::Horizontal && m_gridLayout->children().count() == 0) {
-//        for (int i = 0; i < m_vecLabel.count(); i += 4) {
-//            int iTo2 = i % 2;
-//            m_gridLayout->addWidget(m_vecLabel[i], 0, i / 2 + iTo2, Qt::AlignLeft | Qt::AlignBottom);
-//            m_gridLayout->addWidget(m_vecLabel[i + 1], 0, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight | Qt::AlignBottom);
-//            m_gridLayout->addWidget(m_vecLabel[i + 2], 1, i / 2 + iTo2, Qt::AlignLeft | Qt::AlignTop);
-//            m_gridLayout->addWidget(m_vecLabel[i + 3], 1, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight | Qt::AlignTop);
+    if (orientation == Qt::Horizontal && m_gridLayout->children().count() == 0) {
+        for (int i = 0; i < m_vecLabel.count(); i += 4) {
+            int iTo2 = i % 2;
+            m_gridLayout->addWidget(m_vecLabel[i], 0, i / 2 + iTo2, Qt::AlignLeft | Qt::AlignBottom);
+            m_gridLayout->addWidget(m_vecLabel[i + 1], 0, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight | Qt::AlignBottom);
+            m_gridLayout->addWidget(m_vecLabel[i + 2], 1, i / 2 + iTo2, Qt::AlignLeft | Qt::AlignTop);
+            m_gridLayout->addWidget(m_vecLabel[i + 3], 1, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight | Qt::AlignTop);
 
-//            const int space = -7;
-//            m_vecLabel[i]->setContentsMargins(0, 0, 0, space);
-//            m_vecLabel[i + 1]->setContentsMargins(0, 0, 0, space);
-//            m_vecLabel[i + 2]->setContentsMargins(0, space, 0, 0);
-//            m_vecLabel[i + 3]->setContentsMargins(0, space, 0, 0);
+            const int space = -7;
+            m_vecLabel[i]->setContentsMargins(0, 0, 0, space);
+            m_vecLabel[i + 1]->setContentsMargins(0, 0, 0, space);
+            m_vecLabel[i + 2]->setContentsMargins(0, space, 0, 0);
+            m_vecLabel[i + 3]->setContentsMargins(0, space, 0, 0);
 
-////            // 调试布局代码
-////            m_vecLabel[i]->setAutoFillBackground(true);
-////            m_vecLabel[i + 1]->setAutoFillBackground(true);
-////            m_vecLabel[i + 2]->setAutoFillBackground(true);
-////            m_vecLabel[i + 3]->setAutoFillBackground(true);
-////            QPalette pa = m_vecLabel[i]->palette();
-////            pa.setColor(QPalette::Background, Qt::green);
-////            m_vecLabel[i]->setPalette(pa);
-////            pa.setColor(QPalette::Background, Qt::red);
-////            m_vecLabel[i + 1]->setPalette(pa);
-////            pa.setColor(QPalette::Background, Qt::blue);
-////            m_vecLabel[i + 2]->setPalette(pa);
-////            pa.setColor(QPalette::Background, Qt::gray);
-////            m_vecLabel[i + 3]->setPalette(pa);
-//        }
-//    } else {
-//        for (int i = 0; i < m_vecLabel.count(); i += 2) {
-//            m_gridLayout->addWidget(m_vecLabel[i], i, 0, Qt::AlignLeft | Qt::AlignVCenter);
-//            m_gridLayout->addWidget(m_vecLabel[i + 1], i, 1, Qt::AlignRight | Qt::AlignVCenter);
+            // 调试布局代码
+            m_vecLabel[i]->setAutoFillBackground(true);
+            m_vecLabel[i + 1]->setAutoFillBackground(true);
+            m_vecLabel[i + 2]->setAutoFillBackground(true);
+            m_vecLabel[i + 3]->setAutoFillBackground(true);
+            QPalette pa = m_vecLabel[i]->palette();
+            pa.setColor(QPalette::Background, Qt::green);
+            m_vecLabel[i]->setPalette(pa);
+            pa.setColor(QPalette::Background, Qt::red);
+            m_vecLabel[i + 1]->setPalette(pa);
+            pa.setColor(QPalette::Background, Qt::blue);
+            m_vecLabel[i + 2]->setPalette(pa);
+            pa.setColor(QPalette::Background, Qt::gray);
+            m_vecLabel[i + 3]->setPalette(pa);
+        }
+    } else {
+        for (int i = 0; i < m_vecLabel.count(); i += 2) {
+            m_gridLayout->addWidget(m_vecLabel[i], i, 0, Qt::AlignLeft | Qt::AlignVCenter);
+            m_gridLayout->addWidget(m_vecLabel[i + 1], i, 1, Qt::AlignRight | Qt::AlignVCenter);
 
-//            m_vecLabel[i]->setContentsMargins(0, 0, 0, 0);
-//            m_vecLabel[i + 1]->setContentsMargins(0, 0, 0, 0);
-//        }
-//    }
-//}
+            m_vecLabel[i]->setContentsMargins(0, 0, 0, 0);
+            m_vecLabel[i + 1]->setContentsMargins(0, 0, 0, 0);
+        }
+    }
+}
 
 //bool WinHoverNet::isHoverDisplay()
 //{
@@ -231,43 +246,43 @@
 //    }
 //}
 
-///*!
-// * \brief WinHoverNet::onNet 定时刷新网速
-// */
-//void WinHoverNet::onNet()
-//{
-//    long upload = 0;
-//    long down = 0;
-//    NetUnit netUnit = Byte;
-//    QString unit = "";
+/*!
+ * \brief WinHoverNet::onNet 定时刷新网速
+ */
+void WinHoverNet::onNet()
+{
+    long upload = 0;
+    long down = 0;
+    NetUnit netUnit = Byte;
+    QString unit = "";
 
-//    m_info->netInfo(upload, down);
-//    double increaseUpload  = m_info->netShowUnit((upload - m_upload) / (m_timer->interval() /  1000.0), netUnit);
-//    unit = m_info->netModelUnit(netUnit, m_modelUnit);
-//    m_vecLabel[1]->setText(QString("%1").arg(increaseUpload, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
+    m_info->netInfo(upload, down);
+    double increaseUpload  = m_info->netShowUnit((upload - m_upload) / (m_timer->interval() /  1000.0), netUnit);
+    unit = m_info->netModelUnit(netUnit, m_modelUnit);
+    m_vecLabel[1]->setText(QString("%1").arg(increaseUpload, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
 
-//    netUnit = Byte;
-//    double increaseDown = m_info->netShowUnit((down - m_down) / (m_timer->interval() / 1000.0), netUnit);
-//    unit = m_info->netModelUnit(netUnit, m_modelUnit);
-//    m_vecLabel[3]->setText(QString("%1").arg(increaseDown, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
+    netUnit = Byte;
+    double increaseDown = m_info->netShowUnit((down - m_down) / (m_timer->interval() / 1000.0), netUnit);
+    unit = m_info->netModelUnit(netUnit, m_modelUnit);
+    m_vecLabel[3]->setText(QString("%1").arg(increaseDown, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
 
-//    m_upload = upload;
-//    m_down = down;
-//}
+    m_upload = upload;
+    m_down = down;
+}
 
-///*!
-// * \brief WinHoverNet::onCpu 定时刷新 CPU
-// */
-//void WinHoverNet::onCpu()
-//{
-//    QVector<CpuInfo> vec;
-//    m_info->cpuInfo(vec);
+/*!
+ * \brief WinHoverNet::onCpu 定时刷新 CPU
+ */
+void WinHoverNet::onCpu()
+{
+    QVector<CpuInfo> vec;
+    m_info->cpuInfo(vec);
 
-//    double valCpu = (vec.begin()->cpuWork - m_vec.begin()->cpuWork) * 100.0 / (vec.begin()->cpuAll - m_vec.begin()->cpuAll);
-//    m_vecLabel[5]->setText(QString("%1%").arg(valCpu, 0, 'f', m_precision, QLatin1Char(' ')));
+    double valCpu = (vec.begin()->cpuWork - m_vec.begin()->cpuWork) * 100.0 / (vec.begin()->cpuAll - m_vec.begin()->cpuAll);
+    m_vecLabel[5]->setText(QString("%1%").arg(valCpu, 0, 'f', m_precision, QLatin1Char(' ')));
 
-//    m_vec.begin()->cpuWork = vec.begin()->cpuWork;
-//    m_vec.begin()->cpuAll = vec.begin()->cpuAll;
+    m_vec.begin()->cpuWork = vec.begin()->cpuWork;
+    m_vec.begin()->cpuAll = vec.begin()->cpuAll;
 
 //    if (m_vecOverWarning[0].toBool()) {
 //        QString title("CPU 提示");
@@ -282,19 +297,19 @@
 //            DataOverWarning(title, text, m_winSetting);
 //        }
 //    }
-//}
+}
 
-///*!
-// * \brief WinHoverNet::onMemory 定时刷新 内存
-// */
-//void WinHoverNet::onMemory()
-//{
-//    MemoryInfo info;
-//    m_info->memoryInfo(info);
+/*!
+ * \brief WinHoverNet::onMemory 定时刷新 内存
+ */
+void WinHoverNet::onMemory()
+{
+    MemoryInfo info;
+    m_info->memoryInfo(info);
 
-//    double mem = (info.memoryAll - info.memoryFree) * 100.0 / info.memoryAll;
-//    m_vecLabel[7]->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
-////    ui->lab_34->setText(QString("%1%").arg(swap, 0, 'f', m_precision, QLatin1Char(' ')));
+    double mem = (info.memoryAll - info.memoryFree) * 100.0 / info.memoryAll;
+    m_vecLabel[7]->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
+//    ui->lab_34->setText(QString("%1%").arg(swap, 0, 'f', m_precision, QLatin1Char(' ')));
 
 //    if (m_vecOverWarning[1].toBool()) {
 //        QString title("内存提示");
@@ -309,7 +324,7 @@
 //            m_vecOverWarning[1].setValue(false);
 //        }
 //    }
-//}
+}
 
 ///*!
 // * \brief WinHoverNet::onSystemRunTime 定时刷新 系统开机运行时间

@@ -29,9 +29,13 @@ public:
     void readConfig();
     void saveConfig();
 
+    void cpoyToConfigPath();
     bool isHorizontal();
     bool isLightTheme();
 
+    void writeDataToConfigPath();
+    bool writeDataToConfigPath(QString sour, QString dest, QString sourName, QString destName);
+    QString isInHomePath(QString homePath, QString systemPath, bool isHomePath = true);
 
 public slots:
     void onBtnApplyToJson();

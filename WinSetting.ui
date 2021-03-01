@@ -20,7 +20,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabPersonalization">
       <attribute name="title">
@@ -890,10 +890,13 @@
        <item>
         <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>TextLabel</string>
+          <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet&quot;&gt;lfxNet</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -931,7 +934,7 @@
          <item>
           <widget class="QLabel" name="label_17">
            <property name="text">
-            <string>简介：一个轻的、快的 Linux 实时网速小程序</string>
+            <string>简介：一个轻的、快的 Linux 实时网速小程序（附 dock 网速插件）</string>
            </property>
           </widget>
          </item>
@@ -978,14 +981,20 @@
          <item row="0" column="5">
           <widget class="QLabel" name="label_13">
            <property name="text">
-            <string>MIT</string>
+            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/blob/master/LICENSE&quot;&gt;MIT</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item row="1" column="2">
           <widget class="QLabel" name="label_15">
            <property name="text">
-            <string>偕臧</string>
+            <string>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;偕臧</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1045,7 +1054,7 @@
          <item row="1" column="5">
           <widget class="QLabel" name="label_16">
            <property name="text">
-            <string>TextLabel</string>
+            <string>&lt;a href=&quot;https://github.com/xmuli&quot;&gt;xmuli</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -1055,7 +1064,10 @@
          <item row="0" column="2">
           <widget class="QLabel" name="label_9">
            <property name="text">
-            <string>v2.0.0</string>
+            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;v2.0.0</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1069,7 +1081,10 @@
          <item row="1" column="8">
           <widget class="QLabel" name="label_23">
            <property name="text">
-            <string>TextLabel</string>
+            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;releases</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1152,7 +1167,10 @@
          <item>
           <widget class="QLabel" name="label_18">
            <property name="text">
-            <string>xxxx</string>
+            <string>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;联系我</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1179,7 +1197,10 @@
          <item>
           <widget class="QLabel" name="label_24">
            <property name="text">
-            <string>TextLabel</string>
+            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/issues&quot;&gt;issues</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1202,7 +1223,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,1,1,3">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -1235,7 +1256,7 @@
          <item>
           <widget class="QLabel" name="label_20">
            <property name="text">
-            <string>竹子</string>
+            <string>&lt;a href=&quot;https://blog.justforlxz.com&quot;&gt;justforlxz</string>
            </property>
           </widget>
          </item>

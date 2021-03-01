@@ -32,8 +32,10 @@ int main(int argc, char *argv[]) {
 //    WinSetting *winSetting = new WinSetting();
 //    winSetting->show();
 
-    WinSetting *net = new WinSetting();
-    net->show();
+    WinHoverNet *hoverNet = new WinHoverNet(nullptr, Qt::Vertical, nullptr);
+    hoverNet->show();
+//    WinSetting *net = new WinSetting();
+//    net->show();
 
     return QApplication::exec();
 }

@@ -24,15 +24,13 @@ WinSetting::WinSetting(QWidget *parent)
     , m_path("")
 {
     ui->setupUi(this);
-
     connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
     connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
 
     ifstream jfile("/home/xmuli/project/github/lfxnet-1.1.0/lfxNet.json");
+//    ifstream jfile(":/lfxNet.json");
     jfile >> m_js;
     init();
-
-
 }
 
 WinSetting::~WinSetting()
@@ -186,6 +184,21 @@ void WinSetting::saveConfig()
 
     ofstream outFile("/home/xmuli/project/github/lfxnet-1.1.0/lfxNet.json");
     outFile << setw(2) << m_js << endl;
+}
+
+void WinSetting::cpoyToConfigPath()
+{
+//    int index = -1;
+    QString name("/lfxNet/MonitorNetConfig.json");
+    QString sour = QString("/usr/share") + name;
+    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+////    configPath(sour, dest, index);
+
+//    sour = sour.left(sour.lastIndexOf("/"));
+//    dest = dest.left(dest.lastIndexOf("/"));
+//    name = name.right(name.size() - name.lastIndexOf("/") - 1);
+//    if (index == 2)
+//        writeDataToConfigPath(sour, dest, name, name);
 }
 
 void WinSetting::init()
@@ -565,85 +578,84 @@ void WinSetting::onBtnApplyToJson()
 //    return path;
 //}
 
-///*!
-// * \brief WinSetting::writeDataToConfigPath 将 sour 路径下的 file 文件，读取之后，写入一份新的到 dest 路径下
-// * \param[in] sour 源路径
-// * \param[in] dest 目标路径
-// * \param[in] file 文件名
-// * \return true 成功； false 失败
-// */
-//bool WinSetting::writeDataToConfigPath(QString sour, QString dest, QString sourName, QString destName)
-//{
-//    QString sourPath = sour + "/" + sourName;
-//    QString destPath = dest + "/" + destName;
-//    QFileInfo fileFile(sourPath);
-//    QFileInfo fileNewFile(destPath);
+/*!
+ * \brief WinSetting::writeDataToConfigPath 将 sour 路径下的 file 文件，读取之后，写入一份新的到 dest 路径下
+ * \param[in] sour 源路径
+ * \param[in] dest 目标路径
+ * \param[in] file 文件名
+ * \return true 成功； false 失败
+ */
+bool WinSetting::writeDataToConfigPath(QString sour, QString dest, QString sourName, QString destName)
+{
+    QString sourPath = sour + "/" + sourName;
+    QString destPath = dest + "/" + destName;
+    QFileInfo fileFile(sourPath);
+    QFileInfo fileNewFile(destPath);
 
-//    if (fileFile.isFile() && !fileNewFile.isFile()) {
-//        QDir dirDest(dest);
-//        if (!dirDest.exists())
-//            dirDest.mkpath(dest);
+    if (fileFile.isFile() && !fileNewFile.isFile()) {
+        QDir dirDest(dest);
+        if (!dirDest.exists())
+            dirDest.mkpath(dest);
 
-//        if (QFile::copy(sourPath, destPath)) {
-//            bool ok = QFile::setPermissions(destPath, QFile::ReadOwner | QFile::WriteOwner
-//                                              | QFile::ReadUser | QFile::WriteUser
-//                                              | QFile::ReadGroup | QFile::WriteGroup
-//                                              | QFile::ReadOther | QFile::WriteOther);
-//            if (!ok)
-//                qDebug() << "文件设置读写权限失败："<< dest + sourName;
-//            return true;
-//        } else {
-//            qDebug() << "文件拷贝失败"<< sourPath << "---->" << destPath;
-//            return false;
-//        }
-//    } else {
-//        qDebug() << "文件"<< sourPath << "不存在; 或" << destPath << "已经存在！";
-//        return false;
-//    }
-//}
+        if (QFile::copy(sourPath, destPath)) {
+            bool ok = QFile::setPermissions(destPath, QFile::ReadOwner | QFile::WriteOwner
+                                              | QFile::ReadUser | QFile::WriteUser
+                                              | QFile::ReadGroup | QFile::WriteGroup
+                                              | QFile::ReadOther | QFile::WriteOther);
+            if (!ok)
+                qDebug() << "文件设置读写权限失败："<< dest + sourName;
+            return true;
+        } else {
+            qDebug() << "文件拷贝失败"<< sourPath << "---->" << destPath;
+            return false;
+        }
+    } else {
+        qDebug() << "文件"<< sourPath << "不存在; 或" << destPath << "已经存在！";
+        return false;
+    }
+}
 
-///*!
-// * \brief WinSetting::writeDataToConfigPath 保存配置文件
-// */
-//void WinSetting::writeDataToConfigPath()
-//{
-//    int index = -1;
-//    QString name("/lfxNet/MonitorNetConfig.json");
-//    QString sour = QString("/usr/share") + name;
-//    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
-//    configPath(sour, dest, index);
+/*!
+ * \brief WinSetting::writeDataToConfigPath 保存配置文件
+ */
+void WinSetting::writeDataToConfigPath()
+{
+    QString name("/lfxNet/MonitorNetConfig.json");
+    QString sour = QString("/usr/share") + name;
+    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+    bool isHomePath = false;
+    isInHomePath(sour, dest, isHomePath);
 
-//    sour = sour.left(sour.lastIndexOf("/"));
-//    dest = dest.left(dest.lastIndexOf("/"));
-//    name = name.right(name.size() - name.lastIndexOf("/") - 1);
-//    if (index == 2)
-//        writeDataToConfigPath(sour, dest, name, name);
-//}
+    sour = sour.left(sour.lastIndexOf("/"));
+    dest = dest.left(dest.lastIndexOf("/"));
+    name = name.right(name.size() - name.lastIndexOf("/") - 1);
+    if (!isHomePath)
+        writeDataToConfigPath(sour, dest, name, name);
+}
 
-///*!
-// * \brief WinSetting::configPath 获取系统配置文件的路径
-// * \param[in] systemPath 系统目录的配置文件路径，优先级低
-// * \param[in] homePath 家目录的配置文件路径，优先级高（先去查找）
-// * \param[out] index 0 输出 homePath； 1 输出 systemPath；-1 输出 “”
-// * \return 文件的路径
-// * \note 先判断家目录下的文件是否存在，若有则返回；无则去尝试返回系统目录下文件路径
-// */
-//QString WinSetting::configPath(QString systemPath, QString homePath, int &index)
-//{
-//    QFileInfo fileSystem(systemPath);
-//    QFileInfo fileHome(homePath);
+/*!
+ * \brief WinSetting::isInHomePath 获取系统配置文件的路径
+ * \param[in] homePath 家目录的配置文件路径，优先级高（先去查找）
+ * \param[in] systemPath 系统目录的配置文件路径，优先级低
+ * \param[out] true true 输出 homePath； false 输出 systemPath；
+ * \return 文件的路径
+ * \note 先判断家目录下的文件是否存在，若有则返回；无则去尝试返回系统目录下文件路径
+ */
+QString WinSetting::isInHomePath(QString homePath, QString systemPath, bool isHomePath)
+{
+    QFileInfo fileSystem(systemPath);
+    QFileInfo fileHome(homePath);
 
-//    if (fileHome.isFile()) {
-//        index = 1;
-//        return homePath;
-//    } else if (fileSystem.isFile()) {
-//        index = 2;
-//        return systemPath;
-//    } else {
-//        index = -1;
-//        return "";
-//    }
-//}
+    if (fileHome.isFile()) {
+        isHomePath = true;
+        return homePath;
+    }
+
+    if (fileSystem.isFile()) {
+        isHomePath = false;
+        return systemPath;
+    }
+}
 
 ///*!
 // * \brief WinSetting::configPath 重载 configPath 函数

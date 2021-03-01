@@ -19,7 +19,7 @@ void WinTransparent::init()
 {
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
     setWindowOpacity(0.8);
-    resize(400, 600);
+//    resize(400, 600);
 //    setAttribute(Qt::WA_TranslucentBackground);
 
 //    QGraphicsBlurEffect *blur = new QGraphicsBlurEffect();
