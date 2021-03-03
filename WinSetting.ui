@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>535</width>
-    <height>617</height>
+    <width>500</width>
+    <height>602</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabPersonalization">
       <attribute name="title">
@@ -532,14 +532,14 @@
             <item row="1" column="1">
              <widget class="QCheckBox" name="checkBoxLocationExchangeCPUAndMenory">
               <property name="text">
-               <string>互换位置 [CPU/内存]</string>
+               <string>互换 [CPU/内存]</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
              <widget class="QCheckBox" name="checkBoxLocationExchangeNet">
               <property name="text">
-               <string>互换位置 [上传/下载]</string>
+               <string>互换 [上传/下载]</string>
               </property>
              </widget>
             </item>
@@ -809,7 +809,7 @@
           <item>
            <widget class="QRadioButton" name="radioSystemPath">
             <property name="text">
-             <string>系统路径下配置</string>
+             <string>系统配置</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -819,7 +819,7 @@
           <item>
            <widget class="QRadioButton" name="radioCustomPath">
             <property name="text">
-             <string>用户路径下配置</string>
+             <string>家目录配置</string>
             </property>
            </widget>
           </item>
