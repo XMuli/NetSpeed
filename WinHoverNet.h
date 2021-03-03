@@ -77,10 +77,10 @@ public slots:
 private:
     WinSetting *m_winSetting;      // UI 界面控件
 
+//    bool m_hover;    // 悬浮现实额外信息
     long m_upload;                 // 网速的上次数值
     long m_down;
-    QVector<CpuInfo> m_vec;        // 获取
-//    bool m_hover;    // 悬浮现实额外信息
+    QVector<CpuInfo> m_vec;        // 获取 CPU 信息
     QVector<QVariant> m_vecOverWarningTemp;  // 临时
     QVector<QVariant> m_vecOverWarning; // 顺序：(0-1 是否选中预警):cpu、mem;(2-3 预警数值):cpu、mem；
 

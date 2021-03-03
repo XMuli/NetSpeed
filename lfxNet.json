@@ -4,8 +4,8 @@
       "DisolayCPUAndMemory": true,
       "DisolayNet": true,
       "FractionalAccuracy": 1,
-      "LocationExchangeCPUAndMenory": true,
-      "LocationExchangeNet": true,
+      "LocationExchangeCPUAndMenory": false,
+      "LocationExchangeNet": false,
       "RefreshInterval": 2000
     },
     "IsExportSystenPath": false,
@@ -17,7 +17,7 @@
       "MemoryOverNum": 0
     },
     "systemStyle": {
-      "IsHoverDisplay": true,
+      "IsHoverDisplay": false,
       "SystemStyle": "chameleon",
       "SystemStyleIndex": 0
     }

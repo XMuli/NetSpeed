@@ -501,25 +501,51 @@ void WinHoverNet::onDisolayCPUAndMemory(bool check)
 void WinHoverNet::onLocationExchangeNet(bool check)
 {
     Q_UNUSED(check)
-    QLabel labLab(m_vecLabel[0]->text());
-    QLabel labText(m_vecLabel[1]->text());
 
-    m_vecLabel[0]->setText(m_vecLabel[2]->text());
-    m_vecLabel[1]->setText(m_vecLabel[3]->text());
-    m_vecLabel[2]->setText(labLab.text());
-    m_vecLabel[3]->setText(labText.text());
+    QLayoutItem* itemLabUp = m_gridLayout->itemAtPosition(0, 0);
+    QLayoutItem* itemUp = m_gridLayout->itemAtPosition(0, 1);
+    QLayoutItem* itemLabDown = m_gridLayout->itemAtPosition(1, 0);
+    QLayoutItem* itemDown = m_gridLayout->itemAtPosition(1, 1);
+    QLabel* labUp = static_cast<QLabel *>(itemLabUp->widget());
+    QLabel* up = static_cast<QLabel *>(itemUp->widget());
+    QLabel* labDown = static_cast<QLabel *>(itemLabDown->widget());
+    QLabel* down = static_cast<QLabel *>(itemDown->widget());
+
+    // 交换: 先移除, 后添加
+    m_gridLayout->removeWidget(labUp);
+    m_gridLayout->removeWidget(up);
+    m_gridLayout->removeWidget(labDown);
+    m_gridLayout->removeWidget(down);
+
+    m_gridLayout->addWidget(labDown, 0, 0);
+    m_gridLayout->addWidget(down, 0, 1);
+    m_gridLayout->addWidget(labUp, 1, 0);
+    m_gridLayout->addWidget(up, 1, 1);
 }
 
 void WinHoverNet::onLocationExchangeCPUAndMenory(bool check)
 {
     Q_UNUSED(check)
-//    QLabel labLab(m_vecLabel[4]->text());
-//    QLabel labText(m_vecLabel[5]->text());
 
-//    m_vecLabel[4]->setText(m_vecLabel[6]->text());
-//    m_vecLabel[5]->setText(m_vecLabel[7]->text());
-//    m_vecLabel[6]->setText(labLab.text());
-//    m_vecLabel[7]->setText(labText.text());
+    QLayoutItem* itemLabCpu = m_gridLayout->itemAtPosition(0, 2);
+    QLayoutItem* itemCpu = m_gridLayout->itemAtPosition(0, 3);
+    QLayoutItem* itemLabMem = m_gridLayout->itemAtPosition(1, 2);
+    QLayoutItem* itemMem = m_gridLayout->itemAtPosition(1, 3);
+    QLabel* labCpu = static_cast<QLabel *>(itemLabCpu->widget());
+    QLabel* cpu = static_cast<QLabel *>(itemCpu->widget());
+    QLabel* labMem = static_cast<QLabel *>(itemLabMem->widget());
+    QLabel* mem = static_cast<QLabel *>(itemMem->widget());
+
+    // 交换: 先移除, 后添加
+    m_gridLayout->removeWidget(labCpu);
+    m_gridLayout->removeWidget(cpu);
+    m_gridLayout->removeWidget(labMem);
+    m_gridLayout->removeWidget(mem);
+
+    m_gridLayout->addWidget(labMem, 0, 2);
+    m_gridLayout->addWidget(mem, 0, 3);
+    m_gridLayout->addWidget(labCpu, 1, 2);
+    m_gridLayout->addWidget(cpu, 1, 3);
 }
 
 void WinHoverNet::onFractionalAccuracy(int num)
