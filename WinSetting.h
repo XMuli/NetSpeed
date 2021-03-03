@@ -22,14 +22,13 @@ public:
     ~WinSetting();
 
 public:
-
-//    int doubleClick();
-
     void init();
     void readConfig();
     void readConfig(bool isHomePath);
     void saveConfig();
     void saveConfig(bool &isHomePath);
+    void saveConfigThemeIsLight(bool isLight);
+    void onlyFirstEmitSig();
 
     bool isHorizontal();
     bool isLightTheme();
@@ -58,6 +57,7 @@ signals:
     // 此处是事件过滤器，修改颜色 3+1
     void sigTheme(bool checked);
 
+
     // --------常规配置 相关--------
     void sigCurrystemStyle(int index);
     void sigCurrystemStyleText(const QString &);
@@ -76,11 +76,14 @@ signals:
 
     void sigShowModel(bool);
 
-
 public slots:
+    void onTheme(bool checked);
     void onBtnApplyToJson();
     void onBtnApplyWinSetting();
     void onBtnQuitWinSetting();
+
+    void onCurrystemStyle(int index);
+    void onCurrystemStyleText(QString text);
 
 private:
     Ui::WinSetting *ui;

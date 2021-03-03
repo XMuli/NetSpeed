@@ -18,7 +18,7 @@ WinTransparent::WinTransparent(QWidget *parent)
 void WinTransparent::init()
 {
     setWindowFlags(Qt::FramelessWindowHint | windowFlags());
-    setWindowOpacity(0.8);
+    setWindowOpacity(1); // 透明度
 //    resize(400, 600);
 //    setAttribute(Qt::WA_TranslucentBackground);
 

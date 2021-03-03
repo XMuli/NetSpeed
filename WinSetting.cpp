@@ -45,6 +45,7 @@ void WinSetting::init()
     qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
     initSigConnectPersonalization();
     initSigConnectGeneralSetting();
+//    onlyFirstEmitSig();
 
 
     // readConfig() 先将某些控件预设好
@@ -54,6 +55,7 @@ void WinSetting::init()
 
     // 读入 json 文件到流中
     readConfig();
+
 
 
     // 控件的基本设置，其读写留其它函数完成
@@ -270,6 +272,45 @@ void WinSetting::saveConfig(bool& isHomePath)
     char * pathC = const_cast<char *>(path.toLatin1().data());
     ofstream outFile(pathC);
     outFile << setw(2) << m_js << endl;
+}
+
+void WinSetting::saveConfigThemeIsLight(bool isLight)
+{
+    m_js["Personalization"]["ThemeIsLight"] = isLight;
+}
+
+/*!
+ * \brief WinSetting::onlyFirstEmitSig 仅仅第一次初始化,发射信号,用来初始化控件文字使用
+ */
+void WinSetting::onlyFirstEmitSig()
+{
+    // 第一次发射信号，加载配置文件
+//    emit ui->fontComboBox->currentTextChanged(ui->fontComboBox->currentText());
+//    emit ui->spinBoxFontSize->valueChanged(ui->spinBoxFontSize->value());
+////    emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
+////    emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
+////    emit ui->radioHorizontal->toggled(ui->radioHorizontal->isChecked());
+////    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
+    emit ui->lineLabUpload->textChanged(ui->lineLabUpload->text());
+    emit ui->lineLabDown->textChanged(ui->lineLabDown->text());
+    emit ui->lineLabCpu->textChanged(ui->lineLabCpu->text());
+    emit ui->lineLabMemory->textChanged(ui->lineLabMemory->text());
+//    emit ui->lineLabDiskRead->textChanged(ui->lineLabDiskRead->text());
+//    emit ui->lineLabDiskWrite->textChanged(ui->lineLabDiskWrite->text());
+//    emit ui->checkBoxDisolayNet->clicked(ui->checkBoxDisolayNet->isChecked());
+//    emit ui->checkBoxDisolayCPUAndMemory->clicked(ui->checkBoxDisolayCPUAndMemory->isChecked());
+////    emit ui->checkBoxDisolayDisk->clicked(ui->checkBoxDisolayDisk->isChecked());
+////    emit ui->checkBoxLocationExchangeNet->clicked(ui->checkBoxLocationExchangeNet->isChecked());
+////    emit ui->checkBoxLocationExchangeCPUAndMenory->clicked(ui->checkBoxLocationExchangeCPUAndMenory->isChecked());
+////    emit ui->checkBoxLocationExchangeDisk->clicked(ui->checkBoxLocationExchangeDisk->isChecked());
+//    emit ui->spinBoxFractionalAccuracy->valueChanged(ui->spinBoxFractionalAccuracy->value());
+//    emit ui->spinBoxRefreshInterval->valueChanged(ui->spinBoxRefreshInterval->value());
+//    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
+
+//    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
+//    emit ui->radioHorizontal->clicked(ui->radioHorizontal->isChecked());
+//    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
+////    emit ui->comboBoxDoubleClick->currentIndexChanged(ui->comboBoxDoubleClick->currentIndex());
 }
 
 bool WinSetting::isHorizontal()
@@ -680,9 +721,9 @@ void WinSetting::initSigConnectPersonalization()
     void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
     connect(ui->spinBoxFontSize, pFun, this, &WinSetting::sigFontSize);
 
-    connect(ui->radioButtonLight, &QRadioButton::clicked, this, &WinSetting::sigTheme);
-
-    // 应用 + 取消 没写
+    connect(ui->radioButtonLight, &QRadioButton::toggled, this, &WinSetting::onTheme);
+    connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
+    connect(ui->btnQuitPerson, &QPushButton::clicked, this, &WinSetting::onBtnQuitWinSetting);
 }
 
 void WinSetting::initSigConnectGeneralSetting()
@@ -709,6 +750,12 @@ void WinSetting::initSigConnectGeneralSetting()
     connect(ui->btnQuitGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnQuitWinSetting);
 }
 
+void WinSetting::onTheme(bool checked)
+{
+    saveConfigThemeIsLight(checked);
+    readConfig();
+}
+
 void WinSetting::onBtnApplyToJson()
 {
     saveConfig();
@@ -718,13 +765,27 @@ void WinSetting::onBtnApplyToJson()
 
 void WinSetting::onBtnApplyWinSetting()
 {
-
+    onBtnApplyToJson();
 }
 
 void WinSetting::onBtnQuitWinSetting()
 {
-
+    close();
 }
+
+void WinSetting::onCurrystemStyle(int index)
+{
+    json& jStyle = m_js["GeneralSetting"]["systemStyle"];
+    jStyle["SystemStyleIndex"] = index;
+}
+
+void WinSetting::onCurrystemStyleText(QString text)
+{
+    json& jStyle = m_js["GeneralSetting"]["systemStyle"];
+    jStyle["SystemStyle"] = text.toStdString().c_str();
+}
+
+
 
 
 ///*!

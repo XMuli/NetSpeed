@@ -45,8 +45,8 @@ WinHoverNet::WinHoverNet(Qt::Orientation orientation, QWidget *parent)
     , m_timer(new QTimer())
     , m_modelUnit(Default)
     , m_precision(2)
-//    , m_vecOverWarningTemp(3, QVariant(false))
-//    , m_vecOverWarning(3, QVariant(false))
+    , m_vecOverWarningTemp(3, QVariant(false))
+    , m_vecOverWarning(3, QVariant(false))
     , m_orientation(orientation)
     , m_gridLayout(new QGridLayout(this))
     , m_vecLabel(8, nullptr)
@@ -73,61 +73,73 @@ WinHoverNet::~WinHoverNet()
 
 void WinHoverNet::init()
 {
-    m_winSetting->show();
     for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
         *it = new QLabel();
 
      m_gridLayout->setContentsMargins(0, 0, 0, 0);
      m_gridLayout->setSpacing(0);
 
-//     m_vecOverWarning.reserve(4);
-//     m_vecOverWarningTemp.reserve(4);
-//     m_vecOverWarningTemp.push_back(QVariant(0));
-//     m_vecOverWarningTemp.push_back(QVariant(0));
-//     m_vecOverWarningTemp.push_back(QVariant(0));
-//     m_vecOverWarningTemp.push_back(QVariant("MB"));
+     m_vecOverWarning.reserve(4);
+     m_vecOverWarningTemp.reserve(4);
+     m_vecOverWarningTemp.push_back(QVariant(0));
+     m_vecOverWarningTemp.push_back(QVariant(0));
+     m_vecOverWarningTemp.push_back(QVariant(0));
+     m_vecOverWarningTemp.push_back(QVariant("MB"));
 
-//     initSigConnect();
-//     m_winSetting->readConfigWinDdeDock();
+     initSigConnect();
+     m_winSetting->readConfig();
+     m_winSetting->onlyFirstEmitSig();
+     m_winSetting->show();
 
      setLabWidgetLayout(m_orientation);
      m_info->netInfo(m_upload, m_down);
      m_info->cpuInfo(m_vec);
 }
 
-//void WinHoverNet::initSigConnect()
-//{
-//    // 响应 WinSetting 发射的信号
-//   connect(m_winSetting, &WinSetting::sigCurrentFont, this, &WinHoverNet::onCurrentFont);
-//   connect(m_winSetting, &WinSetting::sigFontSize, this, &WinHoverNet::onFontSize);
-//   connect(m_winSetting, &WinSetting::sigUnitModel, this, &WinHoverNet::onUnitModel);
-//   connect(m_winSetting, &WinSetting::sigUnitModelIndex, this, &WinHoverNet::onUnitModelIndex);
-//   connect(m_winSetting, &WinSetting::sigShowModel, this, &WinHoverNet::onShowModel);
+void WinHoverNet::initSigConnect()
+{
+    //--------响应 "个性化" 发射的信号--------
+    connect(m_winSetting, &WinSetting::sigUnitModel, this, &WinHoverNet::onUnitModel);
+    connect(m_winSetting, &WinSetting::sigUnitModelIndex, this, &WinHoverNet::onUnitModelIndex);
+
+    connect(m_winSetting, &WinSetting::sigLabUploadText, this, &WinHoverNet::onLabUploadText);
+    connect(m_winSetting, &WinSetting::sigLabDownText, this, &WinHoverNet::onLabDownText);
+    connect(m_winSetting, &WinSetting::sigLabCpuText, this, &WinHoverNet::onLabCpuText);
+    connect(m_winSetting, &WinSetting::sigLabMemoryText, this, &WinHoverNet::onLabMemoryText);
+
+    connect(m_winSetting, &WinSetting::sigCurrentFont, this, &WinHoverNet::onCurrentFont);
+    connect(m_winSetting, &WinSetting::sigFontSize, this, &WinHoverNet::onFontSize);
+    // 此处是事件过滤器，修改颜色 3+1
+
+    //--------响应 "常规配置" 发射的信号--------
+//    connect(m_winSetting, &WinSetting::sigCurrystemStyle, this, &WinHoverNet::onCurrystemStyle);
+//    connect(m_winSetting, &WinSetting::sigCurrystemStyleText, this, &WinHoverNet::onCurrystemStyleText);
+    // 悬浮窗口 暂时空
+    connect(m_winSetting, &WinSetting::sigDisolayNet, this, &WinHoverNet::onDisolayNet);
+    connect(m_winSetting, &WinSetting::sigDisolayCPUAndMemory, this, &WinHoverNet::onDisolayCPUAndMemory);
+    connect(m_winSetting, &WinSetting::sigLocationExchangeNet, this, &WinHoverNet::onLocationExchangeNet);
+    connect(m_winSetting, &WinSetting::sigLocationExchangeCPUAndMenory, this, &WinHoverNet::onLocationExchangeCPUAndMenory);
+    connect(m_winSetting, &WinSetting::sigFractionalAccuracy, this, &WinHoverNet::onFractionalAccuracy);
+    connect(m_winSetting, &WinSetting::sigRefreshInterval, this, &WinHoverNet::onRefreshInterval);
+
+    connect(m_winSetting, &WinSetting::sigCpuOver, this, &WinHoverNet::onCpuOver);
+    connect(m_winSetting, &WinSetting::sigMemOver, this, &WinHoverNet::onMemOver);
+    connect(m_winSetting, &WinSetting::sigCpuOverNum, this, &WinHoverNet::onCpuOverNum);
+    connect(m_winSetting, &WinSetting::sigMemOverNum, this, &WinHoverNet::onMemOverNum);
+
+    connect(m_winSetting, &WinSetting::sigShowModel, this, &WinHoverNet::onShowModel);
+
+//    connect(m_winSetting, &WinSetting::sigBtnApplyWinMain, this, &WinHoverNet::onBtnApplyWinMain);
+
 //   connect(m_winSetting, &WinSetting::sigLabTextColor, this, &WinHoverNet::onLabTextColor);
 //   connect(m_winSetting, &WinSetting::sigTextColor, this, &WinHoverNet::onTextColor);
-//   connect(m_winSetting, &WinSetting::sigLabUploadText, this, &WinHoverNet::onLabUploadText);
-//   connect(m_winSetting, &WinSetting::sigLabDownText, this, &WinHoverNet::onLabDownText);
-//   connect(m_winSetting, &WinSetting::sigLabCpuText, this, &WinHoverNet::onLabCpuText);
-//   connect(m_winSetting, &WinSetting::sigLabMemoryText, this, &WinHoverNet::onLabMemoryText);
-////    connect(m_winSetting, &WinSetting::sigLabDiskReadText, this, &WinHoverNet::onLabDiskReadText);
-////    connect(m_winSetting, &WinSetting::sigLabDiskWriteText, this, &WinHoverNet::onLabDiskWriteText);
-//   connect(m_winSetting, &WinSetting::sigDisolayNet, this, &WinHoverNet::onDisolayNet);
-//   connect(m_winSetting, &WinSetting::sigDisolayCPUAndMemory, this, &WinHoverNet::onDisolayCPUAndMemory);
-////    connect(m_winSetting, &WinSetting::sigDisolayDisk, this, &WinHoverNet::onDisolayDisk);
-//   connect(m_winSetting, &WinSetting::sigLocationExchangeNet, this, &WinHoverNet::onLocationExchangeNet);
-//   connect(m_winSetting, &WinSetting::sigLocationExchangeCPUAndMenory, this, &WinHoverNet::onLocationExchangeCPUAndMenory);
-////    connect(m_winSetting, &WinSetting::sigLocationExchangeDisk, this, &WinHoverNet::onLocationExchangeDisk);
-//   connect(m_winSetting, &WinSetting::sigFractionalAccuracy, this, &WinHoverNet::onFractionalAccuracy);
-//   connect(m_winSetting, &WinSetting::sigRefreshInterval, this, &WinHoverNet::onRefreshInterval);
-//   connect(m_winSetting, &WinSetting::sigHoverDisplay, this, &WinHoverNet::onHoverDisplay);
 
-//   // 响应 WinMain 发射的信号
-//   connect(m_winSetting, &WinSetting::sigCpuOver, this, &WinHoverNet::onCpuOver);
-//   connect(m_winSetting, &WinSetting::sigMemOver, this, &WinHoverNet::onMemOver);
-//   connect(m_winSetting, &WinSetting::sigCpuOverNum, this, &WinHoverNet::onCpuOverNum);
-//   connect(m_winSetting, &WinSetting::sigMemOverNum, this, &WinHoverNet::onMemOverNum);
-//   connect(m_winSetting, &WinSetting::sigBtnApplyWinMain, this, &WinHoverNet::onBtnApplyWinMain);
-//}
+//    connect(m_winSetting, &WinSetting::sigLabDiskReadText, this, &WinHoverNet::onLabDiskReadText);
+//    connect(m_winSetting, &WinSetting::sigLabDiskWriteText, this, &WinHoverNet::onLabDiskWriteText);
+//    connect(m_winSetting, &WinSetting::sigDisolayDisk, this, &WinHoverNet::onDisolayDisk);
+//    connect(m_winSetting, &WinSetting::sigLocationExchangeDisk, this, &WinHoverNet::onLocationExchangeDisk);
+//   connect(m_winSetting, &WinSetting::sigHoverDisplay, this, &WinHoverNet::onHoverDisplay);
+}
 
 /*!
  * \brief WinHoverNet::setLabWidgetLayout 设置 dde 的插件布局（水平 、垂直）
@@ -160,6 +172,21 @@ void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
 
     if (orientation == Qt::Horizontal && m_gridLayout->children().count() == 0) {
         for (int i = 0; i < m_vecLabel.count(); i += 4) {
+//            // 调试布局代码
+//            m_vecLabel[i]->setAutoFillBackground(true);
+//            m_vecLabel[i + 1]->setAutoFillBackground(true);
+//            m_vecLabel[i + 2]->setAutoFillBackground(true);
+//            m_vecLabel[i + 3]->setAutoFillBackground(true);
+//            QPalette pa = m_vecLabel[i]->palette();
+//            pa.setColor(QPalette::Background, Qt::green);
+//            m_vecLabel[i]->setPalette(pa);
+//            pa.setColor(QPalette::Background, Qt::red);
+//            m_vecLabel[i + 1]->setPalette(pa);
+//            pa.setColor(QPalette::Background, Qt::blue);
+//            m_vecLabel[i + 2]->setPalette(pa);
+//            pa.setColor(QPalette::Background, Qt::gray);
+//            m_vecLabel[i + 3]->setPalette(pa);
+
             int iTo2 = i % 2;
             m_gridLayout->addWidget(m_vecLabel[i], 0, i / 2 + iTo2, Qt::AlignLeft | Qt::AlignBottom);
             m_gridLayout->addWidget(m_vecLabel[i + 1], 0, (i + 1) / 2 + (i + 1) % 2, Qt::AlignRight | Qt::AlignBottom);
@@ -172,20 +199,6 @@ void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
             m_vecLabel[i + 2]->setContentsMargins(0, space, 0, 0);
             m_vecLabel[i + 3]->setContentsMargins(0, space, 0, 0);
 
-            // 调试布局代码
-            m_vecLabel[i]->setAutoFillBackground(true);
-            m_vecLabel[i + 1]->setAutoFillBackground(true);
-            m_vecLabel[i + 2]->setAutoFillBackground(true);
-            m_vecLabel[i + 3]->setAutoFillBackground(true);
-            QPalette pa = m_vecLabel[i]->palette();
-            pa.setColor(QPalette::Background, Qt::green);
-            m_vecLabel[i]->setPalette(pa);
-            pa.setColor(QPalette::Background, Qt::red);
-            m_vecLabel[i + 1]->setPalette(pa);
-            pa.setColor(QPalette::Background, Qt::blue);
-            m_vecLabel[i + 2]->setPalette(pa);
-            pa.setColor(QPalette::Background, Qt::gray);
-            m_vecLabel[i + 3]->setPalette(pa);
         }
     } else {
         for (int i = 0; i < m_vecLabel.count(); i += 2) {
@@ -222,18 +235,18 @@ void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
 //    }
 //}
 
-///*!
-// * \brief WinHoverNet::showTest 测试函数
-// * \param str 打印自定义字符串
-// */
-//void WinHoverNet::showTest(QString str)
-//{
-//    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarning
-//           <<m_vecOverWarning.size()<<m_vecOverWarning.capacity();
+/*!
+ * \brief WinHoverNet::showTest 测试函数
+ * \param str 打印自定义字符串
+ */
+void WinHoverNet::showTest(QString str)
+{
+    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarning
+           <<m_vecOverWarning.size()<<m_vecOverWarning.capacity();
 
-//    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarningTemp
-//           <<m_vecOverWarningTemp.size()<<m_vecOverWarningTemp.capacity();
-//}
+    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarningTemp
+           <<m_vecOverWarningTemp.size()<<m_vecOverWarningTemp.capacity();
+}
 
 //QString WinHoverNet::hoverDisplayText()
 //{
@@ -310,7 +323,6 @@ void WinHoverNet::onMemory()
 
     double mem = (info.memoryAll - info.memoryFree) * 100.0 / info.memoryAll;
     m_vecLabel[7]->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
-//    ui->lab_34->setText(QString("%1%").arg(swap, 0, 'f', m_precision, QLatin1Char(' ')));
 
 //    if (m_vecOverWarning[1].toBool()) {
 //        QString title("内存提示");
@@ -338,65 +350,76 @@ void WinHoverNet::onMemory()
 //    //    ui->lab_32->setText(m_info->runTimeUnit(run));
 //}
 
-//void WinHoverNet::onCurrentFont(const QFont &font)
+void WinHoverNet::onCurrentFont(const QFont &font)
+{
+    int nCount = m_gridLayout->count();
+    for (int i = 0; i < nCount; ++i) {
+        QLayoutItem *it = m_gridLayout->itemAt(i);
+        QLabel * lab = static_cast<QLabel *>(it->widget());
+        lab->setFont(font);
+    }
+}
+
+void WinHoverNet::onFontSize(int size)
+{
+    QFont font;
+    font.setPointSize(size);
+
+    int nCount = m_gridLayout->count();
+    for (int i = 0; i < nCount; ++i) {
+        QLayoutItem *it = m_gridLayout->itemAt(i);
+        QLabel * lab = static_cast<QLabel *>(it->widget());
+        lab->setFont(font);
+    }
+}
+
+//void WinHoverNet::onCurrystemStyle(int index)
 //{
-//    int nCount = m_gridLayout->count();
-//    for (int i = 0; i < nCount; ++i) {
-//        QLayoutItem *it = m_gridLayout->itemAt(i);
-//        QLabel * lab = static_cast<QLabel *>(it->widget());
-//        lab->setFont(font);
-//    }
+
 //}
 
-//void WinHoverNet::onFontSize(int size)
+//void WinHoverNet::onCurrystemStyleText(QString text)
 //{
-//    QFont font;
-//    font.setPointSize(size);
-
-//    int nCount = m_gridLayout->count();
-//    for (int i = 0; i < nCount; ++i) {
-//        QLayoutItem *it = m_gridLayout->itemAt(i);
-//        QLabel * lab = static_cast<QLabel *>(it->widget());
-//        lab->setFont(font);
-//    }
+//    json& jStyle = m_js["GeneralSetting"]["systemStyle"];
+//    jStyle["SystemStyle"] = text;
 //}
 
-///*!
-// * \brief WinHoverNet::onShowModel 插件水平还是垂直
-// * \param[in] check 现实模式中水平 (radioHorizontal) 控件是否被选中
-// * \line            true 水平； false 垂直
-// */
-//void WinHoverNet::onShowModel(bool check)
-//{
-//    setLabWidgetLayout(check);
-//}
+/*!
+ * \brief WinHoverNet::onShowModel 插件水平还是垂直
+ * \param[in] check 现实模式中水平 (radioHorizontal) 控件是否被选中
+ * \line            true 水平； false 垂直
+ */
+void WinHoverNet::onShowModel(bool check)
+{
+    setLabWidgetLayout(check);
+}
 
-///*!
-// * \brief WinHoverNet::onUnitModel 单位显示模式
-// */
-//void WinHoverNet::onUnitModel(const QString &text)
-//{
-////    if (text == "Default")
-////        m_modelUnit = ModelUnit::Default;
-////    else if (text == "Upper")
-////        m_modelUnit = ModelUnit::Upper;
-////    else if (text == "Lower")
-////        m_modelUnit = ModelUnit::Lower;
-////    else if (text == "Mixed")
-////        m_modelUnit = ModelUnit::Mixed;
-//}
+/*!
+ * \brief WinHoverNet::onUnitModel 单位显示模式
+ */
+void WinHoverNet::onUnitModel(const QString &text)
+{
+    if (text == "Default")
+        m_modelUnit = ModelUnit::Default;
+    else if (text == "Upper")
+        m_modelUnit = ModelUnit::Upper;
+    else if (text == "Lower")
+        m_modelUnit = ModelUnit::Lower;
+    else if (text == "Mixed")
+        m_modelUnit = ModelUnit::Mixed;
+}
 
-//void WinHoverNet::onUnitModelIndex(int index)
-//{
-//    if (index == 0)
-//        m_modelUnit = ModelUnit::Default;
-//    else if (index == 1)
-//        m_modelUnit = ModelUnit::Mixed;
-//    else if (index == 2)
-//        m_modelUnit = ModelUnit::Upper;
-//    else if (index == 3)
-//        m_modelUnit = ModelUnit::Lower;
-//}
+void WinHoverNet::onUnitModelIndex(int index)
+{
+    if (index == 0)
+        m_modelUnit = ModelUnit::Default;
+    else if (index == 1)
+        m_modelUnit = ModelUnit::Mixed;
+    else if (index == 2)
+        m_modelUnit = ModelUnit::Upper;
+    else if (index == 3)
+        m_modelUnit = ModelUnit::Lower;
+}
 
 //void WinHoverNet::onLabTextColor(const QColor color)
 //{
@@ -420,76 +443,76 @@ void WinHoverNet::onMemory()
 //    m_vecLabel[7]->setPalette(palette);
 //}
 
-//void WinHoverNet::onLabUploadText(const QString &text)
-//{
-//    if (m_vecLabel[0]->text() != text)
-//        m_vecLabel[0]->setText(text);
-//}
+void WinHoverNet::onLabUploadText(const QString &text)
+{
+    if (m_vecLabel[0]->text() != text)
+        m_vecLabel[0]->setText(text);
+}
 
-//void WinHoverNet::onLabDownText(const QString &text)
-//{
-//    if (m_vecLabel[2]->text() != text)
-//        m_vecLabel[2]->setText(text);
-//}
+void WinHoverNet::onLabDownText(const QString &text)
+{
+    if (m_vecLabel[2]->text() != text)
+        m_vecLabel[2]->setText(text);
+}
 
-//void WinHoverNet::onLabCpuText(const QString &text)
-//{
-//    if (m_vecLabel[4]->text() != text)
-//        m_vecLabel[4]->setText(text);
-//}
+void WinHoverNet::onLabCpuText(const QString &text)
+{
+    if (m_vecLabel[4]->text() != text)
+        m_vecLabel[4]->setText(text);
+}
 
-//void WinHoverNet::onLabMemoryText(const QString &text)
-//{
-//    if (m_vecLabel[6]->text() != text)
-//        m_vecLabel[6]->setText(text);
-//}
+void WinHoverNet::onLabMemoryText(const QString &text)
+{
+    if (m_vecLabel[6]->text() != text)
+        m_vecLabel[6]->setText(text);
+}
 
-//void WinHoverNet::onDisolayNet(bool check)
-//{
-//    if (check) {
-//        m_vecLabel[0]->show();
-//        m_vecLabel[1]->show();
-//        m_vecLabel[2]->show();
-//        m_vecLabel[3]->show();
-//    } else {
-//        m_vecLabel[0]->hide();
-//        m_vecLabel[1]->hide();
-//        m_vecLabel[2]->hide();
-//        m_vecLabel[3]->hide();
-//    }
+void WinHoverNet::onDisolayNet(bool check)
+{
+    if (check) {
+        m_vecLabel[0]->show();
+        m_vecLabel[1]->show();
+        m_vecLabel[2]->show();
+        m_vecLabel[3]->show();
+    } else {
+        m_vecLabel[0]->hide();
+        m_vecLabel[1]->hide();
+        m_vecLabel[2]->hide();
+        m_vecLabel[3]->hide();
+    }
 
-//}
+}
 
-//void WinHoverNet::onDisolayCPUAndMemory(bool check)
-//{
-//    if (check) {
-//        m_vecLabel[4]->show();
-//        m_vecLabel[5]->show();
-//        m_vecLabel[6]->show();
-//        m_vecLabel[7]->show();
-//    } else {
-//        m_vecLabel[4]->hide();
-//        m_vecLabel[5]->hide();
-//        m_vecLabel[6]->hide();
-//        m_vecLabel[7]->hide();
-//    }
-//}
+void WinHoverNet::onDisolayCPUAndMemory(bool check)
+{
+    if (check) {
+        m_vecLabel[4]->show();
+        m_vecLabel[5]->show();
+        m_vecLabel[6]->show();
+        m_vecLabel[7]->show();
+    } else {
+        m_vecLabel[4]->hide();
+        m_vecLabel[5]->hide();
+        m_vecLabel[6]->hide();
+        m_vecLabel[7]->hide();
+    }
+}
 
-//void WinHoverNet::onLocationExchangeNet(bool check)
-//{
-//    Q_UNUSED(check)
-//    QLabel labLab(m_vecLabel[0]->text());
-//    QLabel labText(m_vecLabel[1]->text());
+void WinHoverNet::onLocationExchangeNet(bool check)
+{
+    Q_UNUSED(check)
+    QLabel labLab(m_vecLabel[0]->text());
+    QLabel labText(m_vecLabel[1]->text());
 
-//    m_vecLabel[0]->setText(m_vecLabel[2]->text());
-//    m_vecLabel[1]->setText(m_vecLabel[3]->text());
-//    m_vecLabel[2]->setText(labLab.text());
-//    m_vecLabel[3]->setText(labText.text());
-//}
+    m_vecLabel[0]->setText(m_vecLabel[2]->text());
+    m_vecLabel[1]->setText(m_vecLabel[3]->text());
+    m_vecLabel[2]->setText(labLab.text());
+    m_vecLabel[3]->setText(labText.text());
+}
 
-//void WinHoverNet::onLocationExchangeCPUAndMenory(bool check)
-//{
-//    Q_UNUSED(check)
+void WinHoverNet::onLocationExchangeCPUAndMenory(bool check)
+{
+    Q_UNUSED(check)
 //    QLabel labLab(m_vecLabel[4]->text());
 //    QLabel labText(m_vecLabel[5]->text());
 
@@ -497,19 +520,19 @@ void WinHoverNet::onMemory()
 //    m_vecLabel[5]->setText(m_vecLabel[7]->text());
 //    m_vecLabel[6]->setText(labLab.text());
 //    m_vecLabel[7]->setText(labText.text());
-//}
+}
 
-//void WinHoverNet::onFractionalAccuracy(int num)
-//{
-//    if (m_precision != num)
-//        m_precision = num;
-//}
+void WinHoverNet::onFractionalAccuracy(int num)
+{
+    if (m_precision != num)
+        m_precision = num;
+}
 
-//void WinHoverNet::onRefreshInterval(int interval)
-//{
-//    if (m_timer->interval() != interval)
-//        m_timer->setInterval(interval);
-//}
+void WinHoverNet::onRefreshInterval(int interval)
+{
+    if (m_timer->interval() != interval)
+        m_timer->setInterval(interval);
+}
 
 //void WinHoverNet::onHoverDisplay(bool check)
 //{
@@ -517,35 +540,35 @@ void WinHoverNet::onMemory()
 //        m_hover = check;
 //}
 
-//void WinHoverNet::onCpuOver(bool check)
-//{
-//    m_vecOverWarningTemp[0].setValue(check);
-//    onBtnApplyWinMain();
-//    showTest("onCpuOver");
-//}
+void WinHoverNet::onCpuOver(bool check)
+{
+    m_vecOverWarningTemp[0].setValue(check);
+    onBtnApplyWinMain();
+    showTest("onCpuOver");
+}
 
-//void WinHoverNet::onMemOver(bool check)
-//{
-//    m_vecOverWarningTemp[1].setValue(check);
-//    onBtnApplyWinMain();
-//    showTest("onMemOver");
-//}
+void WinHoverNet::onMemOver(bool check)
+{
+    m_vecOverWarningTemp[1].setValue(check);
+    onBtnApplyWinMain();
+    showTest("onMemOver");
+}
 
-//void WinHoverNet::onCpuOverNum(int cpu)
-//{
-//    m_vecOverWarningTemp[3].setValue(cpu);
-//    showTest("onCpuOverNum");
-//}
+void WinHoverNet::onCpuOverNum(int cpu)
+{
+    m_vecOverWarningTemp[3].setValue(cpu);
+    showTest("onCpuOverNum");
+}
 
-//void WinHoverNet::onMemOverNum(int mem)
-//{
-//    m_vecOverWarningTemp[4].setValue(mem);
-//    showTest("onMemOverNum");
-//}
+void WinHoverNet::onMemOverNum(int mem)
+{
+    m_vecOverWarningTemp[4].setValue(mem);
+    showTest("onMemOverNum");
+}
 
-//void WinHoverNet::onBtnApplyWinMain()
-//{
-//    m_vecOverWarning = m_vecOverWarningTemp;
-//}
+void WinHoverNet::onBtnApplyWinMain()
+{
+    m_vecOverWarning = m_vecOverWarningTemp;
+}
 
 

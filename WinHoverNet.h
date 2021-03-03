@@ -17,18 +17,18 @@ class WinHoverNet : public WinTransparent
     Q_OBJECT
 
 public:
-    explicit WinHoverNet(/*WinSetting *winSetting = nullptr, */Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
+    explicit WinHoverNet(Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
     ~WinHoverNet();
 
 //    WinHoverNet* winHoverNetObject();
     void init();
-//    void initSigConnect();
+    void initSigConnect();
     void setLabWidgetLayout(bool isHorizontal);
     void setLabWidgetLayout(Qt::Orientation orientation);
 //    bool isHoverDisplay();
 //    void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 1000 * 60 * 10);
 
-//    void showTest(QString str);
+    void showTest(QString str);  // test func()
 //    QString hoverDisplayText();
 
 public slots:
@@ -38,38 +38,41 @@ public slots:
     void onMemory();
 //    void onSystemRunTime();
 
-//    // 响应 WinSetting 发射的信号
-//    void onCurrentFont(const QFont &font);
-//    void onFontSize(int size);
-//    void onShowModel(bool check);
-//    void onUnitModel(const QString &text);
-//    void onUnitModelIndex(int index);
+    // 响应 个性化 发射的信号
+    void onUnitModel(const QString &text);
+    void onUnitModelIndex(int index);
+
+    void onLabUploadText(const QString &text);
+    void onLabDownText(const QString &text);
+    void onLabCpuText(const QString &text);
+    void onLabMemoryText(const QString &text);
+
+    void onCurrentFont(const QFont &font);
+    void onFontSize(int size);
+
+    // 响应 基础配置 发射的信号
+    //    void onCurrystemStyle(int index);
+    //    void onCurrystemStyleText(QString text);
+
+    void onDisolayNet(bool check);
+    void onDisolayCPUAndMemory(bool check);
+    void onLocationExchangeNet(bool check);
+    void onLocationExchangeCPUAndMenory(bool check);
+    void onFractionalAccuracy(int num);
+    void onRefreshInterval(int interval);
+
+    void onCpuOver(bool check);
+    void onMemOver(bool check);
+    void onCpuOverNum(int cpu);
+    void onMemOverNum(int mem);
+
+    void onShowModel(bool check);
+
 //    void onLabTextColor(const QColor color);
 //    void onTextColor(const QColor color);
-//    void onLabUploadText(const QString &text);
-//    void onLabDownText(const QString &text);
-//    void onLabCpuText(const QString &text);
-//    void onLabMemoryText(const QString &text);
-////    void onLabDiskReadText(const QString &text);
-////    void onLabDiskWriteText(const QString &text);
 
-//    void onDisolayNet(bool check);
-//    void onDisolayCPUAndMemory(bool check);
-////    void onDisolayDisk(bool check);
-//    void onLocationExchangeNet(bool check);
-//    void onLocationExchangeCPUAndMenory(bool check);
-////    void onLocationExchangeDisk(bool check);
-
-//    void onFractionalAccuracy(int num);
-//    void onRefreshInterval(int interval);
 //    void onHoverDisplay(bool check);
-
-//    // 响应 WinMain 发射的信号
-//    void onCpuOver(bool check);
-//    void onMemOver(bool check);
-//    void onCpuOverNum(int cpu);
-//    void onMemOverNum(int mem);
-//    void onBtnApplyWinMain();
+    void onBtnApplyWinMain();
 
 private:
     WinSetting *m_winSetting;      // UI 界面控件
@@ -78,8 +81,8 @@ private:
     long m_down;
     QVector<CpuInfo> m_vec;        // 获取
 //    bool m_hover;    // 悬浮现实额外信息
-//    QVector<QVariant> m_vecOverWarningTemp;  // 临时
-//    QVector<QVariant> m_vecOverWarning; // 顺序：(0-1 是否选中预警):cpu、mem;(2-3 预警数值):cpu、mem；
+    QVector<QVariant> m_vecOverWarningTemp;  // 临时
+    QVector<QVariant> m_vecOverWarning; // 顺序：(0-1 是否选中预警):cpu、mem;(2-3 预警数值):cpu、mem；
 
     MonitorInfo_x11 *m_info;
     ModelUnit m_modelUnit;          // 网速单位模式
