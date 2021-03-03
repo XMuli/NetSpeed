@@ -17,7 +17,7 @@ class WinHoverNet : public WinTransparent
     Q_OBJECT
 
 public:
-    explicit WinHoverNet(WinSetting *winSetting = nullptr, Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
+    explicit WinHoverNet(/*WinSetting *winSetting = nullptr, */Qt::Orientation orientation = Qt::Horizontal, QWidget *parent = nullptr);
     ~WinHoverNet();
 
 //    WinHoverNet* winHoverNetObject();
@@ -72,22 +72,22 @@ public slots:
 //    void onBtnApplyWinMain();
 
 private:
-    long m_upload;   // 网速的上次数值
+    WinSetting *m_winSetting;      // UI 界面控件
+
+    long m_upload;                 // 网速的上次数值
     long m_down;
-    QVector<CpuInfo> m_vec;
+    QVector<CpuInfo> m_vec;        // 获取
 //    bool m_hover;    // 悬浮现实额外信息
 //    QVector<QVariant> m_vecOverWarningTemp;  // 临时
 //    QVector<QVariant> m_vecOverWarning; // 顺序：(0-1 是否选中预警):cpu、mem;(2-3 预警数值):cpu、mem；
 
     MonitorInfo_x11 *m_info;
-    ModelUnit m_modelUnit;
-    QTimer *m_timer;              // 刷新时间
-    int m_precision; // 精确度
-
-//    WinSetting *m_winSetting;
-    Qt::Orientation m_orientation;
-    QGridLayout *m_gridLayout;    // 存放下面 8 个标签的布局
-    QVector<QLabel *> m_vecLabel; // 顺序：0上传标签、1上传；2下载标签、3下载；4CPU标签、5CPU；6Mem标签、7Mem；
+    ModelUnit m_modelUnit;          // 网速单位模式
+    QTimer *m_timer;                // 定时刷新内容
+    int m_precision;                // 精确度
+    Qt::Orientation m_orientation;  // 控件布局（水平 | 竖直）
+    QGridLayout *m_gridLayout;      // 存放下面 8 个标签的布局
+    QVector<QLabel *> m_vecLabel;   // 顺序：0上传标签、1上传；2下载标签、3下载；4CPU标签、5CPU；6Mem标签、7Mem；
 };
 
 #endif // WINHOVERNET_H

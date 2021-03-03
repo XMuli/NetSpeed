@@ -44,3 +44,5 @@ if (EXISTS "/usr/lib/dde-dock/plugins")
 else()
     target_link_libraries(${PROJECT_NAME} MonitorInfo)
 endif()
+
+install(FILES "lfxNet.json" DESTINATION "/usr/share/lfxNet")

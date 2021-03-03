@@ -27,19 +27,60 @@ public:
 
     void init();
     void readConfig();
+    void readConfig(bool isHomePath);
     void saveConfig();
+    void saveConfig(bool &isHomePath);
 
-    void cpoyToConfigPath();
     bool isHorizontal();
     bool isLightTheme();
 
+    QString getConfigPath(bool &isHomePath);
+    QString getConfigPath(QString homePath, QString systemPath, bool &isHomePath);
+
     void writeDataToConfigPath();
     bool writeDataToConfigPath(QString sour, QString dest, QString sourName, QString destName);
-    QString isInHomePath(QString homePath, QString systemPath, bool isHomePath = true);
+
+    void initSigConnectPersonalization();
+    void initSigConnectGeneralSetting();
+
+signals:
+    // --------个性化 相关--------
+    void sigUnitModel(const QString &);
+    void sigUnitModelIndex(int);
+
+    void sigLabUploadText(const QString &);
+    void sigLabDownText(const QString &);
+    void sigLabCpuText(const QString &);
+    void sigLabMemoryText(const QString &);
+
+    void sigCurrentFont(const QFont &);
+    void sigFontSize(int);
+    // 此处是事件过滤器，修改颜色 3+1
+    void sigTheme(bool checked);
+
+    // --------常规配置 相关--------
+    void sigCurrystemStyle(int index);
+    void sigCurrystemStyleText(const QString &);
+    // 悬浮窗口 暂时空
+    void sigDisolayNet(bool);
+    void sigDisolayCPUAndMemory(bool);
+    void sigLocationExchangeNet(bool);
+    void sigLocationExchangeCPUAndMenory(bool);
+    void sigFractionalAccuracy(int);
+    void sigRefreshInterval(int);
+
+    void sigCpuOver(bool check);
+    void sigMemOver(bool check);
+    void sigCpuOverNum(int cpu);
+    void sigMemOverNum(int mem);
+
+    void sigShowModel(bool);
+
 
 public slots:
     void onBtnApplyToJson();
-
+    void onBtnApplyWinSetting();
+    void onBtnQuitWinSetting();
 
 private:
     Ui::WinSetting *ui;

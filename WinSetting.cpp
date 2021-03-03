@@ -38,6 +38,60 @@ WinSetting::~WinSetting()
     delete ui;
 }
 
+
+
+void WinSetting::init()
+{
+    qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
+    initSigConnectPersonalization();
+    initSigConnectGeneralSetting();
+
+
+    // readConfig() 先将某些控件预设好
+    ui->labLabTextColor->setAutoFillBackground(true);
+    ui->labTextColor->setAutoFillBackground(true);
+    ui->labBackgroundColor->setAutoFillBackground(true);
+
+    // 读入 json 文件到流中
+    readConfig();
+
+
+    // 控件的基本设置，其读写留其它函数完成
+//    auto list = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
+//    for (auto v : list)
+//        v->setProperty("_d_dtk_spinBox", true);
+
+//    ui->labLabTextColor->setAutoFillBackground(true);
+//    ui->labTextColor->setAutoFillBackground(true);
+
+//    ui->spinBoxFractionalAccuracy->setRange(0, 100);
+//    ui->spinBoxFractionalAccuracy->setSingleStep(1);
+//    ui->spinBoxRefreshInterval->setRange(1000, 2147483647);
+//    ui->spinBoxRefreshInterval->setSingleStep(1000);
+//    ui->spinBoxRefreshInterval->setSuffix(tr("ms"));
+
+//    ui->labLabTextColor->installEventFilter(this);
+//    ui->labTextColor->installEventFilter(this);
+
+//    m_btnGroupTheme->addButton(ui->radioButtonSystem);  // m_btnGroupTheme 可以移除
+//    m_btnGroupTheme->addButton(ui->radioButtonLight);
+//    m_btnGroupTheme->addButton(ui->radioButtonDark);
+
+    QStringList list = QStyleFactory::keys();
+    ui->comboBoxsystemStyle->addItems(list);
+    for (auto v : list) {
+        QString style("Fusion");
+        if (v == "chameleon") {
+            style = "chameleon";
+            ui->comboBoxsystemStyle->setCurrentText(style);
+            qApp->setStyle(QStyleFactory::create(ui->comboBoxsystemStyle->currentText()));
+        }
+    }
+
+    setWindowTitle(QString("lfxMonitorNet"));
+    //    setWindowFlags(Qt::WindowStaysOnTopHint);
+}
+
 /*!
  * \brief WinSetting::readConfig 读取 json 文件，初始化 UI 的控件初始值
  */
@@ -111,6 +165,23 @@ void WinSetting::readConfig()
     else
         ui->radioCustomPath->setChecked(true);
 }
+
+void WinSetting::readConfig(bool isHomePath)
+{
+    QString name("/lfxNet/lfxNet.json");
+    QString sour = QString("/usr/share") + name;
+    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+
+
+    qDebug()<<"----------------------1A__>>"<<getConfigPath(dest, sour, isHomePath);
+
+    sour = sour.left(sour.lastIndexOf("/"));
+    dest = dest.left(dest.lastIndexOf("/"));
+    name = name.right(name.size() - name.lastIndexOf("/") - 1);
+    if (!isHomePath)
+        writeDataToConfigPath(sour, dest, name, name);
+}
+
 
 /*!
  * \brief WinSetting::saveConfig 将当前 UI: WinSetting 界面的数值保存到 json 文件中
@@ -186,72 +257,20 @@ void WinSetting::saveConfig()
     outFile << setw(2) << m_js << endl;
 }
 
-void WinSetting::cpoyToConfigPath()
+/*!
+ * \brief WinSetting::saveConfig 将改好的配置文件，保存到文本文件中
+ */
+void WinSetting::saveConfig(bool& isHomePath)
 {
-//    int index = -1;
-    QString name("/lfxNet/MonitorNetConfig.json");
-    QString sour = QString("/usr/share") + name;
-    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
-////    configPath(sour, dest, index);
+    QString path = getConfigPath(isHomePath);
 
-//    sour = sour.left(sour.lastIndexOf("/"));
-//    dest = dest.left(dest.lastIndexOf("/"));
-//    name = name.right(name.size() - name.lastIndexOf("/") - 1);
-//    if (index == 2)
-//        writeDataToConfigPath(sour, dest, name, name);
+    if (!isHomePath)
+        writeDataToConfigPath();
+
+    char * pathC = const_cast<char *>(path.toLatin1().data());
+    ofstream outFile(pathC);
+    outFile << setw(2) << m_js << endl;
 }
-
-void WinSetting::init()
-{
-    qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
-//    initSigConnectWinDdeDock();
-//    initSigConnectWinMain();
-
-    // readConfig() 先将某些控件预设好
-    ui->labLabTextColor->setAutoFillBackground(true);
-    ui->labTextColor->setAutoFillBackground(true);
-    ui->labBackgroundColor->setAutoFillBackground(true);
-
-    // 读入 json 文件到流中
-    readConfig();
-
-
-    // 控件的基本设置，其读写留其它函数完成
-//    auto list = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
-//    for (auto v : list)
-//        v->setProperty("_d_dtk_spinBox", true);
-
-//    ui->labLabTextColor->setAutoFillBackground(true);
-//    ui->labTextColor->setAutoFillBackground(true);
-
-//    ui->spinBoxFractionalAccuracy->setRange(0, 100);
-//    ui->spinBoxFractionalAccuracy->setSingleStep(1);
-//    ui->spinBoxRefreshInterval->setRange(1000, 2147483647);
-//    ui->spinBoxRefreshInterval->setSingleStep(1000);
-//    ui->spinBoxRefreshInterval->setSuffix(tr("ms"));
-
-//    ui->labLabTextColor->installEventFilter(this);
-//    ui->labTextColor->installEventFilter(this);
-
-//    m_btnGroupTheme->addButton(ui->radioButtonSystem);  // m_btnGroupTheme 可以移除
-//    m_btnGroupTheme->addButton(ui->radioButtonLight);
-//    m_btnGroupTheme->addButton(ui->radioButtonDark);
-
-    QStringList list = QStyleFactory::keys();
-    ui->comboBoxsystemStyle->addItems(list);
-    for (auto v : list) {
-        QString style("Fusion");
-        if (v == "chameleon") {
-            style = "chameleon";
-            ui->comboBoxsystemStyle->setCurrentText(style);
-            qApp->setStyle(QStyleFactory::create(ui->comboBoxsystemStyle->currentText()));
-        }
-    }
-
-    setWindowTitle(QString("lfxMonitorNet"));
-//    setWindowFlags(Qt::WindowStaysOnTopHint);
-}
-
 
 bool WinSetting::isHorizontal()
 {
@@ -263,10 +282,6 @@ bool WinSetting::isLightTheme()
 
 }
 
-void WinSetting::onBtnApplyToJson()
-{
-    saveConfig();
-}
 
 //void WinSetting::initSigConnectWinDdeDock()
 //{
@@ -288,8 +303,6 @@ void WinSetting::onBtnApplyToJson()
 //    connect(ui->lineLabMemory, &QLineEdit::textChanged, this, &WinSetting::sigLabMemoryText);
 //    connect(ui->lineLabDiskRead, &QLineEdit::textChanged, this, &WinSetting::sigLabDiskReadText);
 //    connect(ui->lineLabDiskWrite, &QLineEdit::textChanged, this, &WinSetting::sigLabDiskWriteText);
-//    connect(ui->checkBoxDisolayNet, &QCheckBox::clicked, this, &WinSetting::sigDisolayNet);
-//    connect(ui->checkBoxDisolayCPUAndMemory, &QCheckBox::clicked, this, &WinSetting::sigDisolayCPUAndMemory);
 //    connect(ui->checkBoxDisolayDisk, &QCheckBox::clicked, this, &WinSetting::sigDisolayDisk);
 //    connect(ui->checkBoxLocationExchangeNet, &QCheckBox::clicked, this, &WinSetting::sigLocationExchangeNet);
 //    connect(ui->checkBoxLocationExchangeCPUAndMenory, &QCheckBox::clicked, this, &WinSetting::sigLocationExchangeCPUAndMenory);
@@ -308,11 +321,7 @@ void WinSetting::onBtnApplyToJson()
 //    connect(ui->btnQuitWinMain, &QPushButton::clicked, this, &WinSetting::onBtnQuitWinMain);
 //    connect(ui->btnExportData, &QPushButton::clicked, this, &WinSetting::onChangePath);
 
-//    connect(ui->checkBoxCpuOver, &QCheckBox::clicked, this, &WinSetting::sigCpuOver);
-//    connect(ui->checkBoxMemOver, &QCheckBox::clicked, this, &WinSetting::sigMemOver);
-//    void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
-//    connect(ui->spinBoxCpuOverNum, pFun, this, &WinSetting::sigCpuOverNum);
-//    connect(ui->spinBoxMemOverNum, pFun, this, &WinSetting::sigMemOverNum);
+
 
 //    void (QButtonGroup::*pFunTheme)(int, bool) = &QButtonGroup::buttonToggled;
 //    connect(m_btnGroupTheme, pFunTheme, this, &WinSetting::onBtnGroupTheme);
@@ -534,29 +543,14 @@ void WinSetting::onBtnApplyToJson()
 // * \brief WinSetting::readConfig 读取配置文件
 // * \note 优先读取用户目录下的配置文件，其次去寻找系统级别下的配置文件
 // */
-//void WinSetting::readConfig(int a)
+//void WinSetting::readConfig(bool isHomePath)
 //{
-//    int index = -1;
-//    char * path = const_cast<char *>(configPath(index).toLatin1().data());
+//    char * path = const_cast<char *>(getConfigPath(isHomePath).toLatin1().data());
 //    ifstream jfile(path);
 //    jfile >> m_js;
 //}
 
-///*!
-// * \brief WinSetting::saveConfig 奖修改好的配置文件，保存到文本文件中
-// */
-//void WinSetting::saveConfig()
-//{
-//    int index = -1;
-//    configPath(index);
-//    if (index == 2)
-//        writeDataToConfigPath();
 
-//    configPath(index);
-//    char * path = const_cast<char *>(configPath(index).toLatin1().data());
-//    ofstream outFile(path);
-//    outFile << setw(2) << m_js << endl;
-//}
 
 ///*!
 // * \brief WinSetting::creatorConfigPath 创建配置文件
@@ -577,6 +571,62 @@ void WinSetting::onBtnApplyToJson()
 
 //    return path;
 //}
+
+
+
+QString WinSetting::getConfigPath(bool& isHomePath)
+{
+    QString name("/lfxNet/lfxNet.json");
+
+    QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+    QString systemPath("/usr/share");
+    homePath += name;
+    systemPath += name;
+
+    return getConfigPath(homePath, systemPath, isHomePath);
+}
+
+/*!
+ * \brief WinSetting::getConfigPath 获取系统配置文件的路径
+ * \param[in] homePath 家目录的配置文件路径，优先级高（先去查找）
+ * \param[in] systemPath 系统目录的配置文件路径，优先级低
+ * \param[out] true true 输出 homePath； false 输出 systemPath；
+ * \return 文件的路径
+ * \note 先判断家目录下的文件是否存在，若有则返回；无则去尝试返回系统目录下文件路径
+ */
+QString WinSetting::getConfigPath(QString homePath, QString systemPath, bool& isHomePath)
+{
+    QFileInfo fileSystem(systemPath);
+    QFileInfo fileHome(homePath);
+
+    if (fileHome.isFile()) {
+        isHomePath = true;
+        return homePath;
+    }
+
+    if (fileSystem.isFile()) {
+        isHomePath = false;
+        return systemPath;
+    }
+}
+
+/*!
+ * \brief WinSetting::writeDataToConfigPath 保存配置文件
+ */
+void WinSetting::writeDataToConfigPath()
+{
+    QString name("/lfxNet/lfxNet.json");
+    QString sour = QString("/usr/share") + name;
+    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
+    bool isHomePath = false;
+    getConfigPath(sour, dest, isHomePath);
+
+    sour = sour.left(sour.lastIndexOf("/"));
+    dest = dest.left(dest.lastIndexOf("/"));
+    name = name.right(name.size() - name.lastIndexOf("/") - 1);
+    if (!isHomePath)
+        writeDataToConfigPath(sour, dest, name, name);
+}
 
 /*!
  * \brief WinSetting::writeDataToConfigPath 将 sour 路径下的 file 文件，读取之后，写入一份新的到 dest 路径下
@@ -615,68 +665,67 @@ bool WinSetting::writeDataToConfigPath(QString sour, QString dest, QString sourN
     }
 }
 
-/*!
- * \brief WinSetting::writeDataToConfigPath 保存配置文件
- */
-void WinSetting::writeDataToConfigPath()
+void WinSetting::initSigConnectPersonalization()
 {
-    QString name("/lfxNet/MonitorNetConfig.json");
-    QString sour = QString("/usr/share") + name;
-    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
-    bool isHomePath = false;
-    isInHomePath(sour, dest, isHomePath);
+    void (QComboBox::*pFunIndex)(int) = &QComboBox::currentIndexChanged;
+    connect(ui->comboBoxUnitModel, pFunIndex, this, &WinSetting::sigUnitModelIndex);
+    connect(ui->comboBoxUnitModel, &QComboBox::currentTextChanged, this, &WinSetting::sigUnitModel);
 
-    sour = sour.left(sour.lastIndexOf("/"));
-    dest = dest.left(dest.lastIndexOf("/"));
-    name = name.right(name.size() - name.lastIndexOf("/") - 1);
-    if (!isHomePath)
-        writeDataToConfigPath(sour, dest, name, name);
+    connect(ui->lineLabUpload, &QLineEdit::textChanged, this, &WinSetting::sigLabUploadText);
+    connect(ui->lineLabDown, &QLineEdit::textChanged, this, &WinSetting::sigLabDownText);
+    connect(ui->lineLabCpu, &QLineEdit::textChanged, this, &WinSetting::sigLabCpuText);
+    connect(ui->lineLabMemory, &QLineEdit::textChanged, this, &WinSetting::sigLabMemoryText);
+
+    connect(ui->fontComboBox, &QFontComboBox::currentTextChanged, this, &WinSetting::sigCurrentFont);
+    void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
+    connect(ui->spinBoxFontSize, pFun, this, &WinSetting::sigFontSize);
+
+    connect(ui->radioButtonLight, &QRadioButton::clicked, this, &WinSetting::sigTheme);
+
+    // 应用 + 取消 没写
 }
 
-/*!
- * \brief WinSetting::isInHomePath 获取系统配置文件的路径
- * \param[in] homePath 家目录的配置文件路径，优先级高（先去查找）
- * \param[in] systemPath 系统目录的配置文件路径，优先级低
- * \param[out] true true 输出 homePath； false 输出 systemPath；
- * \return 文件的路径
- * \note 先判断家目录下的文件是否存在，若有则返回；无则去尝试返回系统目录下文件路径
- */
-QString WinSetting::isInHomePath(QString homePath, QString systemPath, bool isHomePath)
+void WinSetting::initSigConnectGeneralSetting()
 {
-    QFileInfo fileSystem(systemPath);
-    QFileInfo fileHome(homePath);
+    void (QComboBox::*pFun)(int) = &QComboBox::currentIndexChanged;
+    connect(ui->comboBoxsystemStyle, pFun, this, &WinSetting::sigCurrystemStyle);
+    connect(ui->comboBoxsystemStyle, &QComboBox::currentTextChanged, this, &WinSetting::sigCurrystemStyleText);
+    // 悬浮窗口 暂时空
+    connect(ui->checkBoxDisolayNet, &QCheckBox::clicked, this, &WinSetting::sigDisolayNet);
+    connect(ui->checkBoxDisolayCPUAndMemory, &QCheckBox::clicked, this, &WinSetting::sigDisolayCPUAndMemory);
+    connect(ui->checkBoxLocationExchangeNet, &QCheckBox::clicked, this, &WinSetting::sigLocationExchangeNet);
+    connect(ui->checkBoxLocationExchangeCPUAndMenory, &QCheckBox::clicked, this, &WinSetting::sigLocationExchangeCPUAndMenory);
+    void (QSpinBox::*pFunSpinxBox)(int) = &QSpinBox::valueChanged;
+    connect(ui->spinBoxFractionalAccuracy, pFunSpinxBox, this, &WinSetting::sigFractionalAccuracy);
+    connect(ui->spinBoxRefreshInterval, pFunSpinxBox, this, &WinSetting::sigRefreshInterval);
 
-    if (fileHome.isFile()) {
-        isHomePath = true;
-        return homePath;
-    }
+    connect(ui->checkBoxCpuOver, &QCheckBox::clicked, this, &WinSetting::sigCpuOver);
+    connect(ui->checkBoxMemOver, &QCheckBox::clicked, this, &WinSetting::sigMemOver);
+    connect(ui->spinBoxCpuOverNum, pFunSpinxBox, this, &WinSetting::sigCpuOverNum);
+    connect(ui->spinBoxMemOverNum, pFunSpinxBox, this, &WinSetting::sigMemOverNum);
 
-    if (fileSystem.isFile()) {
-        isHomePath = false;
-        return systemPath;
-    }
+    connect(ui->radioHorizontal, &QRadioButton::toggled, this, &WinSetting::sigShowModel);
+    connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
+    connect(ui->btnQuitGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnQuitWinSetting);
 }
 
-///*!
-// * \brief WinSetting::configPath 重载 configPath 函数
-// * \param path “相对”路径（包含文件名）
-// * \return 配置文件的路径
-// */
-//QString WinSetting::configPath(int &index, QString path)
-//{
-//    QString name("/lfxNet/MonitorNetConfig.json");
-//    if (!path.isEmpty())
-//        name = path;
+void WinSetting::onBtnApplyToJson()
+{
+    saveConfig();
+    bool isHomePath = true;
+    saveConfig(isHomePath);
+}
 
-//    QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
-//    QString systemPath("/usr/share");
-//    systemPath += name;
+void WinSetting::onBtnApplyWinSetting()
+{
 
-//    return configPath(systemPath, homePath, index);
+}
 
-////    char *dataPath = const_cast<char *>(ret.toLatin1().data());  // 成功
-////    char *dataPath = const_cast<char *>(ret.toStdString().c_str());  // 会强制转换失败，
-//}
+void WinSetting::onBtnQuitWinSetting()
+{
+
+}
+
 
 ///*!
 // * \brief WinSetting::isHorizontal 该网速插件现实模式是水平还是垂直
@@ -807,7 +856,7 @@ QString WinSetting::isInHomePath(QString homePath, QString systemPath, bool isHo
 //void WinSetting::onChangePath()
 //{
 //    QString sour = "";
-//    QString sourName("/lfxNet/MonitorNetConfig.json");
+//    QString sourName("/lfxNet/lfxNet.json");
 //    QString systemPath = QString("/usr/share") + sourName;
 //    QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + sourName;
 //    QString filePathAndName = QFileDialog::getSaveFileName(this, tr("配置导出路径"), homePath, tr("导出配置文件(*.json);;所有文件(*.*)"));

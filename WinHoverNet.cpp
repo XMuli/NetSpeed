@@ -38,9 +38,9 @@
  * </pre>
  * \endhtmlonly
  */
-WinHoverNet::WinHoverNet(WinSetting *winSetting, Qt::Orientation orientation, QWidget *parent)
+WinHoverNet::WinHoverNet(Qt::Orientation orientation, QWidget *parent)
     : WinTransparent(parent)
-//    : m_winSetting(winSetting)
+    , m_winSetting(new WinSetting())  // 没设置父对象， null
     , m_info(new MonitorInfo_x11())
     , m_timer(new QTimer())
     , m_modelUnit(Default)
@@ -73,6 +73,7 @@ WinHoverNet::~WinHoverNet()
 
 void WinHoverNet::init()
 {
+    m_winSetting->show();
     for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
         *it = new QLabel();
 
