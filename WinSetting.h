@@ -42,6 +42,9 @@ public:
     void initSigConnectPersonalization();
     void initSigConnectGeneralSetting();
 
+public:
+    virtual bool eventFilter(QObject *watched, QEvent *event) override;
+
 signals:
     // --------个性化 相关--------
     void sigUnitModel(const QString &);
@@ -54,9 +57,13 @@ signals:
 
     void sigCurrentFont(const QFont &);
     void sigFontSize(int);
-    // 此处是事件过滤器，修改颜色 3+1
-    void sigTheme(bool checked);
 
+    void sigLabTextColor(const QColor);
+    void sigTextColor(const QColor);
+    void sigBackgroundColor(const QColor);
+    void sigBackgroundImage(QString path);
+
+    void sigTheme(bool checked);
 
     // --------常规配置 相关--------
     void sigCurrystemStyle(int index);

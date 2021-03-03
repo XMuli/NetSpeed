@@ -110,6 +110,10 @@ void WinHoverNet::initSigConnect()
     connect(m_winSetting, &WinSetting::sigCurrentFont, this, &WinHoverNet::onCurrentFont);
     connect(m_winSetting, &WinSetting::sigFontSize, this, &WinHoverNet::onFontSize);
     // 此处是事件过滤器，修改颜色 3+1
+    connect(m_winSetting, &WinSetting::sigLabTextColor, this, &WinHoverNet::onLabTextColor);
+    connect(m_winSetting, &WinSetting::sigTextColor, this, &WinHoverNet::onTextColor);
+    connect(m_winSetting, &WinSetting::sigBackgroundColor, this, &WinHoverNet::onBackgroundColor);
+    connect(m_winSetting, &WinSetting::sigBackgroundImage, this, &WinHoverNet::onBackgroundImage);
 
     //--------响应 "常规配置" 发射的信号--------
 //    connect(m_winSetting, &WinSetting::sigCurrystemStyle, this, &WinHoverNet::onCurrystemStyle);
@@ -131,8 +135,6 @@ void WinHoverNet::initSigConnect()
 
 //    connect(m_winSetting, &WinSetting::sigBtnApplyWinMain, this, &WinHoverNet::onBtnApplyWinMain);
 
-//   connect(m_winSetting, &WinSetting::sigLabTextColor, this, &WinHoverNet::onLabTextColor);
-//   connect(m_winSetting, &WinSetting::sigTextColor, this, &WinHoverNet::onTextColor);
 
 //    connect(m_winSetting, &WinSetting::sigLabDiskReadText, this, &WinHoverNet::onLabDiskReadText);
 //    connect(m_winSetting, &WinSetting::sigLabDiskWriteText, this, &WinHoverNet::onLabDiskWriteText);
@@ -373,6 +375,38 @@ void WinHoverNet::onFontSize(int size)
     }
 }
 
+void WinHoverNet::onLabTextColor(const QColor color)
+{
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, color);
+    m_vecLabel[0]->setPalette(palette);
+    m_vecLabel[2]->setPalette(palette);
+    m_vecLabel[4]->setPalette(palette);
+    m_vecLabel[6]->setPalette(palette);
+}
+
+void WinHoverNet::onTextColor(const QColor color)
+{
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, color);
+    m_vecLabel[1]->setPalette(palette);
+    m_vecLabel[3]->setPalette(palette);
+    m_vecLabel[5]->setPalette(palette);
+    m_vecLabel[7]->setPalette(palette);
+}
+
+void WinHoverNet::onBackgroundColor(const QColor color)
+{
+    QPalette palette = this->palette();
+    palette.setColor(QPalette::Background, color);
+    setPalette(palette);
+}
+
+void WinHoverNet::onBackgroundImage(const QColor color)
+{
+
+}
+
 //void WinHoverNet::onCurrystemStyle(int index)
 //{
 
@@ -420,28 +454,6 @@ void WinHoverNet::onUnitModelIndex(int index)
     else if (index == 3)
         m_modelUnit = ModelUnit::Lower;
 }
-
-//void WinHoverNet::onLabTextColor(const QColor color)
-//{
-//    // TODO: 2021-01-08 加一行，颜色相同就返回, 结尾出，后面添加磁盘功能
-//    QPalette palette;
-//    palette.setColor(QPalette::WindowText, color);
-//    m_vecLabel[0]->setPalette(palette);
-//    m_vecLabel[2]->setPalette(palette);
-//    m_vecLabel[4]->setPalette(palette);
-//    m_vecLabel[6]->setPalette(palette);
-//}
-
-//void WinHoverNet::onTextColor(const QColor color)
-//{
-//    // TODO: 2021-01-08 加一行，颜色相同就返回, 结尾出，后面添加磁盘功能
-//    QPalette palette;
-//    palette.setColor(QPalette::WindowText, color);
-//    m_vecLabel[1]->setPalette(palette);
-//    m_vecLabel[3]->setPalette(palette);
-//    m_vecLabel[5]->setPalette(palette);
-//    m_vecLabel[7]->setPalette(palette);
-//}
 
 void WinHoverNet::onLabUploadText(const QString &text)
 {

@@ -53,10 +53,19 @@ void WinSetting::init()
     ui->labTextColor->setAutoFillBackground(true);
     ui->labBackgroundColor->setAutoFillBackground(true);
 
+    QSize size(120, 30);
+    ui->labLabTextColor->installEventFilter(this);
+    ui->labLabTextColor->setFixedSize(size);
+    ui->labTextColor->installEventFilter(this);
+    ui->labTextColor->setFixedSize(size);
+    ui->labBackgroundColor->installEventFilter(this);
+    ui->labBackgroundColor->setFixedSize(size);
+    ui->labBackgroundImage->installEventFilter(this);
+    ui->labBackgroundImage->setFixedSize(size);
+    ui->labBackgroundImage->setScaledContents(true);
+
     // 读入 json 文件到流中
     readConfig();
-
-
 
     // 控件的基本设置，其读写留其它函数完成
 //    auto list = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
@@ -90,7 +99,7 @@ void WinSetting::init()
         }
     }
 
-    setWindowTitle(QString("lfxMonitorNet"));
+    setWindowTitle(QString("lfxNet"));
     //    setWindowFlags(Qt::WindowStaysOnTopHint);
 }
 
@@ -291,10 +300,18 @@ void WinSetting::onlyFirstEmitSig()
 ////    emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
 ////    emit ui->radioHorizontal->toggled(ui->radioHorizontal->isChecked());
 ////    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
+    // 个性化
     emit ui->lineLabUpload->textChanged(ui->lineLabUpload->text());
     emit ui->lineLabDown->textChanged(ui->lineLabDown->text());
     emit ui->lineLabCpu->textChanged(ui->lineLabCpu->text());
     emit ui->lineLabMemory->textChanged(ui->lineLabMemory->text());
+
+    emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
+    emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
+    emit sigBackgroundColor(ui->labTextColor->palette().color(QPalette::Background));
+//    emit sigBackgroundImage(ui->labTextColor->palette().color(QPalette::Background));
+
+    // 常规配置
 //    emit ui->lineLabDiskRead->textChanged(ui->lineLabDiskRead->text());
 //    emit ui->lineLabDiskWrite->textChanged(ui->lineLabDiskWrite->text());
 //    emit ui->checkBoxDisolayNet->clicked(ui->checkBoxDisolayNet->isChecked());
@@ -748,6 +765,60 @@ void WinSetting::initSigConnectGeneralSetting()
     connect(ui->radioHorizontal, &QRadioButton::toggled, this, &WinSetting::sigShowModel);
     connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
     connect(ui->btnQuitGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnQuitWinSetting);
+}
+
+/*!
+ * \brief WinSetting::eventFilter 事件监视器
+ * \param watched 被监视的控件
+ * \param event 发生的事件
+ * \return 是否成功
+ * \note 用法 https://blog.csdn.net/xiezhongyuan07/article/details/79992099
+ */
+bool WinSetting::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == ui->labLabTextColor) {
+        if (event->type() == QEvent::MouseButtonRelease) {
+            QColor labLabTextColor = QColorDialog::getColor(ui->labLabTextColor->palette().color(QPalette::Background), this, tr("选择文本颜色"));
+            QPalette palette;
+            palette.setColor(QPalette::Background, labLabTextColor);
+            ui->labLabTextColor->setPalette(palette);
+            emit sigLabTextColor(labLabTextColor);
+            return true;
+        }
+    } else if (watched == ui->labTextColor) {
+        if (event->type() == QEvent::MouseButtonRelease) {
+            QColor labTextColor = QColorDialog::getColor(ui->labTextColor->palette().color(QPalette::Background), this, tr("选择文本颜色"));
+            QPalette palette;
+            palette.setColor(QPalette::Background, labTextColor);
+            ui->labTextColor->setPalette(palette);
+            emit sigTextColor(labTextColor);
+            return true;
+        }
+    } else if (watched == ui->labBackgroundColor) {
+        if (event->type() == QEvent::MouseButtonRelease) {
+            QColor labTextColor = QColorDialog::getColor(ui->labBackgroundColor->palette().color(QPalette::Background), this, tr("选择文本颜色"));
+            QPalette palette;
+            palette.setColor(QPalette::Background, labTextColor);
+            ui->labBackgroundColor->setPalette(palette);
+            emit sigBackgroundColor(labTextColor);
+            return true;
+        }
+    } else if (watched == ui->labBackgroundImage) {
+        if (event->type() == QEvent::MouseButtonRelease) {
+            // TODO: 替换 QLabel 的图片
+            QString path = QDir::currentPath();
+            QString fileter = "图片文件(*.jpg *.png *.gif);;所有文件(*.*)";
+
+            QString fileNmae = QFileDialog::getOpenFileName(this, "选择一个文件", path, fileter);
+            qDebug()<<"==============================<<"<<fileNmae;
+            ui->labBackgroundImage->setPixmap(QPixmap(fileNmae));
+            return true;
+        }
+    } else {
+
+    }
+
+    return QWidget::eventFilter(watched, event);
 }
 
 void WinSetting::onTheme(bool checked)
