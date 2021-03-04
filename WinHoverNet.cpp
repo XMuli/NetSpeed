@@ -118,8 +118,6 @@ void WinHoverNet::initSigConnect()
     connect(m_winSetting, &WinSetting::sigBackgroundImage, this, &WinHoverNet::onBackgroundImage);
 
     //--------响应 "常规配置" 发射的信号--------
-//    connect(m_winSetting, &WinSetting::sigCurrystemStyle, this, &WinHoverNet::onCurrystemStyle);
-//    connect(m_winSetting, &WinSetting::sigCurrystemStyleText, this, &WinHoverNet::onCurrystemStyleText);
     // 悬浮窗口 暂时空
     connect(m_winSetting, &WinSetting::sigDisolayNet, this, &WinHoverNet::onDisolayNet);
     connect(m_winSetting, &WinSetting::sigDisolayCPUAndMemory, this, &WinHoverNet::onDisolayCPUAndMemory);

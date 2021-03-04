@@ -249,7 +249,6 @@ void WinSetting::saveConfig()
 
     jDisplayText->at(textColor)["LabTextColor"] = ui->labLabTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
     jDisplayText->at(textColor)["TextColor"] = ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
-    qDebug()<<"-------------------->"<<ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
     jDisplayText->at(textColor)["LabBackgroundColor"] = ui->labBackgroundColor->palette().color(QPalette::Background).name().toStdString().c_str();
     // jTextColor["labBackgroundImage"] = 某路径
 
@@ -764,8 +763,9 @@ void WinSetting::initSigConnectPersonalization()
 void WinSetting::initSigConnectGeneralSetting()
 {
     void (QComboBox::*pFun)(int) = &QComboBox::currentIndexChanged;
-    connect(ui->comboBoxsystemStyle, pFun, this, &WinSetting::sigCurrystemStyle);
-    connect(ui->comboBoxsystemStyle, &QComboBox::currentTextChanged, this, &WinSetting::sigCurrystemStyleText);
+    connect(ui->comboBoxsystemStyle, pFun, this, &WinSetting::onCurrystemStyle);
+    connect(ui->comboBoxsystemStyle, &QComboBox::currentTextChanged, this, &WinSetting::onCurrystemStyleText);
+
     // 悬浮窗口 暂时空
     connect(ui->checkBoxDisolayNet, &QCheckBox::clicked, this, &WinSetting::sigDisolayNet);
     connect(ui->checkBoxDisolayCPUAndMemory, &QCheckBox::clicked, this, &WinSetting::sigDisolayCPUAndMemory);
@@ -839,6 +839,10 @@ bool WinSetting::eventFilter(QObject *watched, QEvent *event)
     return QWidget::eventFilter(watched, event);
 }
 
+/*!
+ * \brief WinSetting::onTheme 切换浅色/亮色主题时候,自动更换对应颜色
+ * \param checked true 此时为亮色; false 此时为暗色
+ */
 void WinSetting::onTheme(bool checked)
 {
     saveConfigThemeIsLight(checked);
@@ -873,13 +877,13 @@ void WinSetting::onCurrystemStyle(int index)
     jStyle["SystemStyleIndex"] = index;
 }
 
-void WinSetting::onCurrystemStyleText(QString text)
+void WinSetting::onCurrystemStyleText(const QString style)
 {
     json& jStyle = m_js["GeneralSetting"]["systemStyle"];
-    jStyle["SystemStyle"] = text.toStdString().c_str();
+    jStyle["SystemStyle"] = style.toStdString().c_str();
+
+    qApp->setStyle(QStyleFactory::create(style));
 }
-
-
 
 
 ///*!

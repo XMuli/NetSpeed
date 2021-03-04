@@ -110,7 +110,6 @@ void WinDesktop::onUpdate()
 
         list[num]->m_val = vec[index].cpuWork - m_vec[index].cpuWork;
         list[num]->m_all = vec[index].cpuAll - m_vec[index].cpuAll;
-//        qDebug()<<"---------------------------->" << i << num << list[num]->m_val <<  list[num]->m_all;
 
         list[numNext]->setText(QString::number(list[num]->m_val * 100.0  / list[num]->m_all, 'f', 2) + "%");
         m_vec[index].cpuWork = vec[index].cpuWork;

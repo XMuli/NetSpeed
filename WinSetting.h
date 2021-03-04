@@ -67,7 +67,6 @@ signals:
 
     // --------常规配置 相关--------
     void sigCurrystemStyle(int index);
-    void sigCurrystemStyleText(const QString &);
     // 悬浮窗口 暂时空
     void sigDisolayNet(bool);
     void sigDisolayCPUAndMemory(bool);
@@ -90,7 +89,7 @@ public slots:
     void onBtnQuitWinSetting();
 
     void onCurrystemStyle(int index);
-    void onCurrystemStyleText(QString text);
+    void onCurrystemStyleText(const QString style);
 
 private:
     Ui::WinSetting *ui;
