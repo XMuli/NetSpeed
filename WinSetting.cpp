@@ -27,7 +27,7 @@ WinSetting::WinSetting(QWidget *parent)
     connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
     connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
 
-    ifstream jfile("/home/xmuli/project/github/lfxnet-1.1.0/lfxNet.json");
+    ifstream jfile("/home/xmuli/project/github/lfxnet/lfxNet.json");
 //    ifstream jfile(":/lfxNet.json");
     jfile >> m_js;
     init();
@@ -277,7 +277,7 @@ void WinSetting::saveConfig()
 
     cout << m_js;
     cout.flush();
-    ofstream outFile("/home/xmuli/project/github/lfxnet-1.1.0/lfxNet.json");
+    ofstream outFile("/home/xmuli/project/github/lfxnet/lfxNet.json");
 //    cout << m_js.dump(4) << std::endl;
     outFile << setw(2) << m_js << endl;
 }

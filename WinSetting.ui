@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
+    <width>594</width>
     <height>602</height>
    </rect>
   </property>
@@ -20,30 +20,30 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabPersonalization">
       <attribute name="title">
-       <string>个性化</string>
+       <string>Personalization</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7">
        <item>
         <widget class="QGroupBox" name="groupBox_8">
          <property name="title">
-          <string>国际化</string>
+          <string>Internationalization</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,2,0,1,2,0">
           <item>
            <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>语言:</string>
+             <string>Language:</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QComboBox" name="comboBoxLanguage">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="editable">
              <bool>false</bool>
@@ -53,17 +53,22 @@
             </property>
             <item>
              <property name="text">
-              <string>跟随系统</string>
+              <string>System -- Default</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>简体中文</string>
+              <string>English -- English</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>English</string>
+              <string>简体中文 -- Simplified Chinese</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>繁體中文(臺灣) -- Traditional Chinese(TaiWan)</string>
              </property>
             </item>
            </widget>
@@ -84,7 +89,7 @@
           <item>
            <widget class="QLabel" name="label_42">
             <property name="text">
-             <string>网速单位：</string>
+             <string>Network Unit:</string>
             </property>
            </widget>
           </item>
@@ -95,22 +100,22 @@
             </property>
             <item>
              <property name="text">
-              <string>默认</string>
+              <string>Default</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>混合</string>
+              <string>Mixed</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>大写</string>
+              <string>Upper</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>小写</string>
+              <string>Lower</string>
              </property>
             </item>
            </widget>
@@ -134,7 +139,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_7">
          <property name="title">
-          <string>显示文本</string>
+          <string>Show Text:</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="3,0">
           <property name="spacing">
@@ -165,7 +170,7 @@
             <item row="1" column="2">
              <widget class="QLabel" name="label_37">
               <property name="text">
-               <string>内存：</string>
+               <string>Memory:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -192,7 +197,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label_33">
               <property name="text">
-               <string>上传：</string>
+               <string>Upload:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -202,7 +207,7 @@
             <item row="1" column="0">
              <widget class="QLabel" name="label_36">
               <property name="text">
-               <string>下载：</string>
+               <string>Download:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -237,7 +242,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_9">
          <property name="title">
-          <string>颜色和字体</string>
+          <string>Colors And Fonts</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
@@ -245,7 +250,7 @@
             <item>
              <widget class="QLabel" name="label_43">
               <property name="text">
-               <string>字体：</string>
+               <string>Fonts:</string>
               </property>
              </widget>
             </item>
@@ -262,7 +267,7 @@
             <item>
              <widget class="QLabel" name="label_44">
               <property name="text">
-               <string>字体大小：</string>
+               <string>Font Size:</string>
               </property>
              </widget>
             </item>
@@ -288,21 +293,21 @@
               <item row="1" column="0">
                <widget class="QLabel" name="label_45">
                 <property name="text">
-                 <string>文本颜色：</string>
+                 <string>Text color:</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>标签颜色：</string>
+                 <string>Label color:</string>
                 </property>
                </widget>
               </item>
               <item row="0" column="2">
                <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>背景颜色:</string>
+                 <string>Background color:</string>
                 </property>
                </widget>
               </item>
@@ -330,7 +335,7 @@
               <item row="1" column="2">
                <widget class="QLabel" name="label_4">
                 <property name="text">
-                 <string>背景图片:</string>
+                 <string>Background image:</string>
                 </property>
                </widget>
               </item>
@@ -364,13 +369,13 @@
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
-          <string>主题</string>
+          <string>Theme</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="1,1,1">
           <item>
            <widget class="QRadioButton" name="radioButtonLight">
             <property name="text">
-             <string>浅色主题</string>
+             <string>Light</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -383,7 +388,7 @@
           <item>
            <widget class="QRadioButton" name="radioButtonDark">
             <property name="text">
-             <string>暗色主题</string>
+             <string>Dark</string>
             </property>
            </widget>
           </item>
@@ -434,14 +439,14 @@
          <item>
           <widget class="QPushButton" name="btnApplyPerson">
            <property name="text">
-            <string>应用</string>
+            <string>Apply</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnQuitPerson">
            <property name="text">
-            <string>取消</string>
+            <string>Cancel</string>
            </property>
           </widget>
          </item>
@@ -451,13 +456,13 @@
      </widget>
      <widget class="QWidget" name="tabGeneralSetting">
       <attribute name="title">
-       <string>常规设置</string>
+       <string>General Settings</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QGroupBox" name="groupBoxThemeStyle">
          <property name="title">
-          <string>主题风格</string>
+          <string>Theme Style</string>
          </property>
          <property name="checkable">
           <bool>false</bool>
@@ -465,11 +470,11 @@
          <property name="checked">
           <bool>false</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2,1,1">
+         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,2,1">
           <item>
            <widget class="QLabel" name="label_53">
             <property name="text">
-             <string>系统风格：</string>
+             <string>System style:</string>
             </property>
            </widget>
           </item>
@@ -477,22 +482,9 @@
            <widget class="QComboBox" name="comboBoxsystemStyle"/>
           </item>
           <item>
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
            <widget class="QCheckBox" name="checkBoxHoverDisplay">
             <property name="text">
-             <string>悬浮显示额外信息</string>
+             <string>Show details</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -505,7 +497,7 @@
        <item>
         <widget class="QGroupBox" name="groupBox_10">
          <property name="title">
-          <string>显示文本</string>
+          <string>Show Text</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <property name="spacing">
@@ -522,7 +514,7 @@
             <item row="0" column="1">
              <widget class="QCheckBox" name="checkBoxDisolayCPUAndMemory">
               <property name="text">
-               <string>显示 [CPU/内存]</string>
+               <string>Show [CPU/Memory]</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -532,14 +524,14 @@
             <item row="1" column="1">
              <widget class="QCheckBox" name="checkBoxLocationExchangeCPUAndMenory">
               <property name="text">
-               <string>互换 [CPU/内存]</string>
+               <string>Swap [CPU/Memory]</string>
               </property>
              </widget>
             </item>
             <item row="1" column="0">
              <widget class="QCheckBox" name="checkBoxLocationExchangeNet">
               <property name="text">
-               <string>互换 [上传/下载]</string>
+               <string>Show [CPU/Memory]</string>
               </property>
              </widget>
             </item>
@@ -552,7 +544,7 @@
                <bool>false</bool>
               </property>
               <property name="text">
-               <string>显示 [上传/下载]</string>
+               <string>Show [Upload/Download]</string>
               </property>
               <property name="checked">
                <bool>true</bool>
@@ -582,7 +574,7 @@
             <item>
              <widget class="QLabel" name="label_55">
               <property name="text">
-               <string>小数精确度：</string>
+               <string>Fractional accuracy:</string>
               </property>
              </widget>
             </item>
@@ -611,7 +603,7 @@
             <item>
              <widget class="QLabel" name="label_56">
               <property name="text">
-               <string>刷新时隔：</string>
+               <string>Refresh interval:</string>
               </property>
              </widget>
             </item>
@@ -666,7 +658,7 @@
             <bool>true</bool>
            </property>
            <property name="title">
-            <string>消息通知</string>
+            <string>Message Notification</string>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_12">
             <item>
@@ -679,7 +671,7 @@
                 <item>
                  <widget class="QCheckBox" name="checkBoxCpuOver">
                   <property name="text">
-                   <string>当CPU利用率超过</string>
+                   <string>Notify when CPU is greater than</string>
                   </property>
                  </widget>
                 </item>
@@ -699,13 +691,6 @@
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QLabel" name="label_51">
-                  <property name="text">
-                   <string>% 时通知</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </item>
               <item>
@@ -716,7 +701,7 @@
                 <item>
                  <widget class="QCheckBox" name="checkBoxMemOver">
                   <property name="text">
-                   <string>当内存利用率超过</string>
+                   <string>Notify when memory is greater than</string>
                   </property>
                  </widget>
                 </item>
@@ -733,13 +718,6 @@
                   </property>
                   <property name="value">
                    <number>0</number>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_54">
-                  <property name="text">
-                   <string>% 时通知</string>
                   </property>
                  </widget>
                 </item>
@@ -772,14 +750,14 @@
               <item>
                <widget class="QLabel" name="label_41">
                 <property name="text">
-                 <string>任务栏状态：</string>
+                 <string>Taskbar Status</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QRadioButton" name="radioHorizontal">
                 <property name="text">
-                 <string>水平</string>
+                 <string>Horizontal</string>
                 </property>
                 <property name="checked">
                  <bool>true</bool>
@@ -789,7 +767,7 @@
               <item>
                <widget class="QRadioButton" name="radioVertical">
                 <property name="text">
-                 <string>垂直</string>
+                 <string>Vertical</string>
                 </property>
                </widget>
               </item>
@@ -803,13 +781,13 @@
        <item>
         <widget class="QGroupBox" name="groupBox_13">
          <property name="title">
-          <string>配置和数据文件</string>
+          <string>Data Export</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <widget class="QRadioButton" name="radioSystemPath">
             <property name="text">
-             <string>系统配置</string>
+             <string>System</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -819,14 +797,14 @@
           <item>
            <widget class="QRadioButton" name="radioCustomPath">
             <property name="text">
-             <string>家目录配置</string>
+             <string>Customize</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QPushButton" name="btnExportData">
             <property name="text">
-             <string>导出配置</string>
+             <string>Export</string>
             </property>
            </widget>
           </item>
@@ -864,14 +842,14 @@
          <item>
           <widget class="QPushButton" name="btnApplyGeneralSet">
            <property name="text">
-            <string>应用</string>
+            <string>Application</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnQuitGeneralSet">
            <property name="text">
-            <string>取消</string>
+            <string>Cancel</string>
            </property>
           </widget>
          </item>
@@ -884,7 +862,7 @@
        <bool>false</bool>
       </property>
       <attribute name="title">
-       <string>关于</string>
+       <string>About</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -934,7 +912,7 @@
          <item>
           <widget class="QLabel" name="label_17">
            <property name="text">
-            <string>简介：一个轻的、快的 Linux 实时网速小程序（附 dock 网速插件）</string>
+            <string>Introduction: Hovering speed window for all Linux distributions (with DDE-DOCK network speed plugin)</string>
            </property>
           </widget>
          </item>
@@ -974,7 +952,7 @@
          <item row="1" column="7">
           <widget class="QLabel" name="label_12">
            <property name="text">
-            <string>下载:</string>
+            <string>Feedback</string>
            </property>
           </widget>
          </item>
@@ -1017,14 +995,14 @@
          <item row="0" column="1">
           <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>版本:</string>
+            <string>Versions:</string>
            </property>
           </widget>
          </item>
          <item row="1" column="1">
           <widget class="QLabel" name="label_10">
            <property name="text">
-            <string>作者:</string>
+            <string>Author:</string>
            </property>
           </widget>
          </item>
@@ -1047,17 +1025,7 @@
          <item row="0" column="7">
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>编译:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="5">
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/xmuli&quot;&gt;xmuli</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
+            <string>Compile:</string>
            </property>
           </widget>
          </item>
@@ -1071,17 +1039,10 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="4">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>GitHub:</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="8">
           <widget class="QLabel" name="label_23">
            <property name="text">
-            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;releases</string>
+            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/issues&quot;&gt;GitHub</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -1123,7 +1084,7 @@
          <item row="0" column="4">
           <widget class="QLabel" name="label_3">
            <property name="text">
-            <string>许可证:</string>
+            <string>Licenses:</string>
            </property>
           </widget>
          </item>
@@ -1131,6 +1092,23 @@
           <widget class="QLabel" name="label_14">
            <property name="text">
             <string>2021-02</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="5">
+          <widget class="QLabel" name="label_16">
+           <property name="text">
+            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;releases</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Download:</string>
            </property>
           </widget>
          </item>
@@ -1167,7 +1145,7 @@
          <item>
           <widget class="QLabel" name="label_18">
            <property name="text">
-            <string>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;联系我</string>
+            <string>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;Help improve</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -1179,43 +1157,13 @@
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>反馈:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_24">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/issues&quot;&gt;issues</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_16">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
            <property name="sizeType">
             <enum>QSizePolicy::Minimum</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -1223,7 +1171,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,1,1,3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -1237,8 +1185,8 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -1246,7 +1194,7 @@
          <item>
           <widget class="QLabel" name="label_21">
            <property name="text">
-            <string>鸣谢:</string>
+            <string>Acknowledgements:</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
@@ -1270,8 +1218,8 @@
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>0</width>
+             <height>0</height>
             </size>
            </property>
           </spacer>

@@ -193,7 +193,7 @@ double MonitorInfo_x11::netShowUnit(long net, NetUnit &unit)
         ret = static_cast<double>(net / qPow(2, 40) * 1.0);
     } else {
         unit = Unknow;
-        qWarning()<<QObject::tr("本设备网络速率单位传输超过 TB, 或者低于 1 Byte.");
+        qWarning()<<QObject::tr("This device transfers at a network rate of more than TB per unit, or less than 1 Byte.");
         ret = -1;
     }
 
@@ -306,7 +306,7 @@ QString MonitorInfo_x11::runTimeUnit(double s)
     int hh = (time % 86400) / 3600;
     int dd = time / 86400;
 
-    QString runTime = QString(QObject::tr("系统已运行: %1天, %2:%3:%4"))
+    QString runTime = QString(QObject::tr("The system has been running: %1 day, %2:%3:%4"))
             .arg(dd, 0, 'f', 0, QLatin1Char(' '))
             .arg(hh, 2, 'f', 0, QLatin1Char('0'))
             .arg(MM, 2, 'f', 0, QLatin1Char('0'))

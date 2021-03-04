@@ -15,8 +15,17 @@ set(REQUIRED_LIBS Core Gui Widgets)
 set(REQUIRED_LIBS_QUALIFIED Qt5::Core Qt5::Gui Qt5::Widgets)
 find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED) # REQUIRED: 找不到就报错
 
+set(TS_FILES
+        ./translations/zh_CN.ts
+        ./translations/zh_TW.ts)
+
+find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} LinguistTools REQUIRED)
+
+qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
+
 add_subdirectory(lib)
 add_subdirectory(dde-dock-plugin)
+
 
 # 加入一个配置头文件，用于处理 CMake 对源码的设置
 #configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.in"
@@ -30,7 +39,7 @@ file(GLOB DIR "widgets/*.h" "widgets/*.cpp" "widgets/*.ui" "*.h" "*.hpp" "*.cpp"
 #foreach(v ${DIR})
 #    message(${v})
 #endforeach()
-add_executable(${PROJECT_NAME} ${DIR})
+add_executable(${PROJECT_NAME} ${DIR} ${QM_FILES})
 
 #if (NOT CMAKE_PREFIX_PATH)
 #    message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
