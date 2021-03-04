@@ -25,15 +25,15 @@
   "Personalization": {
     "DisplayTextHor": {
       "TextColorDark": {
-        "LabBackgroundColor": "#593123",
-        "LabTextColor": "#A64826",
-        "TextColor": "#D95E32",
+        "LabBackgroundColor": "#1C1B26",
+        "LabTextColor": "#D95E32",
+        "TextColor": "#F2913D",
         "labBackgroundImage": "xxx.png"
       },
       "TextColorLight": {
-        "LabBackgroundColor": "#405B73",
-        "LabTextColor": "#759CBF",
-        "TextColor": "#ADC5D9",
+        "LabBackgroundColor": "#d5e5f2",
+        "LabTextColor": "#1f3140",
+        "TextColor": "#3f5b73",
         "labBackgroundImage": "xxx.png"
       },
       "TextHor": {
@@ -48,15 +48,15 @@
     },
     "DisplayTextVer": {
       "TextColorDark": {
-        "LabBackgroundColor": "#593123",
-        "LabTextColor": "#A64826",
-        "TextColor": "#D95E32",
+        "LabBackgroundColor": "#1C1B26",
+        "LabTextColor": "#D95E32",
+        "TextColor": "#F2913D",
         "labBackgroundImage": "xxx.png"
       },
       "TextColorLight": {
-        "LabBackgroundColor": "#405B73",
-        "LabTextColor": "#759CBF",
-        "TextColor": "#ADC5D9",
+        "LabBackgroundColor": "#D5E5F2",
+        "LabTextColor": "#1F3140",
+        "TextColor": "#3F5B73",
         "labBackgroundImage": "xxx.png"
       },
       "TextVer": {

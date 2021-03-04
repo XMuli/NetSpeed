@@ -143,6 +143,7 @@ void WinSetting::readConfig()
     ui->fontComboBox->setCurrentIndex(jText["FontTypeIndex"]);
     ui->spinBoxFontSize->setValue(jText["FontSize"]);
 
+
     QPalette palette;
     palette.setColor(QPalette::Background, QString::fromStdString(jTextColor["LabTextColor"]));
     ui->labLabTextColor->setPalette(palette);
@@ -212,33 +213,44 @@ void WinSetting::saveConfig()
     bool isHorizontal = ui->radioHorizontal->isChecked();
     bool isThemeLight = ui->radioButtonLight->isChecked();
 
-    json jDisplayText;
-    json jText;
+
+//    json& jDisplayTextHor = jPersona["DisplayTextHor"];
+//    json& jDisplayTextVer = jPersona["DisplayTextVer"];
+
+    json *jDisplayText;
+//    json *jText;
+    char* text = "";
     if (isHorizontal) {
-        jDisplayText = jPersona["DisplayTextHor"];
-        jText = jDisplayText["TextHor"];
+        jDisplayText = &jPersona["DisplayTextHor"];
+        text = "TextHor";
+//        jText = jDisplayText["TextHor"];
     } else {
-        jDisplayText = jPersona["DisplayTextVer"];
-        jText = jDisplayText["TextVer"];
+        jDisplayText = &jPersona["DisplayTextVer"];
+        text = "TextVer";
+//        jText = &jDisplayText["TextVer"];
     }
 
-    json jTextColor;
+//    json *jTextColor;
+    char* textColor = "";
     if (isThemeLight)
-        jTextColor = jDisplayText["TextColorLight"];
+        textColor = "TextColorLight";
+//        jTextColor = &jDisplayText["TextColorLight"];
     else
-        jTextColor = jDisplayText["TextColorDark"];
+        textColor = "TextColorDark";
+//        jTextColor = &jDisplayText["TextColorDark"];
 
-    jText["LabUpload"] = ui->lineLabUpload->text().toStdString().c_str();
-    jText["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
-    jText["LabCpu"] = ui->lineLabCpu->text().toStdString().c_str();
-    jText["LabMemory"] = ui->lineLabMemory->text().toStdString().c_str();
-    jText["FontSize"] = ui->spinBoxFontSize->value();
-    jText["FontType"] = ui->fontComboBox->currentText().toStdString().c_str();
-    jText["FontTypeIndex"] = ui->fontComboBox->currentIndex();
+    jDisplayText->at(text)["LabUpload"] = ui->lineLabUpload->text().toStdString().c_str();
+    jDisplayText->at(text)["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
+    jDisplayText->at(text)["LabCpu"] = ui->lineLabCpu->text().toStdString().c_str();
+    jDisplayText->at(text)["LabMemory"] = ui->lineLabMemory->text().toStdString().c_str();
+    jDisplayText->at(text)["FontSize"] = ui->spinBoxFontSize->value();
+    jDisplayText->at(text)["FontType"] = ui->fontComboBox->currentText().toStdString().c_str();
+    jDisplayText->at(text)["FontTypeIndex"] = ui->fontComboBox->currentIndex();
 
-    jTextColor["LabTextColor"] = ui->labLabTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
-    jTextColor["TextColor"] = ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
-    jTextColor["LabBackgroundColor"] = ui->labBackgroundColor->palette().color(QPalette::Background).name().toStdString().c_str();
+    jDisplayText->at(textColor)["LabTextColor"] = ui->labLabTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
+    jDisplayText->at(textColor)["TextColor"] = ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
+    qDebug()<<"-------------------->"<<ui->labTextColor->palette().color(QPalette::Background).name().toStdString().c_str();
+    jDisplayText->at(textColor)["LabBackgroundColor"] = ui->labBackgroundColor->palette().color(QPalette::Background).name().toStdString().c_str();
     // jTextColor["labBackgroundImage"] = 某路径
 
     //--------------------------保存常规配置的数据到 JSON 中--------------------------------
@@ -264,7 +276,10 @@ void WinSetting::saveConfig()
     jGeneralSet["IsHorizontal"] = ui->radioHorizontal->isChecked();
     jGeneralSet["IsExportSystenPath"] = ui->radioSystemPath->isChecked();
 
+    cout << m_js;
+    cout.flush();
     ofstream outFile("/home/xmuli/project/github/lfxnet-1.1.0/lfxNet.json");
+//    cout << m_js.dump(4) << std::endl;
     outFile << setw(2) << m_js << endl;
 }
 
@@ -308,7 +323,7 @@ void WinSetting::onlyFirstEmitSig()
 
     emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
     emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
-    emit sigBackgroundColor(ui->labTextColor->palette().color(QPalette::Background));
+    emit sigBackgroundColor(ui->labBackgroundColor->palette().color(QPalette::Background));
 //    emit sigBackgroundImage(ui->labTextColor->palette().color(QPalette::Background));
 
     // 常规配置
@@ -739,8 +754,11 @@ void WinSetting::initSigConnectPersonalization()
     connect(ui->spinBoxFontSize, pFun, this, &WinSetting::sigFontSize);
 
     connect(ui->radioButtonLight, &QRadioButton::toggled, this, &WinSetting::onTheme);
+    connect(ui->radioButtonLight, &QRadioButton::toggled, this, &WinSetting::sigTheme);
     connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
     connect(ui->btnQuitPerson, &QPushButton::clicked, this, &WinSetting::onBtnQuitWinSetting);
+
+//    connect(this, &WinSetting::sigLabTextColor, this, &WinSetting::sigLabMemoryText);
 }
 
 void WinSetting::initSigConnectGeneralSetting()
@@ -796,11 +814,11 @@ bool WinSetting::eventFilter(QObject *watched, QEvent *event)
         }
     } else if (watched == ui->labBackgroundColor) {
         if (event->type() == QEvent::MouseButtonRelease) {
-            QColor labTextColor = QColorDialog::getColor(ui->labBackgroundColor->palette().color(QPalette::Background), this, tr("选择文本颜色"));
+            QColor backgroundColor = QColorDialog::getColor(ui->labBackgroundColor->palette().color(QPalette::Background), this, tr("选择文本颜色"));
             QPalette palette;
-            palette.setColor(QPalette::Background, labTextColor);
+            palette.setColor(QPalette::Background, backgroundColor);
             ui->labBackgroundColor->setPalette(palette);
-            emit sigBackgroundColor(labTextColor);
+            emit sigBackgroundColor(backgroundColor);
             return true;
         }
     } else if (watched == ui->labBackgroundImage) {
@@ -810,7 +828,7 @@ bool WinSetting::eventFilter(QObject *watched, QEvent *event)
             QString fileter = "图片文件(*.jpg *.png *.gif);;所有文件(*.*)";
 
             QString fileNmae = QFileDialog::getOpenFileName(this, "选择一个文件", path, fileter);
-            qDebug()<<"==============================<<"<<fileNmae;
+//            qDebug()<<"==============================<<"<<fileNmae;
             ui->labBackgroundImage->setPixmap(QPixmap(fileNmae));
             return true;
         }
@@ -825,6 +843,10 @@ void WinSetting::onTheme(bool checked)
 {
     saveConfigThemeIsLight(checked);
     readConfig();
+
+    emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
+    emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
+    emit sigBackgroundColor(ui->labBackgroundColor->palette().color(QPalette::Background));
 }
 
 void WinSetting::onBtnApplyToJson()
@@ -836,7 +858,8 @@ void WinSetting::onBtnApplyToJson()
 
 void WinSetting::onBtnApplyWinSetting()
 {
-    onBtnApplyToJson();
+    saveConfig();
+    readConfig();
 }
 
 void WinSetting::onBtnQuitWinSetting()

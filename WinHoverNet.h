@@ -55,6 +55,8 @@ public slots:
     void onBackgroundColor(const QColor color);
     void onBackgroundImage(const QColor color);
 
+//    void onTheme(bool checked);
+
     // 响应 基础配置 发射的信号
 
     //    void onCurrystemStyle(int index);
@@ -73,7 +75,6 @@ public slots:
     void onMemOverNum(int mem);
 
     void onShowModel(bool check);
-
 
 //    void onHoverDisplay(bool check);
     void onBtnApplyWinMain();

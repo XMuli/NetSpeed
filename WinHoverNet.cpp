@@ -110,6 +110,8 @@ void WinHoverNet::initSigConnect()
     connect(m_winSetting, &WinSetting::sigCurrentFont, this, &WinHoverNet::onCurrentFont);
     connect(m_winSetting, &WinSetting::sigFontSize, this, &WinHoverNet::onFontSize);
     // 此处是事件过滤器，修改颜色 3+1
+//    connect(m_winSetting, &WinSetting::sigTheme, this, &WinHoverNet::onTheme);
+
     connect(m_winSetting, &WinSetting::sigLabTextColor, this, &WinHoverNet::onLabTextColor);
     connect(m_winSetting, &WinSetting::sigTextColor, this, &WinHoverNet::onTextColor);
     connect(m_winSetting, &WinSetting::sigBackgroundColor, this, &WinHoverNet::onBackgroundColor);
