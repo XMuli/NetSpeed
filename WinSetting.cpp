@@ -22,6 +22,7 @@ WinSetting::WinSetting(QWidget *parent)
     , ui(new Ui::WinSetting)
     , m_isHorizontal(true)
     , m_path("")
+    , m_trans(new QTranslator(this))
 {
     ui->setupUi(this);
     connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
@@ -38,8 +39,6 @@ WinSetting::~WinSetting()
     delete ui;
 }
 
-
-
 void WinSetting::init()
 {
     qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -47,11 +46,18 @@ void WinSetting::init()
     initSigConnectGeneralSetting();
 //    onlyFirstEmitSig();
 
-
     // readConfig() 先将某些控件预设好
     ui->labLabTextColor->setAutoFillBackground(true);
     ui->labTextColor->setAutoFillBackground(true);
     ui->labBackgroundColor->setAutoFillBackground(true);
+
+    QStringList listLang;
+    QStringList listData;
+    listLang << "English" << "简体中文" << "繁體中文(台湾)";
+    listData << "es_US" << "zh_CN" << "zh_TW";
+
+    for (int i = 0; i < listLang.count(); ++i)
+        ui->comboBoxLanguage->addItem(listLang[i], listData[i]);
 
     QSize size(120, 30);
     ui->labLabTextColor->installEventFilter(this);
@@ -63,6 +69,7 @@ void WinSetting::init()
     ui->labBackgroundImage->installEventFilter(this);
     ui->labBackgroundImage->setFixedSize(size);
     ui->labBackgroundImage->setScaledContents(true);
+    ui->comboBoxLanguage->installEventFilter(this);  // L18N
 
     // 读入 json 文件到流中
     readConfig();
@@ -740,6 +747,7 @@ bool WinSetting::writeDataToConfigPath(QString sour, QString dest, QString sourN
 void WinSetting::initSigConnectPersonalization()
 {
     void (QComboBox::*pFunIndex)(int) = &QComboBox::currentIndexChanged;
+    connect(ui->comboBoxLanguage, pFunIndex, this, &WinSetting::onComboBoxLanguage);
     connect(ui->comboBoxUnitModel, pFunIndex, this, &WinSetting::sigUnitModelIndex);
     connect(ui->comboBoxUnitModel, &QComboBox::currentTextChanged, this, &WinSetting::sigUnitModel);
 
@@ -832,11 +840,30 @@ bool WinSetting::eventFilter(QObject *watched, QEvent *event)
             ui->labBackgroundImage->setPixmap(QPixmap(fileNmae));
             return true;
         }
+    } if (watched == ui->comboBoxLanguage) {
+        if (event->type() == QEvent::LanguageChange) {
+            qDebug()<< "---------event()--->" << m_trans;
+            ui->retranslateUi(this);
+            return true;
+        }
     } else {
 
     }
 
     return QWidget::eventFilter(watched, event);
+}
+
+/*!
+ * \brief WinSetting::onComboBoxLanguage 多语言国际化
+ * \param index 当前选中语言
+ */
+void WinSetting::onComboBoxLanguage(int index)
+{
+    QString language("zh_CN");
+    language = ui->comboBoxLanguage->itemData(index).toString();
+    bool ok = m_trans->load("./" + language + ".qm");
+    qDebug()<< "---------@1--->" << language << ok;
+    QCoreApplication::installTranslator(m_trans);
 }
 
 /*!

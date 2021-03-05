@@ -3,6 +3,8 @@
 
 #include <QButtonGroup>
 #include <QDir>
+#include <QTranslator>
+#include <QCoreApplication>
 #include <QWidget>
 #include "lib/MonitorInfo_x11.h"
 LFX_USE_NAESPACE
@@ -83,6 +85,7 @@ signals:
     void sigShowModel(bool);
 
 public slots:
+    void onComboBoxLanguage(int index);
     void onTheme(bool checked);
     void onBtnApplyToJson();
     void onBtnApplyWinSetting();
@@ -96,6 +99,7 @@ private:
     json m_js;
     bool m_isHorizontal; // 插件的水平、垂直状态
     QString m_path;      // 数据保存路径
+    QTranslator *m_trans;
 };
 
 #endif // WINSETTING_H

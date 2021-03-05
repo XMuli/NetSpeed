@@ -20,7 +20,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabPersonalization">
       <attribute name="title">
@@ -51,26 +51,6 @@
             <property name="duplicatesEnabled">
              <bool>false</bool>
             </property>
-            <item>
-             <property name="text">
-              <string>System -- Default</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>English -- English</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>简体中文 -- Simplified Chinese</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>繁體中文(臺灣) -- Traditional Chinese(TaiWan)</string>
-             </property>
-            </item>
            </widget>
           </item>
           <item>
@@ -910,7 +890,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="label_17">
+          <widget class="QLabel" name="labIntroduction">
            <property name="text">
             <string>Introduction: Hovering speed window for all Linux distributions (with DDE-DOCK network speed plugin)</string>
            </property>
