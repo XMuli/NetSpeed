@@ -178,12 +178,6 @@ void WinSetting::readConfig(bool initLanguage)
     ui->spinBoxFractionalAccuracy->setValue(jDisolayText["FractionalAccuracy"]);
     ui->spinBoxRefreshInterval->setValue(jDisolayText["RefreshInterval"]);
 
-    json jNotification = jGeneralSet["Notification"];
-    ui->checkBoxCpuOver->setChecked(jNotification["CpuOver"]);
-    ui->spinBoxCpuOverNum->setValue(jNotification["CpuOverNum"]);
-    ui->checkBoxMemOver->setChecked(jNotification["MemoryOver"]);
-    ui->spinBoxMemOverNum->setValue(jNotification["MemoryOverNum"]);
-
     if (jGeneralSet["IsExportSystenPath"])
         ui->radioSystemPath->setChecked(true);
     else
@@ -261,12 +255,6 @@ void WinSetting::saveConfig()
     jDisolayText["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->isChecked();
     jDisolayText["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
     jDisolayText["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
-
-    json& jNotification = jGeneralSet["Notification"];
-    jNotification["CpuOver"] = ui->checkBoxCpuOver->isChecked();
-    jNotification["CpuOverNum"] = ui->spinBoxCpuOverNum->value();
-    jNotification["MemoryOver"] = ui->checkBoxMemOver->isChecked();
-    jNotification["MemoryOverNum"] = ui->spinBoxMemOverNum->value();
 
     jGeneralSet["IsHorizontal"] = ui->radioHorizontal->isChecked();
     jGeneralSet["IsExportSystenPath"] = ui->radioSystemPath->isChecked();
@@ -771,11 +759,6 @@ void WinSetting::initSigConnectGeneralSetting()
     void (QSpinBox::*pFunSpinxBox)(int) = &QSpinBox::valueChanged;
     connect(ui->spinBoxFractionalAccuracy, pFunSpinxBox, this, &WinSetting::sigFractionalAccuracy);
     connect(ui->spinBoxRefreshInterval, pFunSpinxBox, this, &WinSetting::sigRefreshInterval);
-
-    connect(ui->checkBoxCpuOver, &QCheckBox::clicked, this, &WinSetting::sigCpuOver);
-    connect(ui->checkBoxMemOver, &QCheckBox::clicked, this, &WinSetting::sigMemOver);
-    connect(ui->spinBoxCpuOverNum, pFunSpinxBox, this, &WinSetting::sigCpuOverNum);
-    connect(ui->spinBoxMemOverNum, pFunSpinxBox, this, &WinSetting::sigMemOverNum);
 
     connect(ui->radioHorizontal, &QRadioButton::toggled, this, &WinSetting::sigShowModel);
     connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);

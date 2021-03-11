@@ -45,8 +45,6 @@ WinHoverNet::WinHoverNet(Qt::Orientation orientation, QWidget *parent)
     , m_timer(new QTimer())
     , m_modelUnit(Default)
     , m_precision(2)
-    , m_vecOverWarningTemp(3, QVariant(false))
-    , m_vecOverWarning(3, QVariant(false))
     , m_orientation(orientation)
     , m_gridLayout(new QGridLayout(this))
     , m_vecLabel(8, nullptr)
@@ -78,13 +76,6 @@ void WinHoverNet::init()
 
      m_gridLayout->setContentsMargins(0, 0, 0, 0);
      m_gridLayout->setSpacing(0);
-
-     m_vecOverWarning.reserve(4);
-     m_vecOverWarningTemp.reserve(4);
-     m_vecOverWarningTemp.push_back(QVariant(0));
-     m_vecOverWarningTemp.push_back(QVariant(0));
-     m_vecOverWarningTemp.push_back(QVariant(0));
-     m_vecOverWarningTemp.push_back(QVariant("MB"));
 
      initSigConnect();
      m_winSetting->readConfig();
@@ -125,11 +116,6 @@ void WinHoverNet::initSigConnect()
     connect(m_winSetting, &WinSetting::sigLocationExchangeCPUAndMenory, this, &WinHoverNet::onLocationExchangeCPUAndMenory);
     connect(m_winSetting, &WinSetting::sigFractionalAccuracy, this, &WinHoverNet::onFractionalAccuracy);
     connect(m_winSetting, &WinSetting::sigRefreshInterval, this, &WinHoverNet::onRefreshInterval);
-
-    connect(m_winSetting, &WinSetting::sigCpuOver, this, &WinHoverNet::onCpuOver);
-    connect(m_winSetting, &WinSetting::sigMemOver, this, &WinHoverNet::onMemOver);
-    connect(m_winSetting, &WinSetting::sigCpuOverNum, this, &WinHoverNet::onCpuOverNum);
-    connect(m_winSetting, &WinSetting::sigMemOverNum, this, &WinHoverNet::onMemOverNum);
 
     connect(m_winSetting, &WinSetting::sigShowModel, this, &WinHoverNet::onShowModel);
 
@@ -241,18 +227,6 @@ void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
 //    }
 //}
 
-/*!
- * \brief WinHoverNet::showTest 测试函数
- * \param str 打印自定义字符串
- */
-void WinHoverNet::showTest(QString str)
-{
-    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarning
-           <<m_vecOverWarning.size()<<m_vecOverWarning.capacity();
-
-    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarningTemp
-           <<m_vecOverWarningTemp.size()<<m_vecOverWarningTemp.capacity();
-}
 
 //QString WinHoverNet::hoverDisplayText()
 //{
@@ -303,20 +277,6 @@ void WinHoverNet::onCpu()
 
     m_vec.begin()->cpuWork = vec.begin()->cpuWork;
     m_vec.begin()->cpuAll = vec.begin()->cpuAll;
-
-//    if (m_vecOverWarning[0].toBool()) {
-//        QString title("CPU 提示");
-//        QString text("");
-//        bool ok = false;
-//        int overNum = m_vecOverWarning[3].toInt(&ok);
-//        if (ok)
-//            text = "CPU 使用率超过" + QString::number(overNum) + "%";
-
-//        if (valCpu >= overNum) {
-//            m_vecOverWarning[0].setValue(false);
-//            DataOverWarning(title, text, m_winSetting);
-//        }
-//    }
 }
 
 /*!
@@ -329,20 +289,6 @@ void WinHoverNet::onMemory()
 
     double mem = (info.memoryAll - info.memoryFree) * 100.0 / info.memoryAll;
     m_vecLabel[7]->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
-
-//    if (m_vecOverWarning[1].toBool()) {
-//        QString title("内存提示");
-//        QString text("");
-//        bool ok = false;
-//        int overNum = m_vecOverWarning[4].toInt(&ok);
-//        if (ok)
-//            text = "内存使用率超过" + QString::number(overNum) + "%";
-
-//        if (mem >= overNum) {
-//            DataOverWarning(title, text, m_winSetting);
-//            m_vecOverWarning[1].setValue(false);
-//        }
-//    }
 }
 
 ///*!
@@ -582,35 +528,5 @@ void WinHoverNet::onRefreshInterval(int interval)
 //        m_hover = check;
 //}
 
-void WinHoverNet::onCpuOver(bool check)
-{
-    m_vecOverWarningTemp[0].setValue(check);
-    onBtnApplyWinMain();
-    showTest("onCpuOver");
-}
-
-void WinHoverNet::onMemOver(bool check)
-{
-    m_vecOverWarningTemp[1].setValue(check);
-    onBtnApplyWinMain();
-    showTest("onMemOver");
-}
-
-void WinHoverNet::onCpuOverNum(int cpu)
-{
-    m_vecOverWarningTemp[3].setValue(cpu);
-    showTest("onCpuOverNum");
-}
-
-void WinHoverNet::onMemOverNum(int mem)
-{
-    m_vecOverWarningTemp[4].setValue(mem);
-    showTest("onMemOverNum");
-}
-
-void WinHoverNet::onBtnApplyWinMain()
-{
-    m_vecOverWarning = m_vecOverWarningTemp;
-}
 
 

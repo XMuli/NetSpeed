@@ -4,20 +4,14 @@
       "DisolayCPUAndMemory": true,
       "DisolayNet": true,
       "FractionalAccuracy": 1,
-      "LocationExchangeCPUAndMenory": true,
-      "LocationExchangeNet": true,
+      "LocationExchangeCPUAndMenory": false,
+      "LocationExchangeNet": false,
       "RefreshInterval": 2000
     },
     "IsExportSystenPath": false,
     "IsHorizontal": true,
-    "Notification": {
-      "CpuOver": true,
-      "CpuOverNum": 0,
-      "MemoryOver": true,
-      "MemoryOverNum": 0
-    },
     "systemStyle": {
-      "IsHoverDisplay": true,
+      "IsHoverDisplay": false,
       "SystemStyle": "chameleon",
       "SystemStyleIndex": 0
     }
@@ -25,19 +19,19 @@
   "Personalization": {
     "DisplayTextHor": {
       "TextColorDark": {
-        "LabBackgroundColor": "#593123",
-        "LabTextColor": "#A64826",
-        "TextColor": "#D95E32",
+        "LabBackgroundColor": "#1C1B26",
+        "LabTextColor": "#D95E32",
+        "TextColor": "#F2913D",
         "labBackgroundImage": "xxx.png"
       },
       "TextColorLight": {
-        "LabBackgroundColor": "#405B73",
-        "LabTextColor": "#759CBF",
-        "TextColor": "#ADC5D9",
+        "LabBackgroundColor": "#d5e5f2",
+        "LabTextColor": "#1f3140",
+        "TextColor": "#3f5b73",
         "labBackgroundImage": "xxx.png"
       },
       "TextHor": {
-        "FontSize": 9,
+        "FontSize": 11,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
         "LabCpu": "  CPU: ",
@@ -48,15 +42,15 @@
     },
     "DisplayTextVer": {
       "TextColorDark": {
-        "LabBackgroundColor": "#593123",
-        "LabTextColor": "#A64826",
-        "TextColor": "#D95E32",
+        "LabBackgroundColor": "#1C1B26",
+        "LabTextColor": "#D95E32",
+        "TextColor": "#F2913D",
         "labBackgroundImage": "xxx.png"
       },
       "TextColorLight": {
-        "LabBackgroundColor": "#405B73",
-        "LabTextColor": "#759CBF",
-        "TextColor": "#ADC5D9",
+        "LabBackgroundColor": "#D5E5F2",
+        "LabTextColor": "#1F3140",
+        "TextColor": "#3F5B73",
         "labBackgroundImage": "xxx.png"
       },
       "TextVer": {
@@ -70,9 +64,9 @@
       }
     },
     "Language": {
-      "Language": "跟随系统",
+      "Language": "English",
       "LanguageIndex": 0,
-      "UnitModel": "默认",
+      "UnitModel": "Default",
       "UnitModelIndex": 0
     },
     "ThemeIsLight": true

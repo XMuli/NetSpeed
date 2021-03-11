@@ -10,12 +10,6 @@
     },
     "IsExportSystenPath": false,
     "IsHorizontal": true,
-    "Notification": {
-      "CpuOver": true,
-      "CpuOverNum": 0,
-      "MemoryOver": true,
-      "MemoryOverNum": 0
-    },
     "systemStyle": {
       "IsHoverDisplay": false,
       "SystemStyle": "chameleon",
