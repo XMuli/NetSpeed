@@ -137,25 +137,25 @@
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="178"/>
         <location filename="../dde-dock-plugin/WinSetting.ui" line="178"/>
         <source>默认</source>
-        <translation type="unfinished">預設</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="183"/>
         <location filename="../dde-dock-plugin/WinSetting.ui" line="183"/>
         <source>混合</source>
-        <translation type="unfinished">大小寫混合</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="188"/>
         <location filename="../dde-dock-plugin/WinSetting.ui" line="188"/>
         <source>大写</source>
-        <translation type="unfinished">大寫</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="193"/>
         <location filename="../dde-dock-plugin/WinSetting.ui" line="193"/>
         <source>小写</source>
-        <translation type="unfinished">小寫</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="219"/>
@@ -173,7 +173,7 @@
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="243"/>
         <location filename="../dde-dock-plugin/WinSetting.ui" line="243"/>
         <source>CPU：</source>
-        <translation type="unfinished">CPU:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="253"/>
@@ -317,19 +317,19 @@
         <location filename="../dde-dock-plugin/WinSetting.ui" line="541"/>
         <location filename="../dde-dock-plugin/WinSetting.ui" line="706"/>
         <source>跟随系统</source>
-        <translation type="unfinished">System -- 預設</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="546"/>
         <location filename="../dde-dock-plugin/WinSetting.ui" line="546"/>
         <source>简体中文</source>
-        <translation type="unfinished">简体中文 -- 簡體中文</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="551"/>
         <location filename="../dde-dock-plugin/WinSetting.ui" line="551"/>
         <source>English</source>
-        <translation type="unfinished">English -- 英文</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.ui" line="562"/>
@@ -520,7 +520,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../dde-dock-plugin/WinDdeDockSetting.cpp" line="551"/>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.cpp" line="560"/>
         <source>选择文本颜色</source>
-        <translation type="unfinished">選擇文字顏色</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dde-dock-plugin/WinDdeDockSetting.cpp" line="629"/>
@@ -562,353 +562,332 @@ p, li { white-space: pre-wrap; }
         <translation>語言:</translation>
     </message>
     <message>
+        <location filename="../WinSetting.ui" line="56"/>
         <source>跟随系统</source>
-        <translation type="vanished">System -- 預設</translation>
+        <translation>System -- 預設</translation>
     </message>
     <message>
+        <location filename="../WinSetting.ui" line="61"/>
         <source>简体中文</source>
-        <translation type="vanished">简体中文 -- 簡體中文</translation>
+        <translation>简体中文 -- 簡體中文</translation>
     </message>
     <message>
+        <location filename="../WinSetting.ui" line="66"/>
         <source>English</source>
-        <translation type="vanished">English -- 英文</translation>
+        <translation>English -- 英文</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="72"/>
+        <location filename="../WinSetting.ui" line="87"/>
         <source>Network Unit:</source>
         <translation>網速單位:</translation>
     </message>
     <message>
-        <source>默认</source>
-        <translation type="vanished">預設</translation>
-    </message>
-    <message>
-        <source>混合</source>
-        <translation type="vanished">大小寫混合</translation>
-    </message>
-    <message>
-        <source>大写</source>
-        <translation type="vanished">大寫</translation>
-    </message>
-    <message>
-        <source>小写</source>
-        <translation type="vanished">小寫</translation>
-    </message>
-    <message>
-        <location filename="../WinSetting.ui" line="83"/>
-        <source>Default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../WinSetting.ui" line="88"/>
-        <source>Mixed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../WinSetting.ui" line="93"/>
-        <source>Upper</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../WinSetting.ui" line="98"/>
-        <source>Lower</source>
-        <translation type="unfinished"></translation>
+        <source>默认</source>
+        <translation>預設</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="122"/>
+        <location filename="../WinSetting.ui" line="103"/>
+        <source>混合</source>
+        <translation>大小寫混合</translation>
+    </message>
+    <message>
+        <location filename="../WinSetting.ui" line="108"/>
+        <source>大写</source>
+        <translation>大寫</translation>
+    </message>
+    <message>
+        <location filename="../WinSetting.ui" line="113"/>
+        <source>小写</source>
+        <translation>小寫</translation>
+    </message>
+    <message>
+        <location filename="../WinSetting.ui" line="137"/>
         <source>Show Text:</source>
         <translation>顯示文字:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="153"/>
+        <location filename="../WinSetting.ui" line="168"/>
         <source>Memory:</source>
         <translation>記憶體:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="163"/>
+        <location filename="../WinSetting.ui" line="178"/>
         <source>CPU：</source>
         <translation>CPU:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="180"/>
+        <location filename="../WinSetting.ui" line="195"/>
         <source>Upload:</source>
         <translation>上傳:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="190"/>
-        <location filename="../WinSetting.ui" line="1091"/>
+        <location filename="../WinSetting.ui" line="205"/>
+        <location filename="../WinSetting.ui" line="1106"/>
         <source>Download:</source>
         <translation>下載:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="225"/>
+        <location filename="../WinSetting.ui" line="240"/>
         <source>Colors And Fonts</source>
         <translation>顏色和字型</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="233"/>
+        <location filename="../WinSetting.ui" line="248"/>
         <source>Fonts:</source>
         <translation>字型:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="250"/>
+        <location filename="../WinSetting.ui" line="265"/>
         <source>Font Size:</source>
         <translation>字型大小:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="276"/>
+        <location filename="../WinSetting.ui" line="291"/>
         <source>Text color:</source>
         <translation>文字顏色:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="283"/>
+        <location filename="../WinSetting.ui" line="298"/>
         <source>Label color:</source>
         <translation>標籤顏色:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="290"/>
+        <location filename="../WinSetting.ui" line="305"/>
         <source>Background color:</source>
         <translation>背景顏色:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="318"/>
+        <location filename="../WinSetting.ui" line="333"/>
         <source>Background image:</source>
         <translation>背景圖片:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="352"/>
+        <location filename="../WinSetting.ui" line="367"/>
         <source>Theme</source>
         <translation>主題</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="358"/>
+        <location filename="../WinSetting.ui" line="373"/>
         <source>Light</source>
         <translation>淺色</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="371"/>
+        <location filename="../WinSetting.ui" line="386"/>
         <source>Dark</source>
         <translation>暗色</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="422"/>
+        <location filename="../WinSetting.ui" line="437"/>
         <source>Apply</source>
         <translation>應用</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="429"/>
-        <location filename="../WinSetting.ui" line="832"/>
+        <location filename="../WinSetting.ui" line="444"/>
+        <location filename="../WinSetting.ui" line="847"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="439"/>
+        <location filename="../WinSetting.ui" line="454"/>
         <source>General Settings</source>
         <translation>常規設定</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="445"/>
+        <location filename="../WinSetting.ui" line="460"/>
         <source>Theme Style</source>
         <translation>主題風格</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="457"/>
+        <location filename="../WinSetting.ui" line="472"/>
         <source>System style:</source>
         <translation>系統風格:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="467"/>
+        <location filename="../WinSetting.ui" line="482"/>
         <source>Show details</source>
         <translation>顯示詳細資訊</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="480"/>
+        <location filename="../WinSetting.ui" line="495"/>
         <source>Show Text</source>
         <translation>顯示文字</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="497"/>
-        <location filename="../WinSetting.ui" line="514"/>
+        <location filename="../WinSetting.ui" line="512"/>
+        <location filename="../WinSetting.ui" line="529"/>
         <source>Show [CPU/Memory]</source>
         <translation>顯示 [CPU/記憶體]</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="507"/>
+        <location filename="../WinSetting.ui" line="522"/>
         <source>Swap [CPU/Memory]</source>
         <translation>互換 [CPU/記憶體]</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="527"/>
+        <location filename="../WinSetting.ui" line="542"/>
         <source>Show [Upload/Download]</source>
         <translation>顯示 [上傳/下載]</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="557"/>
+        <location filename="../WinSetting.ui" line="572"/>
         <source>Fractional accuracy:</source>
         <translation>小數精確度:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="586"/>
+        <location filename="../WinSetting.ui" line="601"/>
         <source>Refresh interval:</source>
         <translation>重新整理時隔:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="641"/>
+        <location filename="../WinSetting.ui" line="656"/>
         <source>Message Notification</source>
         <translation>訊息通知</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="654"/>
+        <location filename="../WinSetting.ui" line="669"/>
         <source>Notify when CPU is greater than</source>
         <translation>當CPU 大於時通知</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="684"/>
+        <location filename="../WinSetting.ui" line="699"/>
         <source>Notify when memory is greater than</source>
         <translation>當記憶體大於時通知</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="733"/>
+        <location filename="../WinSetting.ui" line="748"/>
         <source>Taskbar Status</source>
         <translation>工作列狀態</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="740"/>
+        <location filename="../WinSetting.ui" line="755"/>
         <source>Horizontal</source>
         <translation>水平</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="750"/>
+        <location filename="../WinSetting.ui" line="765"/>
         <source>Vertical</source>
         <translation>豎直</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="764"/>
+        <location filename="../WinSetting.ui" line="779"/>
         <source>Data Export</source>
         <translation>資料匯出</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="770"/>
+        <location filename="../WinSetting.ui" line="785"/>
         <source>System</source>
         <translation>系統</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="780"/>
+        <location filename="../WinSetting.ui" line="795"/>
         <source>Customize</source>
         <translation>自定義</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="787"/>
+        <location filename="../WinSetting.ui" line="802"/>
         <source>Export</source>
         <translation>匯出</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="825"/>
+        <location filename="../WinSetting.ui" line="840"/>
         <source>Application</source>
         <translation>應用</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="845"/>
+        <location filename="../WinSetting.ui" line="860"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="851"/>
+        <location filename="../WinSetting.ui" line="866"/>
         <source>&lt;a href=&quot;https://github.com/xmuli/lfxNet&quot;&gt;lfxNet</source>
         <translation>&lt;a href=&quot;https://github.com/xmuli/lfxNet&quot;&gt;lfxNet</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="895"/>
-        <source>Introduction: Hovering speed window for all Linux distributions (with DDE-DOCK network speed plugin)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../WinSetting.ui" line="1128"/>
-        <source>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;Help improve</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../WinSetting.ui" line="910"/>
         <source>简介：一个轻的、快的 Linux 实时网速小程序（附 dock 网速插件）</source>
-        <translation type="vanished">簡介：所有 Linux 發行版都可執行的懸浮網速視窗（附 DDE-DOCK 網速外掛）</translation>
+        <translation>簡介：所有 Linux 發行版都可執行的懸浮網速視窗（附 DDE-DOCK 網速外掛）</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="935"/>
+        <location filename="../WinSetting.ui" line="950"/>
         <source>Feedback</source>
         <translation>反饋</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="942"/>
+        <location filename="../WinSetting.ui" line="957"/>
         <source>&lt;a href=&quot;https://github.com/xmuli/lfxNet/blob/master/LICENSE&quot;&gt;MIT</source>
         <translation>&lt;a href=&quot;https://github.com/xmuli/lfxNet/blob/master/LICENSE&quot;&gt;MIT</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="952"/>
+        <location filename="../WinSetting.ui" line="967"/>
         <source>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;偕臧</source>
         <translation>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;偕臧</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="978"/>
+        <location filename="../WinSetting.ui" line="993"/>
         <source>Versions:</source>
         <translation>版本:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="985"/>
+        <location filename="../WinSetting.ui" line="1000"/>
         <source>Author:</source>
         <translation>作者:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1008"/>
+        <location filename="../WinSetting.ui" line="1023"/>
         <source>Compile:</source>
         <translation>編譯:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1015"/>
+        <location filename="../WinSetting.ui" line="1030"/>
         <source>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;v2.0.0</source>
         <translation>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;v2.0.0</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1025"/>
+        <location filename="../WinSetting.ui" line="1040"/>
         <source>&lt;a href=&quot;https://github.com/xmuli/lfxNet/issues&quot;&gt;GitHub</source>
         <translation>&lt;a href=&quot;https://github.com/xmuli/lfxNet/issues&quot;&gt;GitHub</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1067"/>
+        <location filename="../WinSetting.ui" line="1082"/>
         <source>Licenses:</source>
         <translation>許可證:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1074"/>
+        <location filename="../WinSetting.ui" line="1089"/>
         <source>2021-02</source>
         <translation>2021-03</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1081"/>
+        <location filename="../WinSetting.ui" line="1096"/>
         <source>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;releases</source>
         <translation>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;releases</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1121"/>
+        <location filename="../WinSetting.ui" line="1136"/>
         <source>UI:</source>
         <translation>UI:</translation>
     </message>
     <message>
+        <location filename="../WinSetting.ui" line="1143"/>
         <source>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;联系我</source>
-        <translation type="vanished">&lt;a href=&quot;https://ifmet.cn/&quot;&gt;幫助改進</translation>
+        <translation>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;幫助改進</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1177"/>
+        <location filename="../WinSetting.ui" line="1180"/>
         <source>Acknowledgements:</source>
         <translation>鳴謝:</translation>
     </message>
     <message>
-        <location filename="../WinSetting.ui" line="1187"/>
+        <location filename="../WinSetting.ui" line="1190"/>
         <source>&lt;a href=&quot;https://blog.justforlxz.com&quot;&gt;justforlxz</source>
         <translation>&lt;a href=&quot;https://blog.justforlxz.com&quot;&gt;justforlxz</translation>
     </message>
     <message>
-        <location filename="../WinSetting.cpp" line="796"/>
-        <location filename="../WinSetting.cpp" line="805"/>
-        <location filename="../WinSetting.cpp" line="814"/>
+        <location filename="../WinSetting.cpp" line="799"/>
+        <location filename="../WinSetting.cpp" line="808"/>
+        <location filename="../WinSetting.cpp" line="817"/>
         <source>选择文本颜色</source>
         <translation>選擇文字顏色</translation>
     </message>

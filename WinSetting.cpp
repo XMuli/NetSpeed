@@ -28,8 +28,9 @@ WinSetting::WinSetting(QWidget *parent)
     connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
     connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
 
-    ifstream jfile("/home/xmuli/project/github/lfxnet/lfxNet.json");
-//    ifstream jfile(":/lfxNet.json");
+    auto path = writeDataToConfigPath().toLatin1().data();
+    qDebug()<<"---------1a-读取配置路径"<<path;
+    ifstream jfile(path);
     jfile >> m_js;
     init();
 }
@@ -55,9 +56,6 @@ void WinSetting::init()
     QStringList listData;
     listLang << "English" << "简体中文" << "繁體中文(台湾)";
     listData << "es_US" << "zh_CN" << "zh_TW";
-
-//    listLang << "简体中文" << "繁體中文(台湾)";
-//    listData << "zh_CN" << "zh_TW";
 
     for (int i = 0; i < listLang.count(); ++i)
         ui->comboBoxLanguage->addItem(listLang[i], listData[i]);
@@ -259,10 +257,12 @@ void WinSetting::saveConfig()
     jGeneralSet["IsHorizontal"] = ui->radioHorizontal->isChecked();
     jGeneralSet["IsExportSystenPath"] = ui->radioSystemPath->isChecked();
 
-    cout << m_js;
-    cout.flush();
-    ofstream outFile("/home/xmuli/project/github/lfxnet/lfxNet.json");
-//    cout << m_js.dump(4) << std::endl;
+//    // 调试
+//    cout << m_js;
+//    cout.flush();
+    auto path = writeDataToConfigPath().toLatin1().data();
+    qDebug()<<"---------2a-保存配置路径"<<path;
+    ofstream outFile(path);
     outFile << setw(2) << m_js << endl;
 }
 
@@ -669,19 +669,27 @@ QString WinSetting::getConfigPath(QString homePath, QString systemPath, bool& is
 /*!
  * \brief WinSetting::writeDataToConfigPath 保存配置文件
  */
-void WinSetting::writeDataToConfigPath()
+QString WinSetting::writeDataToConfigPath()
 {
     QString name("/lfxNet/lfxNet.json");
     QString sour = QString("/usr/share") + name;
     QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
-    bool isHomePath = false;
+    QString sourName = sour;
+    QString destName = dest;
+    bool isHomePath = false;  // 家目录该配置文件是否存在
     getConfigPath(sour, dest, isHomePath);
 
     sour = sour.left(sour.lastIndexOf("/"));
     dest = dest.left(dest.lastIndexOf("/"));
     name = name.right(name.size() - name.lastIndexOf("/") - 1);
-    if (!isHomePath)
-        writeDataToConfigPath(sour, dest, name, name);
+    if (isHomePath) {
+        return destName;
+    } else {
+        if (writeDataToConfigPath(sour, dest, name, name))
+            return destName;
+        else
+            return sourName;
+    }
 }
 
 /*!

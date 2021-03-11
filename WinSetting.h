@@ -37,7 +37,7 @@ public:
     QString getConfigPath(bool &isHomePath);
     QString getConfigPath(QString homePath, QString systemPath, bool &isHomePath);
 
-    void writeDataToConfigPath();
+    QString writeDataToConfigPath();
     bool writeDataToConfigPath(QString sour, QString dest, QString sourName, QString destName);
 
     void initSigConnectPersonalization();

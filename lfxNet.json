@@ -10,6 +10,12 @@
     },
     "IsExportSystenPath": false,
     "IsHorizontal": true,
+    "Notification": {
+      "CpuOver": true,
+      "CpuOverNum": 0,
+      "MemoryOver": true,
+      "MemoryOverNum": 0
+    },
     "systemStyle": {
       "IsHoverDisplay": false,
       "SystemStyle": "chameleon",
@@ -31,10 +37,10 @@
         "labBackgroundImage": "xxx.png"
       },
       "TextHor": {
-        "FontSize": 11,
+        "FontSize": 9,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
-        "LabCpu": "  CPU: ",
+        "LabCpu": "  CPU@: ",
         "LabDown": "↓: ",
         "LabMemory": "  MEM: ",
         "LabUpload": "↑: "
@@ -64,9 +70,9 @@
       }
     },
     "Language": {
-      "Language": "English",
-      "LanguageIndex": 0,
-      "UnitModel": "Default",
+      "Language": "简体中文",
+      "LanguageIndex": 1,
+      "UnitModel": "默认",
       "UnitModelIndex": 0
     },
     "ThemeIsLight": true
