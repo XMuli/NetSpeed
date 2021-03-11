@@ -56,6 +56,9 @@ void WinSetting::init()
     listLang << "English" << "简体中文" << "繁體中文(台湾)";
     listData << "es_US" << "zh_CN" << "zh_TW";
 
+//    listLang << "简体中文" << "繁體中文(台湾)";
+//    listData << "zh_CN" << "zh_TW";
+
     for (int i = 0; i < listLang.count(); ++i)
         ui->comboBoxLanguage->addItem(listLang[i], listData[i]);
 
@@ -113,15 +116,17 @@ void WinSetting::init()
 /*!
  * \brief WinSetting::readConfig 读取 json 文件，初始化 UI 的控件初始值
  */
-void WinSetting::readConfig()
+void WinSetting::readConfig(bool initLanguage)
 {
     json jPersona = m_js["Personalization"];   // 个性化
     json jGeneralSet = m_js["GeneralSetting"]; // 常规配置
 
     //--------------------------个性化初始化--------------------------------
-    json jLanguage = jPersona["Language"];
-    ui->comboBoxLanguage->setCurrentIndex(jLanguage["LanguageIndex"]);
-    ui->comboBoxUnitModel->setCurrentIndex(jLanguage["UnitModelIndex"]);
+    if (initLanguage) {
+        json jLanguage = jPersona["Language"];
+        ui->comboBoxLanguage->setCurrentIndex(jLanguage["LanguageIndex"]);
+        ui->comboBoxUnitModel->setCurrentIndex(jLanguage["UnitModelIndex"]);
+    }
 
     json jDisplayText;
     json jText;
@@ -183,22 +188,6 @@ void WinSetting::readConfig()
         ui->radioSystemPath->setChecked(true);
     else
         ui->radioCustomPath->setChecked(true);
-}
-
-void WinSetting::readConfig(bool isHomePath)
-{
-    QString name("/lfxNet/lfxNet.json");
-    QString sour = QString("/usr/share") + name;
-    QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
-
-
-    qDebug()<<"----------------------1A__>>"<<getConfigPath(dest, sour, isHomePath);
-
-    sour = sour.left(sour.lastIndexOf("/"));
-    dest = dest.left(dest.lastIndexOf("/"));
-    name = name.right(name.size() - name.lastIndexOf("/") - 1);
-    if (!isHomePath)
-        writeDataToConfigPath(sour, dest, name, name);
 }
 
 
@@ -842,8 +831,9 @@ bool WinSetting::eventFilter(QObject *watched, QEvent *event)
         }
     } if (watched == ui->comboBoxLanguage) {
         if (event->type() == QEvent::LanguageChange) {
-            qDebug()<< "---------event()--->" << m_trans;
+//            qDebug()<< "---------event()--->" << m_trans;
             ui->retranslateUi(this);
+            readConfig(false);        // 因 QLineEidt 在切换语言，会清空内容，就顺便将所有全部读一遍
             return true;
         }
     } else {
@@ -859,10 +849,10 @@ bool WinSetting::eventFilter(QObject *watched, QEvent *event)
  */
 void WinSetting::onComboBoxLanguage(int index)
 {
-    QString language("zh_CN");
+    QString language(QLocale().name());
     language = ui->comboBoxLanguage->itemData(index).toString();
     bool ok = m_trans->load("./" + language + ".qm");
-    qDebug()<< "---------@1--->" << language << ok;
+//    qDebug()<< "---------@1--->" << language << ok ;
     QCoreApplication::installTranslator(m_trans);
 }
 

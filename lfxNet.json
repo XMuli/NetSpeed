@@ -37,7 +37,7 @@
         "labBackgroundImage": "xxx.png"
       },
       "TextHor": {
-        "FontSize": 9,
+        "FontSize": 11,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
         "LabCpu": "  CPU: ",
@@ -70,9 +70,9 @@
       }
     },
     "Language": {
-      "Language": "跟随系统",
+      "Language": "English",
       "LanguageIndex": 0,
-      "UnitModel": "默认",
+      "UnitModel": "Default",
       "UnitModelIndex": 0
     },
     "ThemeIsLight": true

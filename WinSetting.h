@@ -25,8 +25,7 @@ public:
 
 public:
     void init();
-    void readConfig();
-    void readConfig(bool isHomePath);
+    void readConfig(bool initLanguage = true);
     void saveConfig();
     void saveConfig(bool &isHomePath);
     void saveConfigThemeIsLight(bool isLight);
