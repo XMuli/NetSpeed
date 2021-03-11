@@ -211,6 +211,10 @@ void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
             m_vecLabel[i + 1]->setContentsMargins(0, 0, 0, 0);
         }
     }
+
+    QMargins margins(contentsMargins());
+    setContentsMargins(margins);
+    adjustSize();
 }
 
 //bool WinHoverNet::isHoverDisplay()
