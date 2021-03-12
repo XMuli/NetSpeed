@@ -26,8 +26,6 @@ WinDdeDockSetting::WinDdeDockSetting(QWidget *parent)
     , m_path("")
     , m_btnGroupTheme(new QButtonGroup(nullptr))
     , m_doubleClick(2)
-    , m_cpuOverNum(0)
-    , m_memOverNum(0)
 {
     ui->setupUi(this);
     init();
@@ -48,9 +46,9 @@ void WinDdeDockSetting::init()
     readConfig();
 
     // 控件的基本设置，其读写留其它函数完成
-//    auto list = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
-//    for (auto v : list)
-//        v->setProperty("_d_dtk_spinBox", true);
+    auto listChild = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
+    for (auto v : listChild)
+        v->setProperty("_d_dtk_spinBox", true);
 
     ui->labLabTextColor->setAutoFillBackground(true);
     ui->labTextColor->setAutoFillBackground(true);
@@ -79,7 +77,7 @@ void WinDdeDockSetting::init()
         }
     }
 
-    setWindowTitle(QString("lfxMonitorNet"));
+    setWindowTitle(QString("MonitorNet"));
     setWindowFlags(Qt::WindowStaysOnTopHint);
 }
 
@@ -101,14 +99,10 @@ void WinDdeDockSetting::initSigConnectWinDdeDock()
     connect(ui->lineLabDown, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDownText);
     connect(ui->lineLabCpu, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabCpuText);
     connect(ui->lineLabMemory, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabMemoryText);
-    connect(ui->lineLabDiskRead, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDiskReadText);
-    connect(ui->lineLabDiskWrite, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabDiskWriteText);
     connect(ui->checkBoxDisolayNet, &QCheckBox::clicked, this, &WinDdeDockSetting::sigDisolayNet);
     connect(ui->checkBoxDisolayCPUAndMemory, &QCheckBox::clicked, this, &WinDdeDockSetting::sigDisolayCPUAndMemory);
-    connect(ui->checkBoxDisolayDisk, &QCheckBox::clicked, this, &WinDdeDockSetting::sigDisolayDisk);
     connect(ui->checkBoxLocationExchangeNet, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeNet);
     connect(ui->checkBoxLocationExchangeCPUAndMenory, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeCPUAndMenory);
-    connect(ui->checkBoxLocationExchangeDisk, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeDisk);
 
     connect(ui->spinBoxFractionalAccuracy, pFun, this, &WinDdeDockSetting::sigFractionalAccuracy);
     void (QComboBox::*pFunDoubleClick)(int) = &QComboBox::currentIndexChanged;
@@ -122,12 +116,6 @@ void WinDdeDockSetting::initSigConnectWinMain()
     connect(ui->btnApplyWinMain, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnApplyWinMain);
     connect(ui->btnQuitWinMain, &QPushButton::clicked, this, &WinDdeDockSetting::onBtnQuitWinMain);
     connect(ui->btnExportData, &QPushButton::clicked, this, &WinDdeDockSetting::onChangePath);
-
-    connect(ui->checkBoxCpuOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigCpuOver);
-    connect(ui->checkBoxMemOver, &QCheckBox::clicked, this, &WinDdeDockSetting::sigMemOver);
-    void (QSpinBox::*pFun)(int) = &QSpinBox::valueChanged;
-    connect(ui->spinBoxCpuOverNum, pFun, this, &WinDdeDockSetting::sigCpuOverNum);
-    connect(ui->spinBoxMemOverNum, pFun, this, &WinDdeDockSetting::sigMemOverNum);
 
     void (QButtonGroup::*pFunTheme)(int, bool) = &QButtonGroup::buttonToggled;
     connect(m_btnGroupTheme, pFunTheme, this, &WinDdeDockSetting::onBtnGroupTheme);
@@ -166,23 +154,17 @@ void WinDdeDockSetting::readConfigWinDdeDock()
         ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[0]["LabDown"]));
         ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[0]["LabCpu"]));
         ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[0]["LabMemory"]));
-        ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[0]["LabDiskRead"]));
-        ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[0]["LabDiskWrite"]));
     } else {
         ui->lineLabUpload->setText(QString::fromStdString(jsDisplayText[1]["LabUpload"]));
         ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[1]["LabDown"]));
         ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[1]["LabCpu"]));
         ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[1]["LabMemory"]));
-        ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[1]["LabDiskRead"]));
-        ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[1]["LabDiskWrite"]));
     }
 
     ui->checkBoxDisolayNet->setChecked(jsDisplayText[2]["DisolayNet"]);
     ui->checkBoxDisolayCPUAndMemory->setChecked(jsDisplayText[2]["DisolayCPUAndMemory"]);
-    ui->checkBoxDisolayDisk->setChecked(jsDisplayText[2]["DisolayDisk"]);
     ui->checkBoxLocationExchangeNet->setChecked(jsDisplayText[3]["LocationExchangeNet"]);
     ui->checkBoxLocationExchangeCPUAndMenory->setChecked(jsDisplayText[3]["LocationExchangeCPUAndMenory"]);
-    ui->checkBoxLocationExchangeDisk->setChecked(jsDisplayText[3]["LocationExchangeDisk"]);
     ui->spinBoxFractionalAccuracy->setValue(jsDisplayText[4]["FractionalAccuracy"]);
     ui->spinBoxRefreshInterval->setValue(jsDisplayText[4]["RefreshInterval"]);
 
@@ -190,27 +172,20 @@ void WinDdeDockSetting::readConfigWinDdeDock()
     ui->checkBoxHoverDisplay->setChecked(jsDockWindow["HoverDisplay"]);
     ui->comboBoxDoubleClick->setCurrentIndex(jsDockWindow["DoubleClickIndex"]);
 
-    // TODO: 2021-01-07 占用图模式未写
-
     // 第一次发射信号，加载配置文件
     emit ui->fontComboBox->currentTextChanged(ui->fontComboBox->currentText());
     emit ui->spinBoxFontSize->valueChanged(ui->spinBoxFontSize->value());
     emit sigLabTextColor(ui->labLabTextColor->palette().color(QPalette::Background));
     emit sigTextColor(ui->labTextColor->palette().color(QPalette::Background));
-//    emit ui->radioHorizontal->toggled(ui->radioHorizontal->isChecked());
-//    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
+
     emit ui->lineLabUpload->textChanged(ui->lineLabUpload->text());
     emit ui->lineLabDown->textChanged(ui->lineLabDown->text());
     emit ui->lineLabCpu->textChanged(ui->lineLabCpu->text());
     emit ui->lineLabMemory->textChanged(ui->lineLabMemory->text());
-//    emit ui->lineLabDiskRead->textChanged(ui->lineLabDiskRead->text());
-//    emit ui->lineLabDiskWrite->textChanged(ui->lineLabDiskWrite->text());
+
     emit ui->checkBoxDisolayNet->clicked(ui->checkBoxDisolayNet->isChecked());
     emit ui->checkBoxDisolayCPUAndMemory->clicked(ui->checkBoxDisolayCPUAndMemory->isChecked());
-//    emit ui->checkBoxDisolayDisk->clicked(ui->checkBoxDisolayDisk->isChecked());
-//    emit ui->checkBoxLocationExchangeNet->clicked(ui->checkBoxLocationExchangeNet->isChecked());
-//    emit ui->checkBoxLocationExchangeCPUAndMenory->clicked(ui->checkBoxLocationExchangeCPUAndMenory->isChecked());
-//    emit ui->checkBoxLocationExchangeDisk->clicked(ui->checkBoxLocationExchangeDisk->isChecked());
+
     emit ui->spinBoxFractionalAccuracy->valueChanged(ui->spinBoxFractionalAccuracy->value());
     emit ui->spinBoxRefreshInterval->valueChanged(ui->spinBoxRefreshInterval->value());
     emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
@@ -249,23 +224,17 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
         jsDisplayText[0]["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
         jsDisplayText[0]["LabCpu"] = ui->lineLabCpu->text().toStdString().c_str();
         jsDisplayText[0]["LabMemory"] = ui->lineLabMemory->text().toStdString().c_str();
-        jsDisplayText[0]["LabDiskRead"] = ui->lineLabDiskRead->text().toStdString().c_str();
-        jsDisplayText[0]["LabDiskWrite"] = ui->lineLabDiskWrite->text().toStdString().c_str();
     } else {
         jsDisplayText[1]["LabUpload"] = ui->lineLabUpload->text().toStdString().c_str();
         jsDisplayText[1]["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
         jsDisplayText[1]["LabCpu"] = ui->lineLabCpu->text().toStdString().c_str();
         jsDisplayText[1]["LabMemory"] = ui->lineLabMemory->text().toStdString().c_str();
-        jsDisplayText[1]["LabDiskRead"] = ui->lineLabDiskRead->text().toStdString().c_str();
-        jsDisplayText[1]["LabDiskWrite"] = ui->lineLabDiskWrite->text().toStdString().c_str();
     }
 
     jsDisplayText[2]["DisolayNet"] = ui->checkBoxDisolayNet->isChecked();
     jsDisplayText[2]["DisolayCPUAndMemory"] = ui->checkBoxDisolayCPUAndMemory->isChecked();
-    jsDisplayText[2]["DisolayDisk"] = ui->checkBoxDisolayDisk->isChecked();
     jsDisplayText[3]["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->isChecked();
     jsDisplayText[3]["LocationExchangeCPUAndMenory"] = ui->checkBoxLocationExchangeCPUAndMenory->isChecked();
-    jsDisplayText[3]["LocationExchangeDisk"] = ui->checkBoxLocationExchangeDisk->isChecked();
     jsDisplayText[4]["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
     jsDisplayText[4]["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
 
@@ -273,8 +242,6 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
     jsDockWindow["HoverDisplay"] = ui->checkBoxHoverDisplay->isChecked();
     jsDockWindow["DoubleClickIndex"] = ui->comboBoxDoubleClick->currentIndex();
     jsDockWindow["DoubleClick"] = ui->comboBoxDoubleClick->currentText().toStdString().c_str();
-
-    // TODO: 2021-01-07 占用图模式未写
 
     saveConfig();
 }
@@ -285,13 +252,7 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
 void WinDdeDockSetting::readConfigWinMain()
 {
     json jsAppSetting = m_js["WinMain"]["AppSetting"];
-    ui->comboBoxLanguage->setCurrentIndex(jsAppSetting["LanguageIndex"]);
-
-    json jsAppNotification = m_js["WinMain"]["Notification"];
-    ui->checkBoxCpuOver->setChecked(jsAppNotification["CpuOver"]);
-    ui->spinBoxCpuOverNum->setValue(jsAppNotification["CpuOverNum"]);
-    ui->checkBoxMemOver->setChecked(jsAppNotification["MemoryOver"]);
-    ui->spinBoxMemOverNum->setValue(jsAppNotification["MemoryOverNum"]);
+    ui->comboBoxStyle ->setCurrentIndex(jsAppSetting["LanguageIndex"]);
 
     json jsThemeStyle = m_js["WinMain"]["ThemeStyle"];
     ui->comboBoxStyle->setCurrentIndex(ui->comboBoxStyle->currentIndex());
@@ -307,8 +268,6 @@ void WinDdeDockSetting::readConfigWinMain()
         QMessageBox::warning(nullptr, tr("主题选择数值错误"), tr("json 的 themeIndex 值错误，此处采用约定：themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-未知"));
 
     emit ui->radioDefaultPath->toggled(ui->radioDefaultPath->isChecked());
-    emit ui->checkBoxCpuOver->clicked(ui->checkBoxCpuOver->isChecked());
-    emit ui->checkBoxMemOver->clicked(ui->checkBoxMemOver->isChecked());
     emit ui->radioButtonSystem->toggled(ui->radioButtonSystem->isChecked());
     emit ui->comboBoxStyle->currentIndexChanged(ui->comboBoxStyle->currentIndex());
 }
@@ -319,14 +278,8 @@ void WinDdeDockSetting::readConfigWinMain()
 void WinDdeDockSetting::saveConfigWinMain()
 {
     json &jsAppSetting = m_js["WinMain"]["AppSetting"];
-    jsAppSetting["LanguageIndex"] = ui->comboBoxLanguage->currentIndex();
-    jsAppSetting["Language"] = ui->comboBoxLanguage->currentText().toStdString().c_str();
-
-    json &jsAppNotification = m_js["WinMain"]["Notification"];
-    jsAppNotification["CpuOver"] = ui->checkBoxCpuOver->isChecked();
-    jsAppNotification["CpuOverNum"] = ui->spinBoxCpuOverNum->value();
-    jsAppNotification["MemoryOver"] = ui->checkBoxMemOver->isChecked();
-    jsAppNotification["MemoryOverNum"] = ui->spinBoxMemOverNum->value();
+    jsAppSetting["LanguageIndex"] = ui->comboBoxStyle->currentIndex();
+    jsAppSetting["Language"] = ui->comboBoxStyle->currentText().toStdString().c_str();
 
     json &jsThemeStyle = m_js["WinMain"]["ThemeStyle"];
     // themeIndex 为 0-跟随系统； 1-浅色模式； 2-暗色模式； 其它-为止
@@ -525,15 +478,11 @@ void WinDdeDockSetting::updateLabelText(bool isHorizontal)
         ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[0]["LabDown"]));
         ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[0]["LabCpu"]));
         ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[0]["LabMemory"]));
-        ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[0]["LabDiskRead"]));
-        ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[0]["LabDiskWrite"]));
     } else {
         ui->lineLabUpload->setText(QString::fromStdString(jsDisplayText[1]["LabUpload"]));
         ui->lineLabDown->setText(QString::fromStdString(jsDisplayText[1]["LabDown"]));
         ui->lineLabCpu->setText(QString::fromStdString(jsDisplayText[1]["LabCpu"]));
         ui->lineLabMemory->setText(QString::fromStdString(jsDisplayText[1]["LabMemory"]));
-        ui->lineLabDiskRead->setText(QString::fromStdString(jsDisplayText[1]["LabDiskRead"]));
-        ui->lineLabDiskWrite->setText(QString::fromStdString(jsDisplayText[1]["LabDiskWrite"]));
     }
 }
 
@@ -609,15 +558,6 @@ void WinDdeDockSetting::onDoubleClick(int index)
 {
     if (m_doubleClick != index)
         m_doubleClick = index;
-}
-
-/*!
- * \brief WinDdeDockSetting::onBootUpUpdate 设置开机检查更新
- * \param check
- */
-void WinDdeDockSetting::onBootUpUpdate(bool check)
-{
-    // TODO: 2021-01-12
 }
 
 void WinDdeDockSetting::onChangePath()

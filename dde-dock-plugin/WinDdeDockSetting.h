@@ -88,8 +88,6 @@ public slots:
     void onBtnQuitWinMain(bool check);
 
     void onDoubleClick(int index);
-    void onBootUpUpdate(bool check);
-//    void onCheckUpdate(bool check);
     void onChangePath();
 
     void onBtnGroupTheme(int index, bool checked);
@@ -102,9 +100,6 @@ private:
     QString m_path;      // 数据保存路径
     QButtonGroup *m_btnGroupTheme;
     int m_doubleClick;
-
-    int m_cpuOverNum;
-    int m_memOverNum;
 };
 
 #endif // WINDDEDOCKSETTING_H

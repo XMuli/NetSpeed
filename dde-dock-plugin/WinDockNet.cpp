@@ -31,8 +31,6 @@ WinDockNet::WinDockNet(WinDdeDockSetting *winSetting, Qt::Orientation orientatio
     , m_timer(new QTimer())
     , m_modelUnit(Default)
     , m_precision(2)
-    , m_vecOverWarningTemp(3, QVariant(false))
-    , m_vecOverWarning(3, QVariant(false))
     , m_orientation(Qt::Horizontal)
     , m_gridLayout(new QGridLayout(this))
     , m_vecLabel(8, nullptr)
@@ -64,13 +62,6 @@ void WinDockNet::init()
      m_gridLayout->setContentsMargins(0, 0, 0, 0);
      m_gridLayout->setSpacing(0);
 
-     m_vecOverWarning.reserve(7);
-     m_vecOverWarningTemp.reserve(7);
-     m_vecOverWarningTemp.push_back(QVariant(0));
-     m_vecOverWarningTemp.push_back(QVariant(0));
-     m_vecOverWarningTemp.push_back(QVariant(0));
-     m_vecOverWarningTemp.push_back(QVariant("MB"));
-
      initSigConnect();
      m_winSetting->readConfigWinDdeDock();
 
@@ -81,7 +72,7 @@ void WinDockNet::init()
 
 void WinDockNet::initSigConnect()
 {
-    // 响应 WinDdeDockSetting 发射的信号
+   // 响应 WinDdeDockSetting 发射的信号
    connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
    connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
    connect(m_winSetting, &WinDdeDockSetting::sigUnitModel, this, &WinDockNet::onUnitModel);
@@ -93,24 +84,16 @@ void WinDockNet::initSigConnect()
    connect(m_winSetting, &WinDdeDockSetting::sigLabDownText, this, &WinDockNet::onLabDownText);
    connect(m_winSetting, &WinDdeDockSetting::sigLabCpuText, this, &WinDockNet::onLabCpuText);
    connect(m_winSetting, &WinDdeDockSetting::sigLabMemoryText, this, &WinDockNet::onLabMemoryText);
-//    connect(m_winSetting, &WinDdeDockSetting::sigLabDiskReadText, this, &WinDockNet::onLabDiskReadText);
-//    connect(m_winSetting, &WinDdeDockSetting::sigLabDiskWriteText, this, &WinDockNet::onLabDiskWriteText);
+
    connect(m_winSetting, &WinDdeDockSetting::sigDisolayNet, this, &WinDockNet::onDisolayNet);
    connect(m_winSetting, &WinDdeDockSetting::sigDisolayCPUAndMemory, this, &WinDockNet::onDisolayCPUAndMemory);
-//    connect(m_winSetting, &WinDdeDockSetting::sigDisolayDisk, this, &WinDockNet::onDisolayDisk);
+
    connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeNet, this, &WinDockNet::onLocationExchangeNet);
    connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeCPUAndMenory, this, &WinDockNet::onLocationExchangeCPUAndMenory);
-//    connect(m_winSetting, &WinDdeDockSetting::sigLocationExchangeDisk, this, &WinDockNet::onLocationExchangeDisk);
+
    connect(m_winSetting, &WinDdeDockSetting::sigFractionalAccuracy, this, &WinDockNet::onFractionalAccuracy);
    connect(m_winSetting, &WinDdeDockSetting::sigRefreshInterval, this, &WinDockNet::onRefreshInterval);
    connect(m_winSetting, &WinDdeDockSetting::sigHoverDisplay, this, &WinDockNet::onHoverDisplay);
-
-   // 响应 WinMain 发射的信号
-   connect(m_winSetting, &WinDdeDockSetting::sigCpuOver, this, &WinDockNet::onCpuOver);
-   connect(m_winSetting, &WinDdeDockSetting::sigMemOver, this, &WinDockNet::onMemOver);
-   connect(m_winSetting, &WinDdeDockSetting::sigCpuOverNum, this, &WinDockNet::onCpuOverNum);
-   connect(m_winSetting, &WinDdeDockSetting::sigMemOverNum, this, &WinDockNet::onMemOverNum);
-   connect(m_winSetting, &WinDdeDockSetting::sigBtnApplyWinMain, this, &WinDockNet::onBtnApplyWinMain);
 }
 
 /*!
@@ -206,19 +189,6 @@ void WinDockNet::DataOverWarning(QString title, QString text, QWidget *parent, b
     }
 }
 
-/*!
- * \brief WinDockNet::showTest 测试函数
- * \param str 打印自定义字符串
- */
-void WinDockNet::showTest(QString str)
-{
-    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarning
-           <<m_vecOverWarning.size()<<m_vecOverWarning.capacity();
-
-    qDebug()<<"=================================#" + str << "===>"<<m_vecOverWarningTemp
-           <<m_vecOverWarningTemp.size()<<m_vecOverWarningTemp.capacity();
-}
-
 QString WinDockNet::hoverDisplayText()
 {
     double run = 0;
@@ -268,20 +238,6 @@ void WinDockNet::onCpu()
 
     m_vec.begin()->cpuWork = vec.begin()->cpuWork;
     m_vec.begin()->cpuAll = vec.begin()->cpuAll;
-
-    if (m_vecOverWarning[0].toBool()) {
-        QString title("CPU 提示");
-        QString text("");
-        bool ok = false;
-        int overNum = m_vecOverWarning[3].toInt(&ok);
-        if (ok)
-            text = "CPU 使用率超过" + QString::number(overNum) + "%";
-
-        if (valCpu >= overNum) {
-            m_vecOverWarning[0].setValue(false);
-            DataOverWarning(title, text, m_winSetting);
-        }
-    }
 }
 
 /*!
@@ -294,21 +250,6 @@ void WinDockNet::onMemory()
 
     double mem = (info.memoryAll - info.memoryFree) * 100.0 / info.memoryAll;
     m_vecLabel[7]->setText(QString("%1%").arg(mem, 0, 'f', m_precision, QLatin1Char(' ')));
-//    ui->lab_34->setText(QString("%1%").arg(swap, 0, 'f', m_precision, QLatin1Char(' ')));
-
-    if (m_vecOverWarning[1].toBool()) {
-        QString title("内存提示");
-        QString text("");
-        bool ok = false;
-        int overNum = m_vecOverWarning[4].toInt(&ok);
-        if (ok)
-            text = "内存使用率超过" + QString::number(overNum) + "%";
-
-        if (mem >= overNum) {
-            DataOverWarning(title, text, m_winSetting);
-            m_vecOverWarning[1].setValue(false);
-        }
-    }
 }
 
 /*!
@@ -500,36 +441,4 @@ void WinDockNet::onHoverDisplay(bool check)
     if (m_hover != check)
         m_hover = check;
 }
-
-void WinDockNet::onCpuOver(bool check)
-{
-    m_vecOverWarningTemp[0].setValue(check);
-    onBtnApplyWinMain();
-    showTest("onCpuOver");
-}
-
-void WinDockNet::onMemOver(bool check)
-{
-    m_vecOverWarningTemp[1].setValue(check);
-    onBtnApplyWinMain();
-    showTest("onMemOver");
-}
-
-void WinDockNet::onCpuOverNum(int cpu)
-{
-    m_vecOverWarningTemp[3].setValue(cpu);
-    showTest("onCpuOverNum");
-}
-
-void WinDockNet::onMemOverNum(int mem)
-{
-    m_vecOverWarningTemp[4].setValue(mem);
-    showTest("onMemOverNum");
-}
-
-void WinDockNet::onBtnApplyWinMain()
-{
-    m_vecOverWarning = m_vecOverWarningTemp;
-}
-
 

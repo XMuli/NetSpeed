@@ -1,6 +1,6 @@
 set(DDE_DOCK_PLUGINS_PATH "/usr/lib/dde-dock/plugins")
 if (EXISTS ${DDE_DOCK_PLUGINS_PATH})
-    set(PLUGIN_NAME "lfxMonitorNet")
+    set(PLUGIN_NAME "MonitorNet")
     set(CMAKE_AUTOUIC ON)
 
     find_package(DtkWidget REQUIRED) # 一次只能找一个库

@@ -29,7 +29,6 @@ public:
     bool isHoverDisplay();
     void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 1000 * 60 * 10);
 
-    void showTest(QString str);
     QString hoverDisplayText();
 
 public slots:
@@ -51,26 +50,15 @@ public slots:
     void onLabDownText(const QString &text);
     void onLabCpuText(const QString &text);
     void onLabMemoryText(const QString &text);
-//    void onLabDiskReadText(const QString &text);
-//    void onLabDiskWriteText(const QString &text);
 
     void onDisolayNet(bool check);
     void onDisolayCPUAndMemory(bool check);
-//    void onDisolayDisk(bool check);
     void onLocationExchangeNet(bool check);
     void onLocationExchangeCPUAndMenory(bool check);
-//    void onLocationExchangeDisk(bool check);
 
     void onFractionalAccuracy(int num);
     void onRefreshInterval(int interval);
     void onHoverDisplay(bool check);
-
-    // 响应 WinMain 发射的信号
-    void onCpuOver(bool check);
-    void onMemOver(bool check);
-    void onCpuOverNum(int cpu);
-    void onMemOverNum(int mem);
-    void onBtnApplyWinMain();
 
 private:
     long m_upload;   // 网速的上次数值
@@ -78,8 +66,6 @@ private:
     QVector<CpuInfo> m_vec;
     int m_precision; // 精确度
     bool m_hover;    // 悬浮现实额外信息
-    QVector<QVariant> m_vecOverWarningTemp;  // 临时
-    QVector<QVariant> m_vecOverWarning; // 顺序：(0-2 是否选中预警):cpu、mem、net;(3-5 预警数值):cpu、mem、net;（6 net 预警单位）[2/5/6 已经废弃使用]；
 
     MonitorInfo_x11 *m_info;
     ModelUnit m_modelUnit;

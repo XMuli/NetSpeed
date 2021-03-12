@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>559</width>
-    <height>669</height>
+    <width>443</width>
+    <height>583</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,7 +65,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,2">
+           <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1">
             <item>
              <layout class="QGridLayout" name="gridLayout_3">
               <property name="horizontalSpacing">
@@ -74,24 +74,10 @@
               <property name="verticalSpacing">
                <number>4</number>
               </property>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_45">
-                <property name="text">
-                 <string>文本颜色：</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label">
                 <property name="text">
                  <string>标签颜色：</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLabel" name="labTextColor">
-                <property name="text">
-                 <string/>
                 </property>
                </widget>
               </item>
@@ -102,20 +88,21 @@
                 </property>
                </widget>
               </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_45">
+                <property name="text">
+                 <string>文本颜色：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLabel" name="labTextColor">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
              </layout>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
@@ -123,95 +110,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_12">
-         <item>
-          <widget class="QGroupBox" name="groupBox_8">
-           <property name="title">
-            <string>模式设置</string>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,1,1,1,0,3,3">
-            <item>
-             <widget class="QLabel" name="label_41">
-              <property name="text">
-               <string>任务栏状态：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioVertical">
-              <property name="text">
-               <string>垂直</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioHorizontal">
-              <property name="text">
-               <string>水平</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="Line" name="line_2">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_42">
-              <property name="text">
-               <string>网速单位：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxUnitModel">
-              <property name="duplicatesEnabled">
-               <bool>false</bool>
-              </property>
-              <item>
-               <property name="text">
-                <string>默认</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>混合</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>大写</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>小写</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
+        <layout class="QVBoxLayout" name="verticalLayout_12"/>
        </item>
        <item>
         <widget class="QGroupBox" name="groupBox_7">
@@ -230,20 +129,24 @@
             <property name="verticalSpacing">
              <number>4</number>
             </property>
-            <item row="0" column="5">
-             <widget class="QLineEdit" name="lineLabDiskRead">
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="lineLabDown">
               <property name="text">
-               <string>↗:</string>
+               <string>↓:</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QLabel" name="label_34">
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="lineLabUpload">
               <property name="text">
-               <string>CPU：</string>
+               <string>↑:</string>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <widget class="QLineEdit" name="lineLabCpu">
+              <property name="text">
+               <string>CPU:</string>
               </property>
              </widget>
             </item>
@@ -264,33 +167,6 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="4">
-             <widget class="QLabel" name="label_35">
-              <property name="text">
-               <string>读取：</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="4">
-             <widget class="QLabel" name="label_38">
-              <property name="text">
-               <string>写入：</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLineEdit" name="lineLabDown">
-              <property name="text">
-               <string>↓:</string>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="2">
              <widget class="QLabel" name="label_37">
               <property name="text">
@@ -301,17 +177,13 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="3">
-             <widget class="QLineEdit" name="lineLabCpu">
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_34">
               <property name="text">
-               <string>CPU:</string>
+               <string>CPU：</string>
               </property>
-             </widget>
-            </item>
-            <item row="1" column="5">
-             <widget class="QLineEdit" name="lineLabDiskWrite">
-              <property name="text">
-               <string>↙:</string>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -325,13 +197,6 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="lineLabUpload">
-              <property name="text">
-               <string>↑:</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </item>
           <item>
@@ -339,6 +204,30 @@
             <property name="verticalSpacing">
              <number>4</number>
             </property>
+            <item row="1" column="1">
+             <widget class="QCheckBox" name="checkBoxLocationExchangeCPUAndMenory">
+              <property name="text">
+               <string>互换位置 [CPU/内存]</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QCheckBox" name="checkBoxLocationExchangeNet">
+              <property name="text">
+               <string>互换位置 [上传/下载]</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QCheckBox" name="checkBoxDisolayCPUAndMemory">
+              <property name="text">
+               <string>显示 [CPU/内存]</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
              <widget class="QCheckBox" name="checkBoxDisolayNet">
               <property name="enabled">
@@ -355,53 +244,6 @@
               </property>
               <property name="tristate">
                <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QCheckBox" name="checkBoxDisolayCPUAndMemory">
-              <property name="text">
-               <string>显示 [CPU/内存]</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
-             <widget class="QCheckBox" name="checkBoxDisolayDisk">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>显示 [读取/写入]</string>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QCheckBox" name="checkBoxLocationExchangeNet">
-              <property name="text">
-               <string>互换位置 [上传/下载]</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QCheckBox" name="checkBoxLocationExchangeCPUAndMenory">
-              <property name="text">
-               <string>互换位置 [CPU/内存]</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QCheckBox" name="checkBoxLocationExchangeDisk">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>互换位置 [读取/写入]</string>
               </property>
              </widget>
             </item>
@@ -504,184 +346,68 @@
       <attribute name="title">
        <string>常规设置</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_25" stretch="2,5">
-         <item>
-          <widget class="QGroupBox" name="groupBox_12">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="title">
-            <string>语言：</string>
-           </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-           <property name="checkable">
-            <bool>false</bool>
-           </property>
-           <property name="checked">
-            <bool>false</bool>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="3">
-            <item>
-             <widget class="QComboBox" name="comboBoxLanguage">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="editable">
-               <bool>false</bool>
-              </property>
-              <property name="duplicatesEnabled">
-               <bool>false</bool>
-              </property>
-              <item>
-               <property name="text">
-                <string>跟随系统</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>简体中文</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>English</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupBox_13">
-           <property name="title">
-            <string>配置和数据文件</string>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <widget class="QRadioButton" name="radioCustomPath">
-              <property name="text">
-               <string>用户路径下配置</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioDefaultPath">
-              <property name="text">
-               <string>系统路径下配置</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="btnExportData">
-              <property name="text">
-               <string>导出配置</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_14">
+        <widget class="QGroupBox" name="groupBox_12">
          <property name="enabled">
           <bool>true</bool>
          </property>
          <property name="title">
-          <string>消息通知</string>
+          <string>语言</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>4</number>
-          </property>
-          <property name="topMargin">
-           <number>4</number>
-          </property>
-          <property name="rightMargin">
-           <number>4</number>
-          </property>
-          <property name="bottomMargin">
-           <number>4</number>
-          </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_10">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QLabel" name="label_53">
+            <property name="text">
+             <string>系统风格：</string>
             </property>
-            <item>
-             <widget class="QCheckBox" name="checkBoxCpuOver">
-              <property name="text">
-               <string>当CPU利用率超过</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="spinBoxCpuOverNum">
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>10</number>
-              </property>
-              <property name="value">
-               <number>0</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_51">
-              <property name="text">
-               <string>% 时通知</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_9">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QComboBox" name="comboBoxStyle"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_42">
+            <property name="text">
+             <string>网速单位：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBoxUnitModel">
+            <property name="duplicatesEnabled">
+             <bool>false</bool>
             </property>
             <item>
-             <widget class="QCheckBox" name="checkBoxMemOver">
-              <property name="text">
-               <string>当内存利用率超过</string>
-              </property>
-             </widget>
+             <property name="text">
+              <string>默认</string>
+             </property>
             </item>
             <item>
-             <widget class="QSpinBox" name="spinBoxMemOverNum">
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>10</number>
-              </property>
-              <property name="value">
-               <number>0</number>
-              </property>
-             </widget>
+             <property name="text">
+              <string>混合</string>
+             </property>
             </item>
             <item>
-             <widget class="QLabel" name="label_54">
-              <property name="text">
-               <string>% 时通知</string>
-              </property>
-             </widget>
+             <property name="text">
+              <string>大写</string>
+             </property>
             </item>
-           </layout>
+            <item>
+             <property name="text">
+              <string>小写</string>
+             </property>
+            </item>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -697,80 +423,102 @@
          <property name="checked">
           <bool>false</bool>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_22">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_28" stretch="1,1,1,1">
-            <item>
-             <widget class="QRadioButton" name="radioButtonSystem">
-              <property name="text">
-               <string>跟随系统</string>
-              </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButtonLight">
-              <property name="text">
-               <string>浅色模式</string>
-              </property>
-              <property name="checkable">
-               <bool>true</bool>
-              </property>
-              <property name="checked">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QRadioButton" name="radioButtonDark">
-              <property name="text">
-               <string>暗色模式</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_16">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <widget class="QRadioButton" name="radioButtonSystem">
+            <property name="text">
+             <string>跟随系统</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_27" stretch="1,2,4">
-            <item>
-             <widget class="QLabel" name="label_53">
-              <property name="text">
-               <string>系统风格：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="comboBoxStyle"/>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_13">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <widget class="QRadioButton" name="radioButtonLight">
+            <property name="text">
+             <string>浅色模式</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButtonDark">
+            <property name="text">
+             <string>暗色模式</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_8">
+         <property name="title">
+          <string>任务栏状态</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,1,1">
+          <item>
+           <widget class="QLabel" name="label_41">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioVertical">
+            <property name="text">
+             <string>垂直</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioHorizontal">
+            <property name="text">
+             <string>水平</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_13">
+         <property name="title">
+          <string>导出配置</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QRadioButton" name="radioDefaultPath">
+            <property name="text">
+             <string>系统</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioCustomPath">
+            <property name="text">
+             <string>自定义</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnExportData">
+            <property name="text">
+             <string>导出配置</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -780,11 +528,11 @@
          <property name="title">
           <string>任务栏窗口</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,1,3,2">
+         <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,1,3">
           <item>
            <widget class="QCheckBox" name="checkBoxHoverDisplay">
             <property name="text">
-             <string>悬浮显示额外信息</string>
+             <string>悬浮显示</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -818,70 +566,6 @@
               <string>系统监视器（DDE）</string>
              </property>
             </item>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_10">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="groupBoxShowModel">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="title">
-          <string>CPU/内存占用图</string>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-         <property name="checkable">
-          <bool>false</bool>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QRadioButton" name="radioButtonNumber">
-            <property name="text">
-             <string>数值</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QRadioButton" name="radioButtonStripes">
-            <property name="text">
-             <string>横向矩形</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QRadioButton" name="radioButtonColumn">
-            <property name="text">
-             <string>柱状图</string>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
            </widget>
           </item>
          </layout>

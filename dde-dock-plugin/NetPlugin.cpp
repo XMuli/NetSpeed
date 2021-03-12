@@ -31,7 +31,7 @@ NetPlugin::NetPlugin(QObject *parent)
  */
 const QString NetPlugin::pluginName() const
 {
-    return "datetime";
+    return "MonitorNet";
 }
 
 /*!
@@ -99,7 +99,7 @@ void NetPlugin::pluginStateSwitched()
  */
 const QString NetPlugin::pluginDisplayName() const
 {
-    return QString("lfxMonitorNet");
+    return QString("MonitorNet");
 }
 
 /*!
