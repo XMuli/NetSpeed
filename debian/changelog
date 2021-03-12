@@ -1,3 +1,22 @@
+lfxnet (2.1.0-1) unstable; urgency=medium
+
+  * 调整 dde-dock 网速插件 BUG
+  * 彻底移除一些无用功能
+  * 删除大量注释代码
+  * 调整 UI， 更小更紧凑
+
+ -- xmuli tech <xmulitech@gmail.com>  Friday, 04 March 2021 20:17:04 +0800
+
+lfxnet (2.0.0-1) unstable; urgency=medium
+
+  * Linux 通用悬浮网速窗口功能基本发布
+  * 移除没人会怎么使用的一些功能
+  * 调整 UI 是的窗口更加紧凑
+  * 修复诸多 BUG
+  * 是一次很大功能的更新
+
+ -- xmuli tech <xmulitech@gmail.com>  Friday, 04 March 2021 21:26:32 +0800
+
 lfxnet (1.1.0-1) unstable; urgency=medium
 
   * 精简 UI，重大改版
