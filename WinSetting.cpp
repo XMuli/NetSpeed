@@ -16,13 +16,14 @@
 #include <QString>
 #include <QComboBox>
 #include <QDate>
+#include <QFileDialog>
+#include <QFile>
 using namespace std;
 
 WinSetting::WinSetting(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::WinSetting)
     , m_isHorizontal(true)
-    , m_path("")
     , m_trans(new QTranslator(this))
 {
     ui->setupUi(this);
@@ -32,7 +33,6 @@ WinSetting::WinSetting(QWidget *parent)
     // 高级- 垂直- 修改 label -居然数据没有保存下？？？
     connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
     connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
-
 
     auto path = writeDataToConfigPath().toLatin1().data();
     qDebug()<<"---------1a-读取配置路径"<<path;
@@ -840,6 +840,8 @@ void WinSetting::initSigConnectGeneralSetting()
     connect(ui->spinBoxRefreshInterval, pFunSpinxBox, this, &WinSetting::sigRefreshInterval);
 
     connect(ui->radioHorizontal, &QRadioButton::toggled, this, &WinSetting::sigShowModel);
+    connect(ui->btnExportData, &QRadioButton::clicked, this, &WinSetting::onExportData);
+
     connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
     connect(ui->btnQuitGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnQuitWinSetting);
 }
@@ -936,13 +938,41 @@ void WinSetting::onBtnApplyToJson()
 {
     saveConfig();
 //    bool isHomePath = true;
-//    saveConfig(isHomePath);
+    //    saveConfig(isHomePath);
+}
+
+/*!
+ * \brief WinSetting::onExportData 导出数据配置
+ */
+void WinSetting::onExportData(bool checked)
+{
+    Q_UNUSED(checked)
+
+    QString name("/lfxNet/lfxNet.json");
+    QString path("");
+    if (ui->radioCustomPath->isChecked()) {
+        path = QString(QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first()) + name;
+    } else {
+        path = QString("/usr/share") + name;
+    }
+
+    if (!QFile::exists(path)) {
+        QMessageBox::warning(nullptr, tr("This path does not exist"), path);
+        return;
+    }
+
+    QString filePathName = QFileDialog::getSaveFileName(this
+                                                        ,tr("Select the export save path")
+                                                        , path
+                                                        , tr("Exporting files(*.json);;All documents(*.*)"));
+
+    if (!QFile::copy(path, filePathName))
+        QMessageBox::critical(nullptr, tr("Error"), tr("File export failed"));
 }
 
 void WinSetting::onBtnApplyWinSetting()
 {
     saveConfig();
-//    readConfig();
 }
 
 void WinSetting::onBtnQuitWinSetting()

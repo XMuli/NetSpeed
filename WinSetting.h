@@ -89,6 +89,7 @@ public slots:
     void onComboBoxLanguage(int index);
     void onTheme(bool checked);
     void onBtnApplyToJson();
+    void onExportData(bool checked);
     void onBtnApplyWinSetting();
     void onBtnQuitWinSetting();
 
@@ -99,7 +100,6 @@ private:
     Ui::WinSetting *ui;
     json m_js;
     bool m_isHorizontal; // 插件的水平、垂直状态
-    QString m_path;      // 数据保存路径
     QTranslator *m_trans;
 };
 
