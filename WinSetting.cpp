@@ -15,6 +15,7 @@
 #include <QStandardPaths>
 #include <QString>
 #include <QComboBox>
+#include <QDate>
 using namespace std;
 
 WinSetting::WinSetting(QWidget *parent)
@@ -25,8 +26,13 @@ WinSetting::WinSetting(QWidget *parent)
     , m_trans(new QTranslator(this))
 {
     ui->setupUi(this);
-    connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
-    connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
+//    connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
+//    connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyToJson);
+
+    // 高级- 垂直- 修改 label -居然数据没有保存下？？？
+    connect(ui->btnApplyPerson, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
+    connect(ui->btnApplyGeneralSet, &QPushButton::clicked, this, &WinSetting::onBtnApplyWinSetting);
+
 
     auto path = writeDataToConfigPath().toLatin1().data();
     qDebug()<<"---------1a-读取配置路径"<<path;
@@ -47,10 +53,12 @@ void WinSetting::init()
     initSigConnectGeneralSetting();
 //    onlyFirstEmitSig();
 
-    // readConfig() 先将某些控件预设好
     ui->labLabTextColor->setAutoFillBackground(true);
     ui->labTextColor->setAutoFillBackground(true);
     ui->labBackgroundColor->setAutoFillBackground(true);
+
+    QString current_date = QDate::currentDate().toString("yyyy-MM-dd");
+    ui->labCompile->setText(current_date);
 
     QStringList listLang;
     QStringList listData;
@@ -74,6 +82,7 @@ void WinSetting::init()
 
     // 读入 json 文件到流中
     readConfig();
+    m_isHorizontal = ui->radioHorizontal->isChecked();
 
     // 控件的基本设置，其读写留其它函数完成
 //    auto list = this->findChildren<QAbstractSpinBox *>();  // 切换为上下按钮模式
@@ -131,6 +140,76 @@ void WinSetting::readConfig(bool initLanguage)
     if (jGeneralSet["IsHorizontal"]) {
         jDisplayText = jPersona["DisplayTextHor"];
         jText = jDisplayText["TextHor"];
+
+            ui->radioHorizontal->setChecked(true);
+    } else {
+        jDisplayText = jPersona["DisplayTextVer"];
+        jText = jDisplayText["TextVer"];
+
+            ui->radioVertical->setChecked(true);
+    }
+
+    bool themeIsLight = jPersona["ThemeIsLight"];
+    json jTextColor;
+    if (themeIsLight) {
+        jTextColor = jDisplayText["TextColorLight"];
+        ui->radioButtonLight->setChecked(true);
+    } else {
+        jTextColor = jDisplayText["TextColorDark"];
+        ui->radioButtonDark->setChecked(true);
+    }
+
+    ui->lineLabUpload->setText(QString::fromStdString(jText["LabUpload"]));
+    ui->lineLabDown->setText(QString::fromStdString(jText["LabDown"]));
+    ui->lineLabCpu->setText(QString::fromStdString(jText["LabCpu"]));
+    ui->lineLabMemory->setText(QString::fromStdString(jText["LabMemory"]));
+    ui->fontComboBox->setCurrentIndex(jText["FontTypeIndex"]);
+    ui->spinBoxFontSize->setValue(jText["FontSize"]);
+
+    QPalette palette;
+    palette.setColor(QPalette::Background, QString::fromStdString(jTextColor["LabTextColor"]));
+    ui->labLabTextColor->setPalette(palette);
+    palette.setColor(QPalette::Background, QString::fromStdString(jTextColor["TextColor"]));
+    ui->labTextColor->setPalette(palette);
+    palette.setColor(QPalette::Background, QString::fromStdString(jTextColor["LabBackgroundColor"]));
+    ui->labBackgroundColor->setPalette(palette);
+    ui->labBackgroundImage->setPixmap(QPixmap(":/backGround.png"));  // TODO: 2021-02-24 图片后面设置为可自选，用作背景图片
+
+    //--------------------------常规配置初始化--------------------------------
+    json jSystemStyle = jGeneralSet["systemStyle"];
+    ui->checkBoxHoverDisplay->setChecked(jSystemStyle["IsHoverDisplay"]);
+    ui->comboBoxsystemStyle->setCurrentIndex(jSystemStyle["SystemStyleIndex"]);
+
+    json jDisolayText = jGeneralSet["DisolayText"];
+    ui->checkBoxDisolayCPUAndMemory->setChecked(jDisolayText["DisolayCPUAndMemory"]);
+    ui->checkBoxDisolayNet->setChecked(jDisolayText["DisolayNet"]);
+    ui->checkBoxLocationExchangeCPUAndMenory->setChecked(jDisolayText["LocationExchangeCPUAndMenory"]);
+    ui->checkBoxLocationExchangeNet->setChecked(jDisolayText["LocationExchangeNet"]);
+    ui->spinBoxFractionalAccuracy->setValue(jDisolayText["FractionalAccuracy"]);
+    ui->spinBoxRefreshInterval->setValue(jDisolayText["RefreshInterval"]);
+
+    if (jGeneralSet["IsExportSystenPath"])
+        ui->radioSystemPath->setChecked(true);
+    else
+        ui->radioCustomPath->setChecked(true);
+}
+
+void WinSetting::changeOriePreviewUI()
+{
+    json jPersona = m_js["Personalization"];   // 个性化
+    json jGeneralSet = m_js["GeneralSetting"]; // 常规配置
+
+    //--------------------------个性化初始化--------------------------------
+    json jLanguage = jPersona["Language"];
+    ui->comboBoxLanguage->setCurrentIndex(jLanguage["LanguageIndex"]);
+    ui->comboBoxUnitModel->setCurrentIndex(jLanguage["UnitModelIndex"]);
+
+    json jDisplayText;
+    json jText;
+    bool isHorizontal = ui->radioHorizontal->isChecked();
+    if (isHorizontal) {
+        jDisplayText = jPersona["DisplayTextHor"];
+        jText = jDisplayText["TextHor"];
     } else {
         jDisplayText = jPersona["DisplayTextVer"];
         jText = jDisplayText["TextVer"];
@@ -152,7 +231,6 @@ void WinSetting::readConfig(bool initLanguage)
     ui->lineLabMemory->setText(QString::fromStdString(jText["LabMemory"]));
     ui->fontComboBox->setCurrentIndex(jText["FontTypeIndex"]);
     ui->spinBoxFontSize->setValue(jText["FontSize"]);
-
 
     QPalette palette;
     palette.setColor(QPalette::Background, QString::fromStdString(jTextColor["LabTextColor"]));
@@ -201,31 +279,21 @@ void WinSetting::saveConfig()
     bool isHorizontal = ui->radioHorizontal->isChecked();
     bool isThemeLight = ui->radioButtonLight->isChecked();
 
-
-//    json& jDisplayTextHor = jPersona["DisplayTextHor"];
-//    json& jDisplayTextVer = jPersona["DisplayTextVer"];
-
     json *jDisplayText;
-//    json *jText;
     char* text = "";
     if (isHorizontal) {
         jDisplayText = &jPersona["DisplayTextHor"];
         text = "TextHor";
-//        jText = jDisplayText["TextHor"];
     } else {
         jDisplayText = &jPersona["DisplayTextVer"];
         text = "TextVer";
-//        jText = &jDisplayText["TextVer"];
     }
 
-//    json *jTextColor;
     char* textColor = "";
     if (isThemeLight)
         textColor = "TextColorLight";
-//        jTextColor = &jDisplayText["TextColorLight"];
     else
         textColor = "TextColorDark";
-//        jTextColor = &jDisplayText["TextColorDark"];
 
     jDisplayText->at(text)["LabUpload"] = ui->lineLabUpload->text().toStdString().c_str();
     jDisplayText->at(text)["LabDown"] = ui->lineLabDown->text().toStdString().c_str();
@@ -257,11 +325,9 @@ void WinSetting::saveConfig()
     jGeneralSet["IsHorizontal"] = ui->radioHorizontal->isChecked();
     jGeneralSet["IsExportSystenPath"] = ui->radioSystemPath->isChecked();
 
-//    // 调试
-//    cout << m_js;
-//    cout.flush();
     auto path = writeDataToConfigPath().toLatin1().data();
-    qDebug()<<"---------2a-保存配置路径"<<path;
+    cout<<"------------------2a-保存配置路径"<<path;
+    cout.flush();
     ofstream outFile(path);
     outFile << setw(2) << m_js << endl;
 }
@@ -330,7 +396,7 @@ void WinSetting::onlyFirstEmitSig()
 
 bool WinSetting::isHorizontal()
 {
-
+    return m_isHorizontal;
 }
 
 bool WinSetting::isLightTheme()
@@ -650,7 +716,7 @@ QString WinSetting::getConfigPath(bool& isHomePath)
  * \return 文件的路径
  * \note 先判断家目录下的文件是否存在，若有则返回；无则去尝试返回系统目录下文件路径
  */
-QString WinSetting::getConfigPath(QString homePath, QString systemPath, bool& isHomePath)
+QString WinSetting::getConfigPath(QString systemPath, QString homePath, bool& isHomePath)
 {
     QFileInfo fileSystem(systemPath);
     QFileInfo fileHome(homePath);
@@ -663,7 +729,11 @@ QString WinSetting::getConfigPath(QString homePath, QString systemPath, bool& is
     if (fileSystem.isFile()) {
         isHomePath = false;
         return systemPath;
+    } else {    // 如果连 systemPath 中也没有，就先拷贝一份过去
+
     }
+
+    // TODO: 两者都没会失败，有风险
 }
 
 /*!
@@ -864,14 +934,14 @@ void WinSetting::onTheme(bool checked)
 void WinSetting::onBtnApplyToJson()
 {
     saveConfig();
-    bool isHomePath = true;
-    saveConfig(isHomePath);
+//    bool isHomePath = true;
+//    saveConfig(isHomePath);
 }
 
 void WinSetting::onBtnApplyWinSetting()
 {
     saveConfig();
-    readConfig();
+//    readConfig();
 }
 
 void WinSetting::onBtnQuitWinSetting()

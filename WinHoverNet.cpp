@@ -82,6 +82,9 @@ void WinHoverNet::init()
      m_winSetting->onlyFirstEmitSig();
      m_winSetting->show();
 
+     if (!m_winSetting->isHorizontal())
+         m_orientation = Qt::Vertical;
+
      setLabWidgetLayout(m_orientation);
      m_info->netInfo(m_upload, m_down);
      m_info->cpuInfo(m_vec);
@@ -205,7 +208,10 @@ void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
 
 //bool WinHoverNet::isHoverDisplay()
 //{
-//    return m_hover;
+//    if (m_orientation == Qt::Horizontal)
+//        return true;
+//    else
+//        return false;
 //}
 
 ///*!
@@ -376,6 +382,7 @@ void WinHoverNet::onBackgroundImage(const QColor color)
 void WinHoverNet::onShowModel(bool check)
 {
     setLabWidgetLayout(check);
+    m_winSetting->changeOriePreviewUI();
 }
 
 /*!

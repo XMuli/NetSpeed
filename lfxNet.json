@@ -25,9 +25,9 @@
   "Personalization": {
     "DisplayTextHor": {
       "TextColorDark": {
-        "LabBackgroundColor": "#1C1B26",
-        "LabTextColor": "#D95E32",
-        "TextColor": "#F2913D",
+        "LabBackgroundColor": "#1c1b26",
+        "LabTextColor": "#d95e32",
+        "TextColor": "#f2913d",
         "labBackgroundImage": "xxx.png"
       },
       "TextColorLight": {
@@ -37,10 +37,10 @@
         "labBackgroundImage": "xxx.png"
       },
       "TextHor": {
-        "FontSize": 9,
+        "FontSize": 10,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
-        "LabCpu": "  CPU@: ",
+        "LabCpu": "  CPU: ",
         "LabDown": "↓: ",
         "LabMemory": "  MEM: ",
         "LabUpload": "↑: "
@@ -54,25 +54,25 @@
         "labBackgroundImage": "xxx.png"
       },
       "TextColorLight": {
-        "LabBackgroundColor": "#D5E5F2",
-        "LabTextColor": "#1F3140",
-        "TextColor": "#3F5B73",
+        "LabBackgroundColor": "#d5e5f2",
+        "LabTextColor": "#1f3140",
+        "TextColor": "#3f5b73",
         "labBackgroundImage": "xxx.png"
       },
       "TextVer": {
-        "FontSize": 9,
+        "FontSize": 10,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
-        "LabCpu": "C: ",
+        "LabCpu": "  C: ",
         "LabDown": "↓: ",
-        "LabMemory": "M: ",
+        "LabMemory": "  M: ",
         "LabUpload": "↑: "
       }
     },
     "Language": {
-      "Language": "简体中文",
-      "LanguageIndex": 1,
-      "UnitModel": "默认",
+      "Language": "English",
+      "LanguageIndex": 0,
+      "UnitModel": "Default",
       "UnitModelIndex": 0
     },
     "ThemeIsLight": true

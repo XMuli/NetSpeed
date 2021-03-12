@@ -26,6 +26,7 @@ public:
 public:
     void init();
     void readConfig(bool initLanguage = true);
+    void changeOriePreviewUI();
     void saveConfig();
     void saveConfig(bool &isHomePath);
     void saveConfigThemeIsLight(bool isLight);

@@ -6,14 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>763</width>
-    <height>625</height>
+    <width>502</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_7">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="autoFillBackground">
@@ -32,7 +44,7 @@
          <property name="title">
           <string>Internationalization</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,2,0,1,2,0">
+         <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,2,1,2,0">
           <item>
            <widget class="QLabel" name="label_8">
             <property name="text">
@@ -52,19 +64,6 @@
              <bool>false</bool>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item>
            <widget class="QLabel" name="label_42">
@@ -226,7 +225,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="1,4,1,4">
+           <layout class="QHBoxLayout" name="horizontalLayout_18" stretch="1,2,1,2,1">
             <item>
              <widget class="QLabel" name="label_43">
               <property name="text">
@@ -257,6 +256,19 @@
                <enum>QAbstractSpinBox::NoButtons</enum>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -791,37 +803,14 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_13">
          <item>
-          <spacer name="horizontalSpacer_20">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
           <widget class="QLabel" name="labIntroduction">
            <property name="text">
-            <string>Introduction: Hovering speed window for all Linux distributions (with DDE-DOCK network speed plugin)</string>
+            <string>Hovering speed window for all Linux distributions (with DDE-DOCK network speed plugin)</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_21">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </item>
@@ -843,64 +832,58 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="1" column="7">
-          <widget class="QLabel" name="label_12">
+         <item row="1" column="3">
+          <widget class="QLabel" name="label_11">
            <property name="text">
-            <string>Feedback</string>
+            <string>Download:</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="5">
+         <item row="1" column="7">
+          <widget class="QLabel" name="label_23">
+           <property name="text">
+            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/issues&quot;&gt;GitHub</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
           <widget class="QLabel" name="label_13">
            <property name="text">
-            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/blob/master/LICENSE&quot;&gt;MIT</string>
+            <string>MIT</string>
+           </property>
+           <property name="openExternalLinks">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="7">
+          <widget class="QLabel" name="labCompile">
+           <property name="text">
+            <string>2021-02</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="4">
+          <widget class="QLabel" name="label_16">
+           <property name="text">
+            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;releases</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="label_15">
-           <property name="text">
-            <string>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;偕臧</string>
-           </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="6">
-          <spacer name="horizontalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Versions:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
+         <item row="1" column="0">
           <widget class="QLabel" name="label_10">
            <property name="text">
             <string>Author:</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
+         <item row="0" column="2">
           <spacer name="horizontalSpacer_5">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -916,119 +899,77 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="7">
-          <widget class="QLabel" name="label_6">
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_15">
            <property name="text">
-            <string>Compile:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;v2.0.0</string>
+            <string>&lt;a href=&quot;https://ifmet.cn/&quot;&gt;偕臧</string>
            </property>
            <property name="openExternalLinks">
             <bool>true</bool>
            </property>
           </widget>
          </item>
-         <item row="1" column="8">
-          <widget class="QLabel" name="label_23">
-           <property name="text">
-            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/issues&quot;&gt;GitHub</string>
+         <item row="0" column="5">
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="openExternalLinks">
-            <bool>true</bool>
+           <property name="sizeType">
+            <enum>QSizePolicy::Minimum</enum>
            </property>
-          </widget>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
          <item row="0" column="0">
-          <spacer name="horizontalSpacer_10">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>Versions:</string>
            </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          </widget>
          </item>
-         <item row="0" column="9">
-          <spacer name="horizontalSpacer_9">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+         <item row="1" column="6">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Feedback</string>
            </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          </widget>
          </item>
-         <item row="0" column="4">
+         <item row="0" column="3">
           <widget class="QLabel" name="label_3">
            <property name="text">
             <string>Licenses:</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="8">
-          <widget class="QLabel" name="label_14">
+         <item row="0" column="6">
+          <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>2021-02</string>
+            <string>Compile:</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="5">
-          <widget class="QLabel" name="label_16">
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_9">
            <property name="text">
-            <string>&lt;a href=&quot;https://github.com/xmuli/lfxNet/releases&quot;&gt;releases</string>
+            <string>v2.0.0</string>
            </property>
            <property name="openExternalLinks">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>Download:</string>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,9">
          <property name="spacing">
           <number>0</number>
          </property>
-         <item>
-          <spacer name="horizontalSpacer_15">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
          <item>
           <widget class="QLabel" name="label_19">
            <property name="text">
@@ -1046,45 +987,13 @@
            </property>
           </widget>
          </item>
-         <item>
-          <spacer name="horizontalSpacer_14">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,2">
          <property name="spacing">
           <number>0</number>
          </property>
-         <item>
-          <spacer name="horizontalSpacer_17">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
          <item>
           <widget class="QLabel" name="label_21">
            <property name="text">
@@ -1101,22 +1010,6 @@
             <string>&lt;a href=&quot;https://blog.justforlxz.com&quot;&gt;justforlxz</string>
            </property>
           </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_19">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeType">
-            <enum>QSizePolicy::Minimum</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </item>

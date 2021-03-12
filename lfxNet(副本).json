@@ -10,6 +10,12 @@
     },
     "IsExportSystenPath": false,
     "IsHorizontal": true,
+    "Notification": {
+      "CpuOver": true,
+      "CpuOverNum": 0,
+      "MemoryOver": true,
+      "MemoryOverNum": 0
+    },
     "systemStyle": {
       "IsHoverDisplay": false,
       "SystemStyle": "chameleon",
@@ -18,6 +24,29 @@
   },
   "Personalization": {
     "DisplayTextHor": {
+      "TextColorDark": {
+        "LabBackgroundColor": "#1c1b26",
+        "LabTextColor": "#d95e32",
+        "TextColor": "#f2913d",
+        "labBackgroundImage": "xxx.png"
+      },
+      "TextColorLight": {
+        "LabBackgroundColor": "#d5e5f2",
+        "LabTextColor": "#1f3140",
+        "TextColor": "#3f5b73",
+        "labBackgroundImage": "xxx.png"
+      },
+      "TextHor": {
+        "FontSize": 10,
+        "FontType": "Noto Sans CJK SC",
+        "FontTypeIndex": 59,
+        "LabCpu": "  CPU#31VL: ",
+        "LabDown": "↓: ",
+        "LabMemory": "  MEM#31VL: ",
+        "LabUpload": "↑: "
+      }
+    },
+    "DisplayTextVer": {
       "TextColorDark": {
         "LabBackgroundColor": "#1C1B26",
         "LabTextColor": "#D95E32",
@@ -30,36 +59,13 @@
         "TextColor": "#3f5b73",
         "labBackgroundImage": "xxx.png"
       },
-      "TextHor": {
-        "FontSize": 11,
-        "FontType": "Noto Sans CJK SC",
-        "FontTypeIndex": 59,
-        "LabCpu": "  CPU: ",
-        "LabDown": "↓: ",
-        "LabMemory": "  MEM: ",
-        "LabUpload": "↑: "
-      }
-    },
-    "DisplayTextVer": {
-      "TextColorDark": {
-        "LabBackgroundColor": "#1C1B26",
-        "LabTextColor": "#D95E32",
-        "TextColor": "#F2913D",
-        "labBackgroundImage": "xxx.png"
-      },
-      "TextColorLight": {
-        "LabBackgroundColor": "#D5E5F2",
-        "LabTextColor": "#1F3140",
-        "TextColor": "#3F5B73",
-        "labBackgroundImage": "xxx.png"
-      },
       "TextVer": {
-        "FontSize": 9,
+        "FontSize": 10,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
-        "LabCpu": "C: ",
+        "LabCpu": "  CPU#31VL: ",
         "LabDown": "↓: ",
-        "LabMemory": "M: ",
+        "LabMemory": "  MEM#31VL: ",
         "LabUpload": "↑: "
       }
     },
