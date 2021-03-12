@@ -117,7 +117,7 @@ void WinSetting::init()
     }
 
     setWindowTitle(QString("lfxNet"));
-    //    setWindowFlags(Qt::WindowStaysOnTopHint);
+    //
 }
 
 /*!
@@ -177,7 +177,7 @@ void WinSetting::readConfig(bool initLanguage)
 
     //--------------------------常规配置初始化--------------------------------
     json jSystemStyle = jGeneralSet["systemStyle"];
-    ui->checkBoxHoverDisplay->setChecked(jSystemStyle["IsHoverDisplay"]);
+    ui->checkBoxWindowTop->setChecked(jSystemStyle["WindowTop"]);
     ui->comboBoxsystemStyle->setCurrentIndex(jSystemStyle["SystemStyleIndex"]);
 
     json jDisolayText = jGeneralSet["DisolayText"];
@@ -243,7 +243,7 @@ void WinSetting::changeOriePreviewUI()
 
     //--------------------------常规配置初始化--------------------------------
     json jSystemStyle = jGeneralSet["systemStyle"];
-    ui->checkBoxHoverDisplay->setChecked(jSystemStyle["IsHoverDisplay"]);
+    ui->checkBoxWindowTop->setChecked(jSystemStyle["WindowTop"]);
     ui->comboBoxsystemStyle->setCurrentIndex(jSystemStyle["SystemStyleIndex"]);
 
     json jDisolayText = jGeneralSet["DisolayText"];
@@ -310,7 +310,7 @@ void WinSetting::saveConfig()
 
     //--------------------------保存常规配置的数据到 JSON 中--------------------------------
     json& jSystemStyle = jGeneralSet["systemStyle"];
-    jSystemStyle["IsHoverDisplay"] = ui->checkBoxHoverDisplay->isChecked();
+    jSystemStyle["WindowTop"] = ui->checkBoxWindowTop->isChecked();
     jSystemStyle["SystemStyleIndex"] = ui->comboBoxsystemStyle->currentIndex();
     jSystemStyle["SystemStyle"] = ui->comboBoxsystemStyle->currentText().toStdString().c_str();
 
@@ -386,11 +386,11 @@ void WinSetting::onlyFirstEmitSig()
 ////    emit ui->checkBoxLocationExchangeDisk->clicked(ui->checkBoxLocationExchangeDisk->isChecked());
 //    emit ui->spinBoxFractionalAccuracy->valueChanged(ui->spinBoxFractionalAccuracy->value());
 //    emit ui->spinBoxRefreshInterval->valueChanged(ui->spinBoxRefreshInterval->value());
-//    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
+//    emit ui->checkBoxWindowTop->clicked(ui->checkBoxWindowTop->isChecked());
 
 //    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
 //    emit ui->radioHorizontal->clicked(ui->radioHorizontal->isChecked());
-//    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
+//    emit ui->checkBoxWindowTop->clicked(ui->checkBoxWindowTop->isChecked());
 ////    emit ui->comboBoxDoubleClick->currentIndexChanged(ui->comboBoxDoubleClick->currentIndex());
 }
 
@@ -434,7 +434,7 @@ bool WinSetting::isLightTheme()
 //    void (QComboBox::*pFunDoubleClick)(int) = &QComboBox::currentIndexChanged;
 //    connect(ui->comboBoxDoubleClick, pFunDoubleClick, this, &WinSetting::onDoubleClick);
 //    connect(ui->spinBoxRefreshInterval, pFun, this, &WinSetting::sigRefreshInterval);
-//    connect(ui->checkBoxHoverDisplay, &QCheckBox::clicked, this, &WinSetting::sigHoverDisplay);
+//    connect(ui->checkBoxWindowTop, &QCheckBox::clicked, this, &WinSetting::sigHoverDisplay);
 //}
 
 //void WinSetting::initSigConnectWinMain()
@@ -503,7 +503,7 @@ bool WinSetting::isLightTheme()
 //    ui->spinBoxRefreshInterval->setValue(jsDisplayText[4]["RefreshInterval"]);
 
 //    json jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
-//    ui->checkBoxHoverDisplay->setChecked(jsDockWindow["HoverDisplay"]);
+//    ui->checkBoxWindowTop->setChecked(jsDockWindow["HoverDisplay"]);
 //    ui->comboBoxDoubleClick->setCurrentIndex(jsDockWindow["DoubleClickIndex"]);
 
 //    // TODO: 2021-01-07 占用图模式未写
@@ -529,11 +529,11 @@ bool WinSetting::isLightTheme()
 ////    emit ui->checkBoxLocationExchangeDisk->clicked(ui->checkBoxLocationExchangeDisk->isChecked());
 //    emit ui->spinBoxFractionalAccuracy->valueChanged(ui->spinBoxFractionalAccuracy->value());
 //    emit ui->spinBoxRefreshInterval->valueChanged(ui->spinBoxRefreshInterval->value());
-//    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
+//    emit ui->checkBoxWindowTop->clicked(ui->checkBoxWindowTop->isChecked());
 
 //    emit ui->comboBoxUnitModel->currentIndexChanged(ui->comboBoxUnitModel->currentIndex());
 //    emit ui->radioHorizontal->clicked(ui->radioHorizontal->isChecked());
-//    emit ui->checkBoxHoverDisplay->clicked(ui->checkBoxHoverDisplay->isChecked());
+//    emit ui->checkBoxWindowTop->clicked(ui->checkBoxWindowTop->isChecked());
 //    emit ui->comboBoxDoubleClick->currentIndexChanged(ui->comboBoxDoubleClick->currentIndex());
 //}
 
@@ -586,7 +586,7 @@ bool WinSetting::isLightTheme()
 //    jsDisplayText[4]["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
 
 //    json &jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
-//    jsDockWindow["HoverDisplay"] = ui->checkBoxHoverDisplay->isChecked();
+//    jsDockWindow["HoverDisplay"] = ui->checkBoxWindowTop->isChecked();
 //    jsDockWindow["DoubleClickIndex"] = ui->comboBoxDoubleClick->currentIndex();
 //    jsDockWindow["DoubleClick"] = ui->comboBoxDoubleClick->currentText().toStdString().c_str();
 
@@ -828,6 +828,7 @@ void WinSetting::initSigConnectGeneralSetting()
     void (QComboBox::*pFun)(int) = &QComboBox::currentIndexChanged;
     connect(ui->comboBoxsystemStyle, pFun, this, &WinSetting::onCurrystemStyle);
     connect(ui->comboBoxsystemStyle, &QComboBox::currentTextChanged, this, &WinSetting::onCurrystemStyleText);
+    connect(ui->checkBoxWindowTop, &QCheckBox::clicked, this, &WinSetting::sigWindowTop);
 
     // 悬浮窗口 暂时空
     connect(ui->checkBoxDisolayNet, &QCheckBox::clicked, this, &WinSetting::sigDisolayNet);

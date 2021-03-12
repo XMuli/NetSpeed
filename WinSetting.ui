@@ -32,7 +32,7 @@
       <bool>false</bool>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabPersonalization">
       <attribute name="title">
@@ -474,9 +474,9 @@
            <widget class="QComboBox" name="comboBoxsystemStyle"/>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBoxHoverDisplay">
+           <widget class="QCheckBox" name="checkBoxWindowTop">
             <property name="text">
-             <string>Show details</string>
+             <string>Window top</string>
             </property>
             <property name="checked">
              <bool>false</bool>

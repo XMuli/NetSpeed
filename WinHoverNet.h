@@ -61,6 +61,7 @@ public slots:
 
     //    void onCurrystemStyle(int index);
     //    void onCurrystemStyleText(QString text);
+    void onWindowTop(bool check);
 
     void onDisolayNet(bool check);
     void onDisolayCPUAndMemory(bool check);

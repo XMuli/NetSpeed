@@ -7,8 +7,8 @@
 #include <QIcon>
 #include <QFile>
 #include <QDate>
-#include <climits>
 #include <QPalette>
+#include <climits>
 
 /*!
  * \brief WinHoverNet::WinHoverNet
@@ -105,6 +105,7 @@ void WinHoverNet::initSigConnect()
     connect(m_winSetting, &WinSetting::sigFontSize, this, &WinHoverNet::onFontSize);
     // 此处是事件过滤器，修改颜色 3+1
 //    connect(m_winSetting, &WinSetting::sigTheme, this, &WinHoverNet::onTheme);
+    connect(m_winSetting, &WinSetting::sigWindowTop, this, &WinHoverNet::onWindowTop);
 
     connect(m_winSetting, &WinSetting::sigLabTextColor, this, &WinHoverNet::onLabTextColor);
     connect(m_winSetting, &WinSetting::sigTextColor, this, &WinHoverNet::onTextColor);
@@ -361,6 +362,22 @@ void WinHoverNet::onBackgroundColor(const QColor color)
 void WinHoverNet::onBackgroundImage(const QColor color)
 {
 
+}
+
+/*!
+ * \brief WinHoverNet::onWindowTop 设置窗口是否置顶
+ * \param check true 置顶， false 不
+ */
+void WinHoverNet::onWindowTop(bool check)
+{
+    if (check) {
+        setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+    } else {
+        setWindowFlags(windowFlags() | Qt::WindowMinimizeButtonHint);   // 不是 Qt::WindowStaysOnBottomHint
+    }
+
+    if (!isVisible())          // 当前窗口不可见，则显示出来
+        setVisible(true);
 }
 
 //void WinHoverNet::onCurrystemStyle(int index)

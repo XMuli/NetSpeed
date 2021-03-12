@@ -10,14 +10,8 @@
     },
     "IsExportSystenPath": false,
     "IsHorizontal": true,
-    "Notification": {
-      "CpuOver": true,
-      "CpuOverNum": 0,
-      "MemoryOver": true,
-      "MemoryOverNum": 0
-    },
     "systemStyle": {
-      "IsHoverDisplay": false,
+      "WindowTop": false,
       "SystemStyle": "chameleon",
       "SystemStyleIndex": 0
     }
@@ -40,9 +34,9 @@
         "FontSize": 10,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
-        "LabCpu": "  CPU#31VL: ",
+        "LabCpu": "  CPU: ",
         "LabDown": "↓: ",
-        "LabMemory": "  MEM#31VL: ",
+        "LabMemory": "  MEM: ",
         "LabUpload": "↑: "
       }
     },
@@ -63,9 +57,9 @@
         "FontSize": 10,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
-        "LabCpu": "  CPU#31VL: ",
+        "LabCpu": "  C: ",
         "LabDown": "↓: ",
-        "LabMemory": "  MEM#31VL: ",
+        "LabMemory": "  M: ",
         "LabUpload": "↑: "
       }
     },

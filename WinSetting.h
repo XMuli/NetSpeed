@@ -69,7 +69,8 @@ signals:
 
     // --------常规配置 相关--------
     void sigCurrystemStyle(int index);
-    // 悬浮窗口 暂时空
+    void sigWindowTop(bool top);
+
     void sigDisolayNet(bool);
     void sigDisolayCPUAndMemory(bool);
     void sigLocationExchangeNet(bool);

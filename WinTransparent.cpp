@@ -17,8 +17,11 @@ WinTransparent::WinTransparent(QWidget *parent)
 
 void WinTransparent::init()
 {
-    setWindowFlags(Qt::X11BypassWindowManagerHint);
-    setWindowOpacity(1); // 透明度
+    setWindowFlags(Qt::X11BypassWindowManagerHint);  // x11 直接绘制，无边框，无影阴影，总是置顶
+//    setAttribute(Qt::WA_TranslucentBackground);
+//    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);
+//    setWindowFlags(windowFlags() | Qt::FramelessWindowHint /*| Qt::ToolTip | Qt::FramelessWindowHint | Qt::Dialog*/);
+//    setWindowOpacity(1); // 透明度
 //    resize(400, 600);
 //    setAttribute(Qt::WA_TranslucentBackground);
 
