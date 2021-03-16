@@ -1,3 +1,14 @@
+lfxnet (2.2.0-1) unstable; urgency=medium
+
+  * 将项目 lfxNet 重命名为 NetSpeed.
+  * 将 DDE—DOCK 插件 liblfxMonitorNet.so 重命名为 libNetPlugins.so
+  * 删除大量注释代码
+  * 其它改动的我也忘记了，汗
+
+ -- xmuli tech <xmulitech@gmail.com>  Friday, 04 March 2021 20:17:04 +0800
+
+
+
 lfxnet (2.1.0-1) unstable; urgency=medium
 
   * 调整 dde-dock 网速插件 BUG
