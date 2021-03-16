@@ -31,7 +31,7 @@ NetPlugin::NetPlugin(QObject *parent)
  */
 const QString NetPlugin::pluginName() const
 {
-    return "MonitorNet";
+    return "NetPlugins";
 }
 
 /*!

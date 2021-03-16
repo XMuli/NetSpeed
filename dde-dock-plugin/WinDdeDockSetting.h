@@ -73,12 +73,6 @@ signals:
     void sigRefreshInterval(int);
     void sigHoverDisplay(bool);
 
-    // WinMain 相关
-    void sigCpuOver(bool check);
-    void sigMemOver(bool check);
-    void sigCpuOverNum(int cpu);
-    void sigMemOverNum(int mem);
-
     void sigBtnApplyWinMain();
 
 public slots:
