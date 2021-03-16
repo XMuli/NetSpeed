@@ -301,14 +301,14 @@ void WinDockNet::onShowModel(bool check)
  */
 void WinDockNet::onUnitModel(const QString &text)
 {   
-//    if (text == "Default")
-//        m_modelUnit = ModelUnit::Default;
-//    else if (text == "Upper")
-//        m_modelUnit = ModelUnit::Upper;
-//    else if (text == "Lower")
-//        m_modelUnit = ModelUnit::Lower;
-//    else if (text == "Mixed")
-//        m_modelUnit = ModelUnit::Mixed;
+    if (text == "Default")
+        m_modelUnit = ModelUnit::Default;
+    else if (text == "Upper")
+        m_modelUnit = ModelUnit::Upper;
+    else if (text == "Lower")
+        m_modelUnit = ModelUnit::Lower;
+    else if (text == "Mixed")
+        m_modelUnit = ModelUnit::Mixed;
 }
 
 void WinDockNet::onUnitModelIndex(int index)

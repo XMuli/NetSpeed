@@ -389,7 +389,7 @@ bool WinDdeDockSetting::writeDataToConfigPath(QString sour, QString dest, QStrin
 void WinDdeDockSetting::writeDataToConfigPath()
 {
     int index = -1;
-    QString name("/lfxNet/MonitorNetConfig.json");
+    QString name("/NetSpeed/NetPlugins.json");
     QString sour = QString("/usr/share") + name;
     QString dest = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + name;
     configPath(sour, dest, index);
@@ -433,7 +433,7 @@ QString WinDdeDockSetting::configPath(QString systemPath, QString homePath, int 
  */
 QString WinDdeDockSetting::configPath(int &index, QString path)
 {
-    QString name("/lfxNet/MonitorNetConfig.json");
+    QString name("/NetSpeed/NetPlugins.json");
     if (!path.isEmpty())
         name = path;
 
@@ -563,7 +563,7 @@ void WinDdeDockSetting::onDoubleClick(int index)
 void WinDdeDockSetting::onChangePath()
 {
     QString sour = "";
-    QString sourName("/lfxNet/MonitorNetConfig.json");
+    QString sourName("/NetSpeed/NetPlugins.json");
     QString systemPath = QString("/usr/share") + sourName;
     QString homePath = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + sourName;
     QString filePathAndName = QFileDialog::getSaveFileName(this, tr("配置导出路径"), homePath, tr("导出配置文件(*.json);;所有文件(*.*)"));

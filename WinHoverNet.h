@@ -25,18 +25,12 @@ public:
     void initSigConnect();
     void setLabWidgetLayout(bool isHorizontal);
     void setLabWidgetLayout(Qt::Orientation orientation);
-//    bool isHoverDisplay();
-//    void DataOverWarning(QString title, QString text, QWidget *parent = nullptr, bool isTransient = true, int ms = 1000 * 60 * 10);
-
-    void showTest(QString str);  // test func()
-//    QString hoverDisplayText();
 
 public slots:
-//    // 响应本身
+    // 响应本身
     void onNet();
     void onCpu();
     void onMemory();
-//    void onSystemRunTime();
 
     // 响应 个性化 发射的信号
     void onUnitModel(const QString &text);
@@ -55,10 +49,7 @@ public slots:
     void onBackgroundColor(const QColor color);
     void onBackgroundImage(const QColor color);
 
-//    void onTheme(bool checked);
-
     // 响应 基础配置 发射的信号
-
     //    void onCurrystemStyle(int index);
     //    void onCurrystemStyleText(QString text);
     void onWindowTop(bool check);
@@ -72,12 +63,12 @@ public slots:
 
     void onShowModel(bool check);
 
-//    void onHoverDisplay(bool check);
+protected:
+    virtual void mouseReleaseEvent(QMouseEvent *event) override;
+//        virtual bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     WinSetting *m_winSetting;                // UI 界面控件
-
-//    bool m_hover;                          // 悬浮现实额外信息
     long m_upload;                           // 网速的上次数值
     long m_down;
     QVector<CpuInfo> m_vec;                  // 获取 CPU 信息
@@ -89,6 +80,7 @@ private:
     Qt::Orientation m_orientation;           // 控件布局（水平 | 竖直）
     QGridLayout *m_gridLayout;               // 存放下面 8 个标签的布局
     QVector<QLabel *> m_vecLabel;            // 顺序：0上传标签、1上传；2下载标签、3下载；4CPU标签、5CPU；6Mem标签、7Mem；
+
 };
 
 #endif // WINHOVERNET_H

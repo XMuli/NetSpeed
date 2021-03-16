@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>backGround.png</file>
-        <file>lfxNet.json</file>
+        <file>NetSpeed.json</file>
     </qresource>
 </RCC>

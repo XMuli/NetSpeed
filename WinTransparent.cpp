@@ -36,8 +36,6 @@ void WinTransparent::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton) {
         m_isMoveWindow = true;
         m_posStart = event->pos();
-    } else if (event->button() == Qt::MiddleButton) {
-        close();
     }
 }
 
@@ -47,8 +45,10 @@ void WinTransparent::mouseMoveEvent(QMouseEvent *event)
         move(event->pos() - m_posStart + pos());
 }
 
-void WinTransparent::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (event->button() == Qt::LeftButton)
-        m_isMoveWindow = false;
-}
+//void WinTransparent::mouseReleaseEvent(QMouseEvent *event)
+//{
+//    if (event->button() == Qt::LeftButton)
+//        m_isMoveWindow = false;
+
+//    qDebug()<<"--------------->111";
+//}

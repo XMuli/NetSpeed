@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QDate>
 #include <QPalette>
+#include <QMouseEvent>
 #include <climits>
 
 /*!
@@ -48,7 +49,6 @@ WinHoverNet::WinHoverNet(Qt::Orientation orientation, QWidget *parent)
     , m_orientation(orientation)
     , m_gridLayout(new QGridLayout(this))
     , m_vecLabel(8, nullptr)
-//    , m_hover(true)
 {
     init();
     connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onNet);
@@ -64,11 +64,6 @@ WinHoverNet::~WinHoverNet()
 {
 }
 
-//WinHoverNet *WinHoverNet::winHoverNetObject()
-//{
-//    return this;
-//}
-
 void WinHoverNet::init()
 {
     for (auto it = m_vecLabel.begin(); it != m_vecLabel.end(); ++it)
@@ -80,7 +75,8 @@ void WinHoverNet::init()
      initSigConnect();
      m_winSetting->readConfig();
      m_winSetting->onlyFirstEmitSig();
-     m_winSetting->show();
+     installEventFilter(this);
+//     m_winSetting->show();
 
      if (!m_winSetting->isHorizontal())
          m_orientation = Qt::Vertical;
@@ -88,6 +84,8 @@ void WinHoverNet::init()
      setLabWidgetLayout(m_orientation);
      m_info->netInfo(m_upload, m_down);
      m_info->cpuInfo(m_vec);
+
+
 }
 
 void WinHoverNet::initSigConnect()
@@ -113,7 +111,6 @@ void WinHoverNet::initSigConnect()
     connect(m_winSetting, &WinSetting::sigBackgroundImage, this, &WinHoverNet::onBackgroundImage);
 
     //--------响应 "常规配置" 发射的信号--------
-    // 悬浮窗口 暂时空
     connect(m_winSetting, &WinSetting::sigDisolayNet, this, &WinHoverNet::onDisolayNet);
     connect(m_winSetting, &WinSetting::sigDisolayCPUAndMemory, this, &WinHoverNet::onDisolayCPUAndMemory);
     connect(m_winSetting, &WinSetting::sigLocationExchangeNet, this, &WinHoverNet::onLocationExchangeNet);
@@ -215,37 +212,7 @@ void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
 //        return false;
 //}
 
-///*!
-// * \brief WinHoverNet::DataOverWarning 当 cpu、mem、net 勾选预警提示，并且超过各自指定预警值，弹出提示窗口
-// * \param tile 弹窗标题
-// * \param text 弹窗内容
-// * \param isTransient 是否为临时消息（默认显示 4000 ms 后自动消失）
-// * \param ms 临时弹窗消息，默认显示时间毫秒数
-// */\
-//void WinHoverNet::DataOverWarning(QString title, QString text, QWidget *parent, bool isTransient, int ms)
-//{
-//    if (isTransient) {
-//        QMessageBox *msg = new QMessageBox(QMessageBox::Information, title, text);
-//        msg->setWindowFlags(Qt::WindowStaysOnTopHint);
-//        QTimer::singleShot(ms, msg, &QMessageBox::close);
-//        msg->exec();
-//    } else {
-//        QMessageBox::information(parent, title, text);
-//    }
-//}
 
-
-//QString WinHoverNet::hoverDisplayText()
-//{
-//    double run = 0;
-//    double idle = 0;
-//    if (m_hover) {
-//        m_info->systemRunTime(run, idle);
-//        return m_info->runTimeUnit(run);
-//    } else {
-//        return "";
-//    }
-//}
 
 /*!
  * \brief WinHoverNet::onNet 定时刷新网速
@@ -380,17 +347,6 @@ void WinHoverNet::onWindowTop(bool check)
         setVisible(true);
 }
 
-//void WinHoverNet::onCurrystemStyle(int index)
-//{
-
-//}
-
-//void WinHoverNet::onCurrystemStyleText(QString text)
-//{
-//    json& jStyle = m_js["GeneralSetting"]["systemStyle"];
-//    jStyle["SystemStyle"] = text;
-//}
-
 /*!
  * \brief WinHoverNet::onShowModel 插件水平还是垂直
  * \param[in] check 现实模式中水平 (radioHorizontal) 控件是否被选中
@@ -400,6 +356,13 @@ void WinHoverNet::onShowModel(bool check)
 {
     setLabWidgetLayout(check);
     m_winSetting->changeOriePreviewUI();
+}
+
+void WinHoverNet::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::RightButton)
+        m_winSetting->show();
+//    qDebug()<<"-----------2222";
 }
 
 /*!
@@ -545,12 +508,5 @@ void WinHoverNet::onRefreshInterval(int interval)
     if (m_timer->interval() != interval)
         m_timer->setInterval(interval);
 }
-
-//void WinHoverNet::onHoverDisplay(bool check)
-//{
-//    if (m_hover != check)
-//        m_hover = check;
-//}
-
 
 

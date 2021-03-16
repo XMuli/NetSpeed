@@ -17,16 +17,10 @@ int main(int argc, char *argv[]) {
 //    setting->readConfigWinDdeDock();
 //    setting->show();
 
-//    WinDockNet *dockNet = new WinDockNet();
-//    dockNet->setWindowFlags( dockNet->windowFlags() &~Qt::WindowCloseButtonHint /* &~ Qt::WindowMinMaxButtonsHint*/);
-//    dockNet->show();
-
 //    WinTransparent *winTrans = new WinTransparent();
 //    winTrans->show();
 
     // 鼠标中键关闭（后面加个鼠标穿透固定在桌面）
-//    WinDesktop *winDesktop = new WinDesktop();
-//    winDesktop->show();
 
 
 //    WinSetting *winSetting = new WinSetting();

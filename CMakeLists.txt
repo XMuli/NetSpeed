@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
-set(PROJECT_NAME lfxNet)
+set(PROJECT_NAME NetSpeed)
 set(PROJECT_VERSION_MAJOR 1)
 set(PROJECT_VERSION_MINOR 0)
 project(${PROJECT_NAME})
@@ -49,9 +49,9 @@ add_executable(${PROJECT_NAME} ${DIR} ${QM_FILES})
 #find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
 
 if (EXISTS "/usr/lib/dde-dock/plugins")
-    target_link_libraries(${PROJECT_NAME} MonitorInfo MonitorNet)
+    target_link_libraries(${PROJECT_NAME} MonitorInfo NetPlugins)
 else()
     target_link_libraries(${PROJECT_NAME} MonitorInfo)
 endif()
 
-install(FILES "lfxNet.json" DESTINATION "/usr/share/lfxNet")
+install(FILES "NetSpeed.json" DESTINATION "/usr/share/NetSpeed")
