@@ -10,8 +10,6 @@
 
 > NetSpeed 是一款轻量的实时网速悬浮窗口。
 
-<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210316-162021.png" width="100%"/>
-
 <br>
 
 ## 目录
@@ -34,6 +32,19 @@
 ### NetSpeed
 
 ​		 `Linux` 上提供一个悬浮网速窗口，可实时显示网速、CPU 、内存信息（通用）。
+
+
+
+**功能：**
+
+1. 多语言切换，智能单位切换
+2. 自定义网速标签 / 背景标签内容、颜色、精准度、字体、字体大小、位置互换、是否显示
+3. 自带两套浅色 / 暗色两套主题、切换程序风格
+4. 支持水平和垂直两种模式、窗口置顶
+5. 自定义数据导出
+6. 欢迎帮助完善
+
+<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210316-162021.png" width="100%"/>
 
 <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210316-162022.png" width="100%"/>
 
@@ -63,9 +74,15 @@ sudo make install # 安装
 
 **注意：** 若未生效，执行 `killall dde-dock` 重启任务栏后生效
 
+若是帮助到了你，<font color=#FE7207  size=4 face="幼圆">可以点击该项目的的<img src="https://raw.githubusercontent.com/xmuli/xmuliPic/pic/2021/20210128152407.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/xmuli/xmuliPic/pic/2021/20210128152444.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，相当点个赞，</font>手有余香。
+
 <br>
 
-若是帮助到了你，<font color=#FE7207  size=4 face="幼圆">可以点击该项目的的<img src="https://raw.githubusercontent.com/xmuli/xmuliPic/pic/2021/20210128152407.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/xmuli/xmuliPic/pic/2021/20210128152444.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，相当点个赞，</font>手有余香。
+### 卸载
+
+```bash
+sudo rm -rf /usr/lib/dde-dock/plugins/libNetPlugins.so ~/.config/NetSpeed /usr/share/NetSpeed
+```
 
 <br>
 
