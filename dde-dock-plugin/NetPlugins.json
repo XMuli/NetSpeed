@@ -35,7 +35,7 @@
                 "LocationExchangeNet":false
             },
             {
-                "FractionalAccuracy":2,
+                "FractionalAccuracy":0,
                 "RefreshInterval":1000
             }
         ],
