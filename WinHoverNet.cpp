@@ -9,6 +9,8 @@
 #include <QDate>
 #include <QPalette>
 #include <QMouseEvent>
+#include <QDBusAbstractInterface>
+#include <QDebug>
 #include <climits>
 
 /*!
@@ -39,6 +41,7 @@
  * </pre>
  * \endhtmlonly
  */
+
 WinHoverNet::WinHoverNet(Qt::Orientation orientation, QWidget *parent)
     : WinTransparent(parent)
     , m_winSetting(new WinSetting())  // 没设置父对象， null
@@ -57,6 +60,14 @@ WinHoverNet::WinHoverNet(Qt::Orientation orientation, QWidget *parent)
 //    connect(m_timer, &QTimer::timeout, this, &WinHoverNet::onSystemRunTime);
     m_timer->setInterval(1000);
     m_timer->start();
+}
+
+WinHoverNet *WinHoverNet::getInstance()
+{
+    static WinHoverNet instance;
+
+    qDebug()<<"--------------------->"<<&instance;
+    return &instance;
 }
 
 
@@ -85,7 +96,7 @@ void WinHoverNet::init()
      m_info->netInfo(m_upload, m_down);
      m_info->cpuInfo(m_vec);
 
-
+     setSingleInstance(); // 注册
 }
 
 void WinHoverNet::initSigConnect()
@@ -202,6 +213,20 @@ void WinHoverNet::setLabWidgetLayout(Qt::Orientation orientation)
     QMargins margins(contentsMargins());
     setContentsMargins(margins);
     adjustSize();
+}
+
+/*!
+ * \brief WinHoverNet::setSingleInstance 若是启动，则注册 DBus 服务
+ * \return true 成功； false 失败
+ */
+bool WinHoverNet::setSingleInstance()
+{
+    QDBusConnection sessionBus = QDBusConnection::sessionBus();
+    if (sessionBus.registerService("cn.ifmet.netspeed")
+            | sessionBus.registerObject("/", this, QDBusConnection::ExportAllContents))
+        return true;
+    else
+        return false;
 }
 
 //bool WinHoverNet::isHoverDisplay()

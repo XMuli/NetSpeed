@@ -26,7 +26,8 @@ int main(int argc, char *argv[]) {
 //    WinSetting *winSetting = new WinSetting();
 //    winSetting->show();
 
-    WinHoverNet *hoverNet = new WinHoverNet();
+//    WinHoverNet *hoverNet = new WinHoverNet();
+    WinHoverNet *hoverNet = WinHoverNet::getInstance();
     hoverNet->show();
 //    WinSetting *net = new WinSetting();
 //    net->show();
