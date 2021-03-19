@@ -3,7 +3,7 @@
     "DisolayText": {
       "DisolayCPUAndMemory": true,
       "DisolayNet": true,
-      "FractionalAccuracy": 1,
+      "FractionalAccuracy": 2,
       "LocationExchangeCPUAndMenory": false,
       "LocationExchangeNet": false,
       "RefreshInterval": 2000
@@ -31,7 +31,7 @@
         "labBackgroundImage": "xxx.png"
       },
       "TextHor": {
-        "FontSize": 10,
+        "FontSize": 9,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
         "LabCpu": "  CPU: ",

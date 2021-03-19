@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>backGround.png</file>
-        <file>NetSpeed.json</file>
+        <file>resource/images/backGround.png</file>
+        <file>resource/images/NetSpeed.svg</file>
+        <file>resource/data/NetSpeed.json</file>
     </qresource>
 </RCC>

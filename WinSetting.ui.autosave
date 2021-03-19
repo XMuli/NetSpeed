@@ -831,7 +831,7 @@
          <item>
           <widget class="QLabel" name="labIntroduction">
            <property name="text">
-            <string>A lightweight real-time Internet speed hover window.</string>
+            <string>A light and fast network speed hover window.</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>

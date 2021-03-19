@@ -55,4 +55,4 @@ else()
     target_link_libraries(${PROJECT_NAME} MonitorInfo)
 endif()
 
-install(FILES "NetSpeed.json" DESTINATION "/usr/share/NetSpeed")
+install(FILES "./resource/data/NetSpeed.json" DESTINATION "/usr/share/NetSpeed")

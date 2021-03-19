@@ -96,7 +96,7 @@ void WinHoverNet::init()
      m_info->netInfo(m_upload, m_down);
      m_info->cpuInfo(m_vec);
 
-     setSingleInstance(); // 注册
+     setSingleInstance(); // 注册 DBus
 }
 
 void WinHoverNet::initSigConnect()
