@@ -25,7 +25,8 @@ WinDdeDockSetting::WinDdeDockSetting(QWidget *parent)
     , m_isHorizontal(true)
     , m_path("")
     , m_btnGroupTheme(new QButtonGroup(nullptr))
-    , m_doubleClick(2)
+    , m_doubleClick(0)
+    , m_trans(new QTranslator(this))
 {
     ui->setupUi(this);
     init();
@@ -79,6 +80,13 @@ void WinDdeDockSetting::init()
 
     setWindowTitle(QString("MonitorNet"));
     setWindowFlags(Qt::WindowStaysOnTopHint);
+
+    QString language(QLocale().name());
+    bool ok = m_trans->load("/usr/share/NetSpeed/translations/" + language + ".qm");
+    QCoreApplication::installTranslator(m_trans);
+    ui->retranslateUi(this);
+//    qDebug()<< "----@2--->" << "/usr/share/NetSpeed/translations/" + language + ".qm" << ok << QLocale().name();
+//    QMessageBox::about(this, QLocale().name(), "/usr/share/NetSpeed/translations/" + language + ".qm  " + QString::number(ok));
 }
 
 void WinDdeDockSetting::initSigConnectWinDdeDock()

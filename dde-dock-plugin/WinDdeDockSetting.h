@@ -3,6 +3,7 @@
 
 #include <QButtonGroup>
 #include <QDir>
+#include <QTranslator>
 #include <QWidget>
 #include "../lib/MonitorInfo_x11.h"
 LFX_USE_NAESPACE
@@ -94,6 +95,7 @@ private:
     QString m_path;      // 数据保存路径
     QButtonGroup *m_btnGroupTheme;
     int m_doubleClick;
+    QTranslator *m_trans;
 };
 
 #endif // WINDDEDOCKSETTING_H
