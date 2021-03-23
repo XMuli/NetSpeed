@@ -3,10 +3,10 @@
     "DisolayText": {
       "DisolayCPUAndMemory": true,
       "DisolayNet": true,
-      "FractionalAccuracy": 2,
+      "FractionalAccuracy": 0,
       "LocationExchangeCPUAndMenory": false,
       "LocationExchangeNet": false,
-      "RefreshInterval": 2000
+      "RefreshInterval": 1000
     },
     "IsExportSystenPath": false,
     "IsHorizontal": true,
@@ -31,7 +31,7 @@
         "labBackgroundImage": "xxx.png"
       },
       "TextHor": {
-        "FontSize": 9,
+        "FontSize": 10,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
         "LabCpu": "  CPU: ",
@@ -54,13 +54,13 @@
         "labBackgroundImage": "xxx.png"
       },
       "TextVer": {
-        "FontSize": 10,
+        "FontSize": 9,
         "FontType": "Noto Sans CJK SC",
         "FontTypeIndex": 59,
-        "LabCpu": "  C: ",
-        "LabDown": "↓: ",
-        "LabMemory": "  M: ",
-        "LabUpload": "↑: "
+        "LabCpu": "C ",
+        "LabDown": "↓ ",
+        "LabMemory": "M ",
+        "LabUpload": "↑ "
       }
     },
     "Language": {
