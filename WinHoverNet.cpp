@@ -48,7 +48,7 @@ WinHoverNet::WinHoverNet(Qt::Orientation orientation, QWidget *parent)
     , m_info(new MonitorInfo_x11())
     , m_timer(new QTimer())
     , m_modelUnit(Default)
-    , m_precision(2)
+    , m_precision(0)
     , m_orientation(orientation)
     , m_gridLayout(new QGridLayout(this))
     , m_vecLabel(8, nullptr)
@@ -65,8 +65,7 @@ WinHoverNet::WinHoverNet(Qt::Orientation orientation, QWidget *parent)
 WinHoverNet *WinHoverNet::getInstance()
 {
     static WinHoverNet instance;
-
-    qDebug()<<"--------------------->"<<&instance;
+//    qDebug()<<"--------------------->"<<&instance;
     return &instance;
 }
 
@@ -96,7 +95,7 @@ void WinHoverNet::init()
      m_info->netInfo(m_upload, m_down);
      m_info->cpuInfo(m_vec);
 
-     setSingleInstance(); // 注册 DBus
+//     setSingleInstance(); // 注册 DBus
 }
 
 void WinHoverNet::initSigConnect()
@@ -132,13 +131,6 @@ void WinHoverNet::initSigConnect()
     connect(m_winSetting, &WinSetting::sigShowModel, this, &WinHoverNet::onShowModel);
 
 //    connect(m_winSetting, &WinSetting::sigBtnApplyWinMain, this, &WinHoverNet::onBtnApplyWinMain);
-
-
-//    connect(m_winSetting, &WinSetting::sigLabDiskReadText, this, &WinHoverNet::onLabDiskReadText);
-//    connect(m_winSetting, &WinSetting::sigLabDiskWriteText, this, &WinHoverNet::onLabDiskWriteText);
-//    connect(m_winSetting, &WinSetting::sigDisolayDisk, this, &WinHoverNet::onDisolayDisk);
-//    connect(m_winSetting, &WinSetting::sigLocationExchangeDisk, this, &WinHoverNet::onLocationExchangeDisk);
-//   connect(m_winSetting, &WinSetting::sigHoverDisplay, this, &WinHoverNet::onHoverDisplay);
 }
 
 /*!
@@ -228,16 +220,6 @@ bool WinHoverNet::setSingleInstance()
     else
         return false;
 }
-
-//bool WinHoverNet::isHoverDisplay()
-//{
-//    if (m_orientation == Qt::Horizontal)
-//        return true;
-//    else
-//        return false;
-//}
-
-
 
 /*!
  * \brief WinHoverNet::onNet 定时刷新网速
@@ -358,14 +340,15 @@ void WinHoverNet::onBackgroundImage(const QColor color)
 
 /*!
  * \brief WinHoverNet::onWindowTop 设置窗口是否置顶
- * \param check true 置顶， false 不
+ * \param check true 置顶， false
+ * \see 参考：https://blog.csdn.net/GoForwardToStep/article/details/68938965
  */
 void WinHoverNet::onWindowTop(bool check)
 {
     if (check) {
-        setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
+        setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint | Qt::WindowStaysOnTopHint);
     } else {
-        setWindowFlags(windowFlags() | Qt::WindowMinimizeButtonHint);   // 不是 Qt::WindowStaysOnBottomHint
+        setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint);   // 不是 Qt::WindowStaysOnBottomHint
     }
 
     if (!isVisible())          // 当前窗口不可见，则显示出来
