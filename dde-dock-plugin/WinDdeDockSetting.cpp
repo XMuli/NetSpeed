@@ -109,8 +109,6 @@ void WinDdeDockSetting::initSigConnectWinDdeDock()
     connect(ui->lineLabMemory, &QLineEdit::textChanged, this, &WinDdeDockSetting::sigLabMemoryText);
     connect(ui->checkBoxDisolayNet, &QCheckBox::clicked, this, &WinDdeDockSetting::sigDisolayNet);
     connect(ui->checkBoxDisolayCPUAndMemory, &QCheckBox::clicked, this, &WinDdeDockSetting::sigDisolayCPUAndMemory);
-    connect(ui->checkBoxLocationExchangeNet, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeNet);
-    connect(ui->checkBoxLocationExchangeCPUAndMenory, &QCheckBox::clicked, this, &WinDdeDockSetting::sigLocationExchangeCPUAndMenory);
 
     connect(ui->spinBoxFractionalAccuracy, pFun, this, &WinDdeDockSetting::sigFractionalAccuracy);
     void (QComboBox::*pFunDoubleClick)(int) = &QComboBox::currentIndexChanged;
@@ -171,10 +169,8 @@ void WinDdeDockSetting::readConfigWinDdeDock()
 
     ui->checkBoxDisolayNet->setChecked(jsDisplayText[2]["DisolayNet"]);
     ui->checkBoxDisolayCPUAndMemory->setChecked(jsDisplayText[2]["DisolayCPUAndMemory"]);
-    ui->checkBoxLocationExchangeNet->setChecked(jsDisplayText[3]["LocationExchangeNet"]);
-    ui->checkBoxLocationExchangeCPUAndMenory->setChecked(jsDisplayText[3]["LocationExchangeCPUAndMenory"]);
-    ui->spinBoxFractionalAccuracy->setValue(jsDisplayText[4]["FractionalAccuracy"]);
-    ui->spinBoxRefreshInterval->setValue(jsDisplayText[4]["RefreshInterval"]);
+    ui->spinBoxFractionalAccuracy->setValue(jsDisplayText[3]["FractionalAccuracy"]);
+    ui->spinBoxRefreshInterval->setValue(jsDisplayText[3]["RefreshInterval"]);
 
     json jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
     ui->checkBoxHoverDisplay->setChecked(jsDockWindow["HoverDisplay"]);
@@ -241,10 +237,10 @@ void WinDdeDockSetting::saveConfigWinDdeDock()
 
     jsDisplayText[2]["DisolayNet"] = ui->checkBoxDisolayNet->isChecked();
     jsDisplayText[2]["DisolayCPUAndMemory"] = ui->checkBoxDisolayCPUAndMemory->isChecked();
-    jsDisplayText[3]["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->isChecked();
-    jsDisplayText[3]["LocationExchangeCPUAndMenory"] = ui->checkBoxLocationExchangeCPUAndMenory->isChecked();
-    jsDisplayText[4]["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
-    jsDisplayText[4]["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
+//    jsDisplayText[3]["LocationExchangeNet"] = ui->checkBoxLocationExchangeNet->isChecked();
+//    jsDisplayText[3]["LocationExchangeCPUAndMenory"] = ui->checkBoxLocationExchangeCPUAndMenory->isChecked();
+    jsDisplayText[3]["FractionalAccuracy"] = ui->spinBoxFractionalAccuracy->value();
+    jsDisplayText[3]["RefreshInterval"] = ui->spinBoxRefreshInterval->value();
 
     json &jsDockWindow = m_js["WinDdeDock"]["DockWindow"];
     jsDockWindow["HoverDisplay"] = ui->checkBoxHoverDisplay->isChecked();

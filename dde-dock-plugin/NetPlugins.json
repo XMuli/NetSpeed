@@ -1,9 +1,9 @@
 {
     "WinDdeDock":{
         "ColorAndFont":{
-            "FontSize":8,
-            "FontType":"Noto Sans CJK SC",
-            "FontTypeIndex":59,
+            "FontSize":9,
+            "FontType":"Monospace",
+            "FontTypeIndex":26,
             "LabTextColor":"#000000",
             "TextColor":"#000000"
         },
@@ -28,11 +28,6 @@
                 "DisolayCPUAndMemory":true,
                 "DisolayDisk":false,
                 "DisolayNet":true
-            },
-            {
-                "LocationExchangeCPUAndMenory":false,
-                "LocationExchangeDisk":false,
-                "LocationExchangeNet":false
             },
             {
                 "FractionalAccuracy":0,

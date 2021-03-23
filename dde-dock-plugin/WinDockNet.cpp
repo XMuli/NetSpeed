@@ -75,6 +75,7 @@ void WinDockNet::initSigConnect()
    // 响应 WinDdeDockSetting 发射的信号
    connect(m_winSetting, &WinDdeDockSetting::sigCurrentFont, this, &WinDockNet::onCurrentFont);
    connect(m_winSetting, &WinDdeDockSetting::sigFontSize, this, &WinDockNet::onFontSize);
+
    connect(m_winSetting, &WinDdeDockSetting::sigUnitModel, this, &WinDockNet::onUnitModel);
    connect(m_winSetting, &WinDdeDockSetting::sigUnitModelIndex, this, &WinDockNet::onUnitModelIndex);
    connect(m_winSetting, &WinDdeDockSetting::sigShowModel, this, &WinDockNet::onShowModel);
@@ -212,14 +213,14 @@ void WinDockNet::onNet()
     QString unit = "";
 
     m_info->netInfo(upload, down);
-    double increaseUpload  = m_info->netShowUnit((upload - m_upload) / (m_timer->interval() /  1000.0), netUnit);
+    double increaseUpload  = m_info->netShowUnit((upload - m_upload) / (m_timer->interval() / 1000.0), netUnit);
     unit = m_info->netModelUnit(netUnit, m_modelUnit);
-    m_vecLabel[1]->setText(QString("%1").arg(increaseUpload, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
+    m_vecLabel[1]->setText(QString("%1").arg(increaseUpload, 3, 'f', m_precision, QLatin1Char(' ')) + unit);
 
     netUnit = Byte;
     double increaseDown = m_info->netShowUnit((down - m_down) / (m_timer->interval() / 1000.0), netUnit);
     unit = m_info->netModelUnit(netUnit, m_modelUnit);
-    m_vecLabel[3]->setText(QString("%1").arg(increaseDown, 0, 'f', m_precision, QLatin1Char(' ')) + unit);
+    m_vecLabel[3]->setText(QString("%1").arg(increaseDown, 3, 'f', m_precision, QLatin1Char(' ')) + unit);
 
     m_upload = upload;
     m_down = down;
@@ -275,14 +276,13 @@ void WinDockNet::onCurrentFont(const QFont &font)
 
 void WinDockNet::onFontSize(int size)
 {
-    QFont font;
-    font.setPointSize(size);
-
     int nCount = m_gridLayout->count();
     for (int i = 0; i < nCount; ++i) {
         QLayoutItem *it = m_gridLayout->itemAt(i);
-        QLabel * lab = static_cast<QLabel *>(it->widget());
-        lab->setFont(font);
+        QLabel *lab = static_cast<QLabel *>(it->widget());
+        QFont *font = const_cast<QFont *>(&(lab->font()));
+        font->setPointSize(size);
+//        qDebug()<<"---------2@-------->"<<lab->font().family()<<lab->font().pointSize();
     }
 }
 
