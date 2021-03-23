@@ -982,7 +982,7 @@
          <item row="0" column="1">
           <widget class="QLabel" name="label_9">
            <property name="text">
-            <string>v2.0.0</string>
+            <string>v2.3.0</string>
            </property>
            <property name="openExternalLinks">
             <bool>false</bool>

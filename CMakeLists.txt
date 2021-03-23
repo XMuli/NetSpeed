@@ -40,7 +40,7 @@ file(GLOB DIR "widgets/*.h" "widgets/*.cpp" "widgets/*.ui" "*.h" "*.hpp" "*.cpp"
 #    message(${v})
 #endforeach()
 add_executable(${PROJECT_NAME} ${DIR} ${QM_FILES})
-target_link_libraries(${PROJECT_NAME} MonitorInfo)
+target_link_libraries(${PROJECT_NAME} MonitorInfo)   #NetPlugins
 
 install(FILES "./resource/data/NetSpeed.json" DESTINATION "/usr/share/NetSpeed")
 install(FILES "./resource/NetSpeed.desktop" DESTINATION "/usr/share/applications")

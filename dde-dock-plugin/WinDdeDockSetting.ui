@@ -709,7 +709,10 @@
        <item>
         <widget class="QLabel" name="label_92">
          <property name="text">
-          <string>LOGO</string>
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../resources.qrc">:/resource/images/NetSpeed.svg</pixmap>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -849,7 +852,7 @@
          <item row="0" column="1">
           <widget class="QLabel" name="label_104">
            <property name="text">
-            <string>v2.0.0</string>
+            <string>v2.3.0</string>
            </property>
            <property name="openExternalLinks">
             <bool>false</bool>
@@ -935,6 +938,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

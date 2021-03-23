@@ -22,11 +22,9 @@ int main(int argc, char *argv[]) {
 
     // 鼠标中键关闭（后面加个鼠标穿透固定在桌面）
 
-
 //    WinSetting *winSetting = new WinSetting();
 //    winSetting->show();
 
-//    WinHoverNet *hoverNet = new WinHoverNet();
     WinHoverNet *hoverNet = WinHoverNet::getInstance();
     hoverNet->show();
 //    WinSetting *net = new WinSetting();
