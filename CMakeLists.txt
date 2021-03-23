@@ -27,7 +27,6 @@ qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${TS_FILES})
 add_subdirectory(lib)
 add_subdirectory(dde-dock-plugin)
 
-
 # 加入一个配置头文件，用于处理 CMake 对源码的设置
 #configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.in"
 #               "${CMAKE_CURRENT_BINARY_DIR}/config.h")
@@ -41,18 +40,11 @@ file(GLOB DIR "widgets/*.h" "widgets/*.cpp" "widgets/*.ui" "*.h" "*.hpp" "*.cpp"
 #    message(${v})
 #endforeach()
 add_executable(${PROJECT_NAME} ${DIR} ${QM_FILES})
-
-#if (NOT CMAKE_PREFIX_PATH)
-#    message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
-#            "(-DCMAKE_PREFIX_PATH=\"path/to/Qt/lib/cmake\" or -DCMAKE_PREFIX_PATH=/usr/include/{host}/qt{version}/ on Ubuntu)")
-#endif ()
-
-#find_package(Qt${QT_VERSION} COMPONENTS ${REQUIRED_LIBS} REQUIRED)
-
-if (EXISTS "/usr/lib/dde-dock/plugins")
-    target_link_libraries(${PROJECT_NAME} MonitorInfo NetPlugins)
-else()
-    target_link_libraries(${PROJECT_NAME} MonitorInfo)
-endif()
+target_link_libraries(${PROJECT_NAME} MonitorInfo)
 
 install(FILES "./resource/data/NetSpeed.json" DESTINATION "/usr/share/NetSpeed")
+install(FILES "./resource/NetSpeed.desktop" DESTINATION "/usr/share/applications")
+file(GLOB TRANSLATIONS "${CMAKE_CURRENT_BINARY_DIR}/*.qm")  # 要带上构建生成的路径
+install(FILES ${TRANSLATIONS}
+        DESTINATION "/usr/share/NetSpeed/translations")
+install(TARGETS ${PROJECT_NAME} DESTINATION "/usr/bin/NetSpeed")

@@ -24,7 +24,7 @@ if (EXISTS ${DDE_DOCK_PLUGINS_PATH})
 
     #set(CMAKE_INSTALL_PREFIX "/usr")  # 默认为 "/usr/local", 若指定 / 的绝对路径，则 install 命令使用此变量作作为前缀会失效
     install(FILES "NetPlugins.json" DESTINATION "/usr/share/NetSpeed")
-    install(TARGETS ${PLUGIN_NAME} LIBRARY DESTINATION "/usr/lib/dde-dock/plugins")
+    install(TARGETS ${PLUGIN_NAME} DESTINATION "/usr/lib/dde-dock/plugins")
 
     # 参考：https://github.com/linuxdeepin/dde-dock/blob/master/plugins/plugin-guide/plugins-developer-guide.md
 
