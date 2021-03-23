@@ -618,8 +618,8 @@ void WinSetting::onComboBoxLanguage(int index)
 {
     QString language(QLocale().name());
     language = ui->comboBoxLanguage->itemData(index).toString();
-    bool ok = m_trans->load("./" + language + ".qm");
-//    qDebug()<< "---------@1--->" << language << ok ;
+    bool ok = m_trans->load("/usr/share/NetSpeed/translations/" + language + ".qm"); // /usr/share/NetSpeed/translations/
+//    qDebug()<< "----@1--->" << "/usr/share/NetSpeed/translations/" + language + ".qm" << ok ;
     QCoreApplication::installTranslator(m_trans);
 }
 
