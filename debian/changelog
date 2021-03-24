@@ -1,13 +1,21 @@
-lfxnet (2.2.0-1) unstable; urgency=medium
+netspeed (2.3.0-1) stable; urgency=medium
+
+  * 设置 CMake 命令，部署 make install 时候使用
+  * 删除部分 UI 控件（无用）
+  * 添加 LOGO 图片
+  * 添加置悬浮窗口的置顶功能
+  * 添加 NetPlugins 的窗口，设置固定宽度为（重选一个字体生效）
+
+ -- xmuli tech <xmulitech@gmail.com>  Tue, 23 Mar 2021 20:17:04 +0800
+
+netspeed (2.2.0-1) unstable; urgency=medium
 
   * 将项目 lfxNet 重命名为 NetSpeed.
   * 将 DDE—DOCK 插件 liblfxMonitorNet.so 重命名为 libNetPlugins.so
   * 删除大量注释代码
   * 其它改动的我也忘记了，汗
 
- -- xmuli tech <xmulitech@gmail.com>  Friday, 04 March 2021 20:17:04 +0800
-
-
+ -- xmuli tech <xmulitech@gmail.com>  Fri, 04 Mar 2021 20:17:04 +0800
 
 lfxnet (2.1.0-1) unstable; urgency=medium
 
@@ -16,7 +24,7 @@ lfxnet (2.1.0-1) unstable; urgency=medium
   * 删除大量注释代码
   * 调整 UI， 更小更紧凑
 
- -- xmuli tech <xmulitech@gmail.com>  Friday, 04 March 2021 20:17:04 +0800
+ -- xmuli tech <xmulitech@gmail.com>  Fri, 04 Mar 2021 20:17:04 +0800
 
 lfxnet (2.0.0-1) unstable; urgency=medium
 
@@ -26,7 +34,7 @@ lfxnet (2.0.0-1) unstable; urgency=medium
   * 修复诸多 BUG
   * 是一次很大功能的更新
 
- -- xmuli tech <xmulitech@gmail.com>  Friday, 04 March 2021 21:26:32 +0800
+ -- xmuli tech <xmulitech@gmail.com>  Fri, 04 Mar 2021 21:26:32 +0800
 
 lfxnet (1.1.0-1) unstable; urgency=medium
 
