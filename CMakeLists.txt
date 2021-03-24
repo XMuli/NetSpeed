@@ -43,6 +43,7 @@ add_executable(${PROJECT_NAME} ${DIR} ${QM_FILES})
 target_link_libraries(${PROJECT_NAME} MonitorInfo)   #NetPlugins
 
 install(FILES "./resource/data/NetSpeed.json" DESTINATION "/usr/share/NetSpeed")
+install(FILES "./resource/images/NetSpeed.svg" DESTINATION "/usr/share/NetSpeed")
 install(FILES "./resource/NetSpeed.desktop" DESTINATION "/usr/share/applications")
 file(GLOB TRANSLATIONS "${CMAKE_CURRENT_BINARY_DIR}/*.qm")  # 要带上构建生成的路径
 install(FILES ${TRANSLATIONS}

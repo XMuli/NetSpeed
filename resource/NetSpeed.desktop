@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Exec=/usr/bin/NetSpeed/NetSpeed
-Icon=/home/xmuli/project/github/NetSpeed/resource/images/NetSpeed.svg
+Icon=/usr/share/NetSpeed/NetSpeed.svg
 Name=NetSpeed
 Terminal=false
 Type=Application
