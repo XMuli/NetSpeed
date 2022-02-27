@@ -1,14 +1,12 @@
 # NetSpeed
 
-<p align="right"><br><a href="README.en_US.md">English</a> | <a href="README.md">简体中文</a> | <a href="README.zh_TW.md">繁體中文</a></p>
+![](https://img.shields.io/github/license/XMuli/NetSpeed) ![](https://img.shields.io/github/v/release/XMuli/NetSpeed?style=flat&color=birightgreen) ![](https://img.shields.io/badge/powered%20by-XMuli-ff69b4) 
 
- ![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/badge/language-Qt-orange.svg) ![](https://img.shields.io/github/license/xmuli/NetSpeed) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xmuli/NetSpeed)  
-
- ![GitHub All Releases](https://img.shields.io/github/downloads/xmuli/NetSpeed/total)  ![GitHub stars](https://img.shields.io/github/stars/xmuli/NetSpeed?style=social) ![GitHub forks](https://img.shields.io/github/forks/xmuli/NetSpeed?style=social) 
+![](https://img.shields.io/github/languages/code-size/XMuli/NetSpeed)  ![](https://img.shields.io/github/downloads/XMuli/NetSpeed/total) ![](https://img.shields.io/github/stars/XMuli/NetSpeed?style=social) ![](https://img.shields.io/github/forks/XMuli/NetSpeed?style=social&label=Fork)
 
 <br>
 
-> NetSpeed 是一款轻量的实时网速悬浮窗口。
+> NetSpeed 是一款轻量的实时网速悬浮窗口（支持任意 Linux 发行版）。
 
 <br>
 
