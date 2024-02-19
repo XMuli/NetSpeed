@@ -13,6 +13,7 @@
 ## 目录
 
 - [背景](#背景)
+- [上架商城](#上架商城)
 - [编译](#编译)
 - [下载](#下载)
 - [作者](#作者)
@@ -53,6 +54,12 @@
 ​		一款轻便、快速的任务栏网速插件（仅 DDE）。姑且是 [lfxspeed](https://github.com/xmuli/lfxspeed) 的重构版本。 
 
 <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210316-162023.gif" width="60%"/> <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/20210316-162024.gif" width="35%"/>
+
+<br>
+
+### 已上架 App Store
+
+<img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2024/202402192323023.png" width="100%"/>
 
 <br>
 
