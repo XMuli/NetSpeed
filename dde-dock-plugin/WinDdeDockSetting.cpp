@@ -1,4 +1,4 @@
-#include "WinDdeDockSetting.h"
+﻿#include "WinDdeDockSetting.h"
 #include "ui_WinDdeDockSetting.h"
 #include <fstream>
 #include <iostream>

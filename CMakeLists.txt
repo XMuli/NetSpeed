@@ -1,3 +1,6 @@
+# SPDX-SnippetCopyrightText: 2020-2025 Wengeng Zhang
+# SPDX-Author: Wengeng Zhang <xmulitech@gmail.com>
+# SPDX-License-Identifier: MIT
 cmake_minimum_required(VERSION 3.13)
 set(PROJECT_NAME NetSpeed)
 set(PROJECT_VERSION_MAJOR 1)

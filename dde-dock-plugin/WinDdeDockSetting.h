@@ -1,4 +1,4 @@
-#ifndef WINDDEDOCKSETTING_H
+﻿#ifndef WINDDEDOCKSETTING_H
 #define WINDDEDOCKSETTING_H
 
 #include <QButtonGroup>

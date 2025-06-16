@@ -1,3 +1,6 @@
+﻿// SPDX-SnippetCopyrightText: 2020-2025 Wengeng Zhang
+// SPDX-Author: Wengeng Zhang <xmulitech@gmail.com>
+// SPDX-License-Identifier: MIT
 #include "WinDesktop.h"
 
 #include <QVBoxLayout>

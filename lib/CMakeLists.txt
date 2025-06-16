@@ -1,3 +1,6 @@
+# SPDX-SnippetCopyrightText: 2020-2025 Wengeng Zhang
+# SPDX-Author: Wengeng Zhang <xmulitech@gmail.com>
+# SPDX-License-Identifier: MIT
 set(LIB_SHARED_NAME "MonitorInfo")
 
 file(GLOB DIR_LIB "*.h" "*.cpp")

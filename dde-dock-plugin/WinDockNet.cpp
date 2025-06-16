@@ -1,4 +1,4 @@
-#include "WinDockNet.h"
+﻿#include "WinDockNet.h"
 
 #include <QTimer>
 #include <QDebug>

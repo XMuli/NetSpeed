@@ -1,3 +1,6 @@
+# SPDX-SnippetCopyrightText: 2020-2025 Wengeng Zhang
+# SPDX-Author: Wengeng Zhang <xmulitech@gmail.com>
+# SPDX-License-Identifier: MIT
 set(DDE_DOCK_PLUGINS_PATH "/usr/lib/dde-dock/plugins")
 if (EXISTS ${DDE_DOCK_PLUGINS_PATH})
     set(PLUGIN_NAME "NetPlugins")

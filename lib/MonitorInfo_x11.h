@@ -1,7 +1,6 @@
-//
-// Created by xmuli on 2020/12/28.
-//
-
+﻿// SPDX-SnippetCopyrightText: 2020-2025 Wengeng Zhang
+// SPDX-Author: Wengeng Zhang <xmulitech@gmail.com>
+// SPDX-License-Identifier: MIT
 #ifndef LFXNET_MONITORINFO_X11_H
 #define LFXNET_MONITORINFO_X11_H
 

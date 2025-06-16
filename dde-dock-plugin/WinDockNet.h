@@ -1,4 +1,4 @@
-#ifndef WINDOCKNET_H
+﻿#ifndef WINDOCKNET_H
 #define WINDOCKNET_H
 
 #include "../lfx_global.h"
